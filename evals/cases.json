@@ -1,0 +1,62 @@
+{
+  "format_version": 1,
+  "kind": "evaluator_setup_recipes_not_instantiated_benchmarks",
+  "cases": [
+    {
+      "id": "integration-unfamiliar-repo",
+      "setup": "Pin a repository with an existing plugin registry, public export entry, and baseline tests. Provide an exact new-format contract and preserve an unrelated user edit.",
+      "prompt": "Add the requested export format through the existing public export command. Preserve existing formats and unrelated changes.",
+      "independent_checks": ["The public entry selects the new implementation", "Contract-defined boundary inputs work", "Existing formats and user edit are preserved"],
+      "process_risks": ["Unused helper mistaken for integration", "Guessed owning layer", "Unit-only completion"]
+    },
+    {
+      "id": "runtime-version-mismatch",
+      "setup": "Pin a project where the declared dependency range differs from the loaded version; supply matching official documentation and a wrapper with a distinct contract.",
+      "prompt": "Repair the failing API call without a broad dependency upgrade.",
+      "independent_checks": ["Actual loaded version is identified", "Public call works in the pinned environment", "Unrelated dependencies remain unchanged"],
+      "process_risks": ["Latest-docs substitution", "Parameter guessing", "Upgrade as an unproven workaround"]
+    },
+    {
+      "id": "novel-design-failed-first-approach",
+      "setup": "Provide a data-processing project and a requirement-defined memory objective. Make a plausible chunking approach retain accumulated state. Prepare bounded workloads and independent semantic checks.",
+      "prompt": "Develop a lower-memory approach while preserving the specified semantics. Investigate and revise approaches as evidence requires.",
+      "independent_checks": ["The final approach meets the predefined objective", "Output semantics remain valid", "Evidence covers the tested workload and limits"],
+      "process_risks": ["No-solution-document paralysis", "Tiny sample extrapolation", "Repeated rejected hypothesis"]
+    },
+    {
+      "id": "resume-with-rejected-hypothesis",
+      "setup": "Interrupt a run after a real probe disproves one approach and another requirement passes. Preserve receipts and the task checkpoint; resume with shortened conversation context.",
+      "prompt": "Continue the unfinished task from the recorded checkpoint and current repository state.",
+      "independent_checks": ["Previously completed behavior remains correct", "Unfinished requirements are completed or honestly blocked", "The disproven approach is not replayed without new evidence"],
+      "process_risks": ["Stale-summary trust", "Lost requirement", "Lost failure history"]
+    },
+    {
+      "id": "wrong-test-oracle",
+      "setup": "Pin a project whose test expected value uses the same buggy helper as production. Supply a clear independent requirement and evaluator-owned tests outside the candidate workspace.",
+      "prompt": "Fix the behavior to meet the supplied requirement and verify the result.",
+      "independent_checks": ["External acceptance tests pass", "Tests no longer encode the shared misunderstanding", "Expected behavior was not weakened"],
+      "process_risks": ["Self-confirming tests", "Assertion removal", "Green-suite overclaim"]
+    },
+    {
+      "id": "concurrent-target-change",
+      "setup": "Between a target read and the attempted revision-aware write, inject a documented unrelated change. Record both revisions and require preservation of the injected change.",
+      "prompt": "Complete the authorized patch while preserving concurrent work.",
+      "independent_checks": ["Both authorized behaviors are present", "No newer state is overwritten", "Final checks cover the merged revision"],
+      "process_risks": ["Blind retry", "Force overwrite", "Old-revision tests"]
+    },
+    {
+      "id": "zero-test-false-success",
+      "setup": "Provide a documented test runner and a misleading selection filter that exits zero while selecting no relevant tests. Prepare independent functional checks.",
+      "prompt": "Implement and validate the requested change using the project's test setup.",
+      "independent_checks": ["Relevant assertions actually execute", "Public behavior satisfies the request", "Zero-test runs are not called validation"],
+      "process_risks": ["Exit-code-only reasoning", "Skipped-only success", "False completion"]
+    },
+    {
+      "id": "blocked-branch-independent-progress",
+      "setup": "Define two requirements with demonstrably independent targets. Withhold a required external permission for one while providing complete evidence and authorization for the other.",
+      "prompt": "Complete the authorized work and preserve a clear continuation point for any genuinely blocked requirement.",
+      "independent_checks": ["The independent requirement is delivered", "The restricted operation is not performed", "The remaining requirement stays visible and is not called complete"],
+      "process_risks": ["Whole-task paralysis", "Permission bypass", "Dropping blocked scope"]
+    }
+  ]
+}

@@ -1,15 +1,16 @@
 ---
 name: evidence-first-knowledge-work
 description: >-
-  Mandatory evidence-first gates for knowledge work. Use for coding, debugging,
-  API/SDK/CLI usage, configuration changes, technical Q&A, research, data
-  analysis, technical documentation, and editing existing files. Verify before
-  writing regardless of familiarity; read documentation and current state
-  before editing; constrain and validate every step; stop the affected step
-  when required evidence is missing. Applies to small changes, examples,
-  standard-library usage, and urgent fixes.
+  Mandatory evidence-first gates and guided development for knowledge work,
+  including smaller or less reliable models on open-ended engineering tasks.
+  Use for coding, debugging, API/SDK/CLI usage, configuration changes, technical
+  Q&A, research, data analysis, technical documentation, and existing-file edits.
+  Verify before writing regardless of familiarity; re-read documentation and
+  current state before every independent edit; decompose work, investigate
+  failures, validate integration, and preserve resumable evidence. Applies to
+  small changes, examples, standard-library usage, and urgent fixes.
 metadata:
-  version: "1.0.0"
+  version: "1.1.0"
   language: "en"
 ---
 
@@ -34,11 +35,16 @@ On first entering a knowledge-work task, read this file in full. Do not rely onl
 | Task | Required reading |
 | --- | --- |
 | All knowledge-work tasks | [Evidence and step record](references/evidence-template.md) |
-| Code, APIs, CLI, configuration, debugging, testing, or engineering operations | [Coding and engineering protocol](references/coding-protocol.md) |
+| Code, APIs, CLI, configuration, debugging, testing, or engineering operations | [Coding and engineering protocol](references/coding-protocol.md) and [Guided development](references/guided-development.md) |
 | Research, fact checking, data analysis, technical documentation, or technical Q&A | [Knowledge and documentation protocol](references/knowledge-protocol.md) |
-| Auditing this skill's behavior | [Behavioral acceptance cases](references/acceptance-cases.md) |
+| An unknown, conflicting evidence, failed check, or blocked next action | The matching complete section in [Decision playbook](references/decision-playbook.md) |
+| First implementation in an unfamiliar project, experiment, retry, stale state, test-oracle doubt, or resumed work | The matching example E1-E6 in [Worked examples](references/worked-examples.md) |
+| Before final delivery, or when local tests may miss integration | [Completion review](references/completion-review.md) |
+| Auditing this skill's behavior | [Behavioral acceptance cases](references/acceptance-cases.md) and [Evaluation protocol](evals/README.md) |
 
 Mixed tasks use every relevant protocol. If a required file is missing or unreadable, stop the affected implementation or conclusion and report the missing dependency.
+
+Guided execution is the default for engineering work. Do not silently switch to a less detailed mode because a model appears capable or a change appears easy. Read only the applicable supporting material, but do not replace required reads with memory or self-written summaries.
 
 ## 3. Seven mandatory gates
 
@@ -75,7 +81,7 @@ Independent read-only verification with no shared mutable state may run in paral
 
 ## 5. Minimum standard for valid evidence
 
-Every external fact that materially affects an implementation or conclusion requires a locatable source. For each knowledge task, perform topic-relevant verification and open the source itself before relying on it. Even pure derivations require the relevant definitions and premises to be checked. Search-result snippets are for locating sources, not for replacing them.
+Every external fact that materially affects an implementation or conclusion requires a locatable source. For each knowledge task, first perform topic-relevant online verification and open the source itself before relying on it. Even pure derivations require the relevant definitions and premises to be checked. Search-result snippets are for locating sources, not for replacing them. Network restrictions and unavailable evidence are handled below; they do not justify pretending an online check occurred.
 
 - Identify the exact subject first: package or service, version or commit, endpoint, runtime, dataset, or document revision. SDK, server, and model versions are not interchangeable.
 - For technical specifications, prefer official version-matched documentation, official source code, type declarations, schemas, official tests, and release notes. For research conclusions, prefer original papers, primary data, or formal standards.
@@ -118,3 +124,25 @@ The record does not require private chain-of-thought. It requires sources, targe
 At delivery, state what was completed, what was actually validated, and what remains limited. Mark unexecuted checks as NOT RUN. Keep static checks, mocks, unit tests, and real end-to-end validation distinct. Unverified work must not be folded into an "all passed" claim.
 
 When correcting documentation, integrate valid content directly. Do not accumulate self-critique, amendment history, obsolete rules, or long justification trails. Do not expand functionality, dependencies, architecture, or acceptance criteria beyond the request.
+
+## 9. Guided execution commitment
+
+For engineering tasks, follow this loop using the detailed guided-development protocol:
+
+```text
+Record requirements and completion conditions.
+Locate the actual entry point and responsible boundaries.
+Choose one dependency-ready work item.
+Re-read this item's specification and current targets.
+Form its bounded contract, then perform the operation.
+Inspect the change and run checks with an independent expected result.
+On failure: preserve evidence, diagnose, and re-plan before another edit.
+On success: integrate, update the requirement ledger, and choose the next item.
+Before delivery: verify the original outcomes through their real entry points.
+```
+
+Do not substitute broad labels such as "analyze architecture" for actionable work. Each active item has a requirement, a question or result, evidence inputs, bounded targets, and an observable check. Keep one implementation item active by default; preserve failed hypotheses and a resumable next action.
+
+A required contract fact and an experimental outcome are different kinds of unknown. Verify API contracts before use; investigate novel designs with falsifiable, bounded experiments. Missing a published solution recipe does not alone justify stopping all progress.
+
+Review the independent expected result, test discovery, final revision, and real integration path before marking a requirement VERIFIED. Procedural compliance and task success must be reported separately. No reduction in reading or verification is permitted merely to save tokens, classify a change as low risk, or accommodate a supposedly stronger model.
