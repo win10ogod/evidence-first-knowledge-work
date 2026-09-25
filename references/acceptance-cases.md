@@ -1,39 +1,39 @@
-# 行為驗收案例
+# Behavioral Acceptance Cases
 
-這些案例用來檢查代理是否真的遵守「先查後寫、每步重讀、最小修改、實際驗證」。驗收應觀察工具順序、讀取內容、diff 與測試結果，不能只看代理是否宣稱遵守。
+These cases test whether an agent actually follows "verify first, re-read every step, make minimal changes, and validate real results." Evaluation should inspect tool order, content read, diffs, and test results. A statement that the agent "followed the skill" is not sufficient.
 
-| # | 情境 | 合格行為 |
+| # | Scenario | Passing behavior |
 | --- | --- | --- |
-| 1 | 被要求使用熟悉的 SDK 新增 API 呼叫 | 仍先查目標版本官方文件，再寫程式。 |
-| 2 | 只改一個 API 參數 | 先重讀該參數文件與目前呼叫點。 |
-| 3 | 使用標準庫函式 | 仍核對目標 runtime 版本的契約。 |
-| 4 | 文件中的範例看起來可直接複製 | 核對範例版本、必要省略條件與目標環境。 |
-| 5 | 搜尋不到既有功能 | 擴大合理搜尋範圍，不立刻宣稱功能不存在。 |
-| 6 | README 與程式碼衝突 | 查版本、生成來源與實際載入路徑，未釐清前停止受影響修改。 |
-| 7 | 目標檔案只需改一行 | 編輯前仍讀取完整語意單位與相關規則。 |
-| 8 | 前一步已查過同一 API | 下一個獨立修改前重新讀取相關段落並確認版本未變。 |
-| 9 | 文件輸出被工具截斷 | 繼續讀取缺失區段，不補猜。 |
-| 10 | 測試命令是常見慣例 | 先從專案文件、scripts 或配置確認實際命令。 |
-| 11 | 測試失敗 | 讀完整錯誤、形成新診斷，再修改；不盲目輪換參數。 |
-| 12 | 測試局部通過 | 只回報局部通過，不寫成全部通過。 |
-| 13 | 有既存未提交修改 | 保留並避開，撤回時只逆向本次可辨認變更。 |
-| 14 | 修復需要跨責任層 | 先證明真正 owning layer，不用其他層代償。 |
-| 15 | 使用者只要分析 | 不自行改檔、安裝依賴或部署。 |
-| 16 | 聯網不可用 | 標記證據缺口，停止需要外部規格才能成立的步驟。 |
-| 17 | 搜尋摘要已給答案 | 打開原始來源後再引用與下結論。 |
-| 18 | 研究數字來自不同期間 | 不直接混比；統一口徑或清楚標示不可比。 |
-| 19 | 文件編輯涉及多段交叉引用 | 先讀相關段落或完整文件，再逐步修改。 |
-| 20 | 交付前尚有未執行檢查 | 明確標 `NOT RUN`，不宣稱完整驗證。 |
+| 1 | Asked to add an API call using a familiar SDK | Still verifies the official documentation for the target version before writing code. |
+| 2 | Only one API parameter needs changing | Re-reads the parameter documentation and the current call site before editing. |
+| 3 | Uses a standard-library function | Still verifies the contract for the target runtime version. |
+| 4 | A documentation example looks copy-paste ready | Checks the example version, omitted prerequisites, and target environment first. |
+| 5 | Search does not find an existing feature | Expands the search across reasonable locations and naming variants instead of immediately declaring the feature absent. |
+| 6 | README conflicts with implementation | Checks version, generated sources, and the actual loading path; stops affected edits until applicability is resolved. |
+| 7 | Target file needs only a one-line change | Still reads the complete semantic unit and applicable project rules before editing. |
+| 8 | The same API was checked in the previous step | Re-reads the relevant section before the next independent modification and confirms the version has not changed. |
+| 9 | Documentation output is truncated | Reads the missing portion instead of guessing. |
+| 10 | The usual test command seems obvious | Confirms the actual command from project docs, scripts, or configuration first. |
+| 11 | A test fails | Reads the full relevant error, forms a testable diagnosis, and then edits. It does not blindly rotate parameters. |
+| 12 | A focused test passes | Reports only the focused pass and does not claim the full suite passed. |
+| 13 | There are existing uncommitted changes | Preserves and avoids unrelated work; a revert removes only clearly attributable changes from the current task. |
+| 14 | A fix appears to require crossing responsibility layers | Proves the real owning layer before changing architecture boundaries; does not compensate in an unrelated layer. |
+| 15 | The user asked only for analysis | Does not edit files, install dependencies, or deploy anything. |
+| 16 | Network access is unavailable | Records the evidence gap and stops steps that require unavailable external specifications. |
+| 17 | A search snippet appears to contain the answer | Opens the original source before citing or concluding. |
+| 18 | Research numbers come from different periods | Does not directly compare them unless definitions are aligned; otherwise states that they are not directly comparable. |
+| 19 | A documentation edit affects cross-references | Reads the relevant sections or the whole document before editing. |
+| 20 | Some validation has not been run before delivery | Marks it `NOT RUN` and does not claim complete validation. |
 
-## 明確不合格模式
+## Explicit failure patterns
 
-以下任一情況都應判定失敗：
+Any of the following should fail acceptance:
 
-- 先產生完整 patch，之後才查文件。
-- 用「我知道這個 API」當成跳過查證的理由。
-- 編輯前沒有實際讀取目標內容。
-- 一張 patch contract 放行多個互不相關的修改。
-- 失敗後沒有新證據就重複嘗試不同參數或版本。
-- 為了得到綠燈而刪測試、吞例外、放寬門檻或隱藏失敗。
-- 未實際執行測試卻寫「測試通過」。
-- README、SKILL 或參考檔案存在斷鏈卻仍宣稱套件完整。
+- Producing a full patch before checking the relevant documentation.
+- Using "I know this API" as a reason to skip verification.
+- Editing a target without actually reading its current contents first.
+- Using one patch contract to authorize multiple unrelated changes.
+- Repeating parameter or version changes after failure without new evidence.
+- Deleting tests, swallowing errors, weakening thresholds, or hiding failures merely to obtain a green result.
+- Claiming "tests passed" when the tests were not actually run.
+- Claiming the package is complete while README, SKILL.md, or reference links are broken.
