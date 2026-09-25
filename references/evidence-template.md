@@ -1,8 +1,8 @@
-# 證據與步驟記錄
+# Evidence and Step Record
 
-此模板只記錄可核對的工作事實，不要求內部思考逐字稿。可直接放在任務筆記、issue、PR 描述或對話中。
+This template records inspectable working facts only. It does not require private chain-of-thought. It may be used in task notes, issues, pull-request descriptions, or the conversation.
 
-## 任務級記錄
+## Task-level record
 
 ```text
 TASK
@@ -13,7 +13,7 @@ TASK
 - Applicable project rules:
 ```
 
-## 每步開始前
+## Before each step
 
 ```text
 STEP <N>
@@ -41,9 +41,9 @@ G3 STEP CONTRACT
 - Recovery:
 ```
 
-必要欄位未知時標記 `BLOCKED`，先補證據；不得先操作再回填。
+If a required field is unknown, mark the step `BLOCKED` and obtain the missing evidence first. Do not execute the operation and fill the record afterward.
 
-## 每步操作後
+## After each step
 
 ```text
 G4 OBSERVED CHANGE
@@ -59,7 +59,7 @@ G5 VALIDATION
 - Remaining limitation:
 ```
 
-## 最終交付
+## Final delivery
 
 ```text
 G6 DELIVERY
@@ -71,4 +71,4 @@ G6 DELIVERY
 - Sources used:
 ```
 
-`PASS` 只能來自實際完成的檢查；預期結果、自填文字、口頭表示「應該沒問題」不能當成 PASS。
+`PASS` may be recorded only for a check that was actually executed and observed. Expected behavior, self-written status text, or a statement that something "should work" is not a PASS.
