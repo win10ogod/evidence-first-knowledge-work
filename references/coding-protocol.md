@@ -1,107 +1,107 @@
-# Coding、API 與工程操作規範
+# Coding, API, and Engineering Operations Protocol
 
-本檔是 SKILL.md 的工程分支。寫程式範例、patch、啟動命令、測試與配置同樣適用；標準庫、常用 API、小改及緊急修復均不能豁免。
+This file is the engineering branch of `SKILL.md`. It applies equally to code examples, patches, startup commands, tests, and configuration. Standard-library usage, familiar APIs, small changes, and urgent fixes are not exemptions.
 
-## C1. 先讀專案，再判斷缺口
+## C1. Read the project before declaring a gap
 
-修改前必須檢查：
+Before editing, inspect:
 
-| 對象 | 必須取得的證據 |
+| Area | Evidence required |
 | --- | --- |
-| 專案規則 | 適用的 AGENTS.md、CLAUDE.md、子目錄規則及任務專用 Skill；禁止自行改寫規則以放行。 |
-| 規格與操作文件 | README、相關設計／需求、開發與測試指引、配置說明、遷移規則。確認適用範圍。 |
-| 環境與版本 | 專案 manifest、lockfile、runtime、相關套件與服務版本；區分宣告版本、鎖定版本與實際載入版本。 |
-| 現有工作 | 當前分支、相關未提交差異、未追蹤目標及使用者既有修改；沒有 Git 時用工具讀取與可恢復副本記錄狀態。 |
-| 既有功能 | 搜尋相關實作、別名、設定開關、wrapper、註冊表、生成來源與替代路徑；追蹤必要的上下游呼叫。 |
-| 測試 | 測試入口、相關案例、fixtures、環境條件及可觀察的既有失敗。 |
+| Project rules | Applicable AGENTS.md, CLAUDE.md, subdirectory instructions, and task-specific skills. Never rewrite governing rules merely to permit a change. |
+| Specifications and operating docs | README, design or requirement docs, development and testing instructions, configuration docs, and migration guidance. Confirm applicability. |
+| Environment and versions | Project manifests, lockfiles, runtime, relevant package versions, and service versions. Distinguish declared, locked, and actually loaded versions. |
+| Existing work | Current branch, relevant uncommitted changes, untracked targets, and user-owned edits. Without Git, use tool reads and recoverable snapshots to establish state. |
+| Existing capability | Search related implementations, aliases, flags, wrappers, registries, generated sources, and alternative paths. Trace necessary upstream and downstream calls. |
+| Tests | Test entry points, relevant cases, fixtures, environment requirements, and observable pre-existing failures. |
 
-不得因一次關鍵字搜尋沒有結果，就宣稱整個 repository 沒有此功能。搜尋要覆蓋合理候選位置與命名；被忽略目錄、子模組、生成檔或外部套件有關時也要查明。無須機械式逐檔閱讀整座倉庫。
+Do not conclude that a repository lacks a feature merely because one keyword search returned no result. Search reasonable candidate locations and naming variants. Check ignored directories, submodules, generated files, or external packages when they may own the behavior. This does not require blindly reading every file in the repository.
 
-修改目標至少讀取完整語意單位、檔案層級設定及必要上下文；涉及跨段落語意或準備整檔改寫時先讀完整檔案。工具輸出截斷就繼續讀取，不能補猜剩餘內容。
+Read at least the complete semantic unit, file-level configuration, and necessary context around any edit target. If a change crosses sections or a whole-file rewrite is planned, read the entire file first. If tool output is truncated, continue reading. Never invent the missing portion.
 
-新建檔案前，先確認目標不存在、現有目錄慣例及相近實作。已有能力可滿足需求時優先正確使用；不得重造一個同用途子系統。
+Before creating a new file, confirm that the target does not already exist, inspect directory conventions, and search for similar implementations. If existing functionality can satisfy the request, use it correctly instead of creating a duplicate subsystem.
 
-缺少專案文件時記錄已查範圍，改讀現有原始碼、schema、型別及測試。仍不能確定契約時停止受影響的實作。
+When project documentation is absent, record what was checked and continue with relevant source, schemas, type declarations, and tests. If the contract still cannot be determined, stop the affected implementation.
 
-## C2. 每個 API 都查，不憑熟悉程度
+## C2. Verify every API, regardless of familiarity
 
-對本步新增、修改或依賴其語意的 API、SDK 方法、標準庫函式、CLI 旗標與配置欄位，逐項確認相符版本的官方文件。至少查清會影響本步正確性的項目：
+For every API, SDK method, standard-library function, CLI flag, or configuration field that this step adds, changes, or relies on semantically, verify the version-matched official documentation. At minimum, check every item that can affect correctness:
 
-- 真實名稱、模組／套件／端點、是否在目標版本存在、是否已棄用。
-- 簽名、參數名稱、型別、必填與預設值、單位、合法範圍、互斥及配套條件。
-- 回傳型別、回應 schema、例外、錯誤碼與失敗語意。
-- 同步／非同步、串流／非串流、分頁、重試、逾時及資源生命週期。
-- 權限、驗證方式、狀態變更、冪等性及本步涉及的成本或安全限制。
+- Exact name, module/package/endpoint, existence in the target version, and deprecation status.
+- Signature, parameter names, types, required/default values, units, legal ranges, exclusions, and companion requirements.
+- Return type, response schema, exceptions, error codes, and failure semantics.
+- Synchronous/asynchronous behavior, streaming/non-streaming behavior, pagination, retries, timeouts, and resource lifetime.
+- Permissions, authentication, state changes, idempotency, and relevant cost or safety constraints.
 
-以上無關項目可以具體註明不適用，不能因沒查到便填「不適用」。不得把別的語言 SDK、相似方法、較新版本或示例中的省略值直接套用到目標環境。
+An item may be marked not applicable only when there is a concrete reason. Failure to find documentation is not a reason to mark it N/A. Do not transplant behavior from another language SDK, a similar method, a newer version, or an abbreviated example into the target environment without verification.
 
-官方文件查無所需項目時，查相符版本的官方原始碼、型別宣告或套件內文件。CLI 可核對已安裝版本的 help；調用 help 前也須確認命令本身不會觸發實際作業。不可假定所有 --help 都沒有副作用。
+If official documentation does not answer the question, inspect version-matched official source, type declarations, or packaged documentation. CLI help may be used to confirm the installed version's interface, but first verify that invoking help itself does not trigger actual work. Do not assume every `--help` path is side-effect free.
 
-遇到文件與現況不符，先區分版本錯配、私有 fork、wrapper 與實際缺陷，必要時建立受控最小重現。測到某輸入可用不能證明完整契約，也不能自動推翻官方限制。
+When documentation conflicts with observed behavior, first distinguish version mismatch, private forks, wrappers, and genuine defects. Build a controlled minimal reproduction when necessary. A successful experiment with one input does not establish the complete contract and does not automatically override official constraints.
 
-未查清的參數不得先填一個看似合理的值；禁止用反覆報錯猜參數名稱。
+Never insert a plausible-looking parameter value because the real one is unclear. Do not discover parameter names by repeatedly provoking errors.
 
-## C3. 編輯前的契約
+## C3. Pre-edit contract
 
-首次修改前，提供下列精簡記錄；每一步更新變更的欄位，並附本步文件與最新讀檔依據：
+Before the first modification, produce this compact record. Refresh the changed fields before every independent step and attach the documentation and current-state evidence for that step.
 
 ```text
 RECONNAISSANCE
-- Existing implementation: 位置與已核對的功能
-- Existing flags/config: 相關開關與設定
-- Call path: 必要的上下游路徑
-- Relevant tests: 真實測試入口與現況
-- Proven gap: 現況與有效需求的具體差距
+- Existing implementation: location and verified behavior
+- Existing flags/config: relevant switches and settings
+- Call path: required upstream/downstream path
+- Relevant tests: real test entry points and current status
+- Proven gap: specific difference between current state and valid request
 
 BOUNDARY
-- Failing layer: 缺陷發生位置；新功能則標示新增責任
-- Owning layer: 應承擔修正的模組／層
-- Forbidden layers to modify: 不得改動的邊界
+- Failing layer: location of the defect; for new functionality, the new responsibility
+- Owning layer: module/layer that should own the change
+- Forbidden layers to modify: boundaries that must remain untouched
 
 PATCH CONTRACT
-- Files allowed to change: 明確檔案或受限的生成輸出
-- Maximum file count: 本步具體上限
-- Invariants: 不能改變的既有行為、介面、資料及使用者修改
-- Documentation evidence: 相符版本來源與本步重讀位置
-- Current-state evidence: 最新內容／diff 與本步讀取記錄
-- Validation commands: 已核對的命令、工作目錄與所需環境
-- Expected observations: 與原需求對應的可觀察結果
-- Side effects and recovery: 影響範圍、停止與精準復原方式
+- Files allowed to change: explicit files or bounded generated output
+- Maximum file count: concrete limit for this step
+- Invariants: existing behavior, interfaces, data, and user work that must not change
+- Documentation evidence: version-matched source and section re-read for this step
+- Current-state evidence: latest content/diff read for this step
+- Validation commands: verified command, working directory, and required environment
+- Expected observations: observable outcomes tied to the request
+- Side effects and recovery: impact boundary, stop condition, and precise recovery method
 ```
 
-必要欄位留白、填「之後再查」、未知或只寫空泛口號時，不得開始修改。欄位真不適用時必須說明具體原因。
+Required fields may not be blank, deferred with "check later," unknown, or filled with vague slogans. If a field truly does not apply, state the concrete reason.
 
-檔案數上限與驗收方法依任務設定；不得為了填表自行擴大改動，也不得擅自加上逐值、逐位元、雜湊完全相同等額外目標。
+Set file-count limits and acceptance methods from the actual task. Do not expand the change merely to complete the template, and do not invent bitwise, hash, or value-for-value parity requirements that the user did not request.
 
-契約是執行範圍，不能當成新的使用者授權。範圍內細節可在補證據後更新；涉及新功能、破壞性變更、額外費用或未授權資源必須取得相應授權。
+The contract is an execution boundary, not new user authorization. Scope details may be updated after gathering more evidence, but new features, breaking changes, additional cost, or access to unauthorized resources require appropriate authorization.
 
-## C4. 最小修改與命令控制
+## C4. Minimal edits and command control
 
-一個邏輯變更可以包含必要的程式、測試與相應文件，但每個目標都必須先讀取。不得以同一張契約放行不相關重構。
+One logical change may include the necessary code, tests, and matching documentation, but every target must be read before editing. One patch contract may not authorize unrelated refactors.
 
-- 優先用定位清楚的局部 patch。替換時核對舊內容；匹配失敗或檔案已變動，先重新讀取，禁止盲目擴大替換。
-- 不覆蓋未知內容、不移除使用者修改、不改不相關格式、不全域更新依賴、不擅自升級框架。
-- 發現責任層不對時回到診斷；不得跨架構、runtime、loader、optimizer、kernel 等層級相互代償。
-- 安裝只在已授權的專案隔離環境執行；Python 使用虛擬環境，不修改系統 Python。沿用專案既有工具與 lockfile。
-- 命令執行前確認完整指令、工作目錄、輸入、輸出、憑證範圍、成本、timeout 與可能副作用；禁止把多個未知變更串成一條命令。
-- 測試、build、formatter、codegen、套件管理與 import 可能執行程式或改動資料，必須先核對實際行為及輸出位置。
-- 涉及大量資料、模型或 GPU 作業時，先以檔案大小、shape、dtype 及已核對的工具行為估算資源；先做小樣本／受控檢查。無法確認安全資源範圍就停止該操作。
-- 無明確授權不 commit、push、發布、部署、刪除資源、重設工作區或呼叫具外部實際效果的服務。
+- Prefer narrowly targeted patches. Verify the expected old content before replacement. If a match fails or the file changed, re-read the target instead of widening the replacement blindly.
+- Do not overwrite unknown content, remove user changes, reformat unrelated code, globally update dependencies, or upgrade frameworks without authorization.
+- If ownership is wrong, return to diagnosis. Do not compensate for an architecture/backend/loader/optimizer/kernel problem by changing another layer.
+- Install only in an authorized project-isolated environment. For Python, use a virtual environment and do not mutate system Python. Respect the project's existing tools and lockfile.
+- Before executing a command, verify the full command, working directory, inputs, outputs, credential scope, cost, timeout, and possible side effects. Do not chain multiple unknown mutations into one command.
+- Tests, builds, formatters, code generators, package managers, and imports can execute code or mutate files. Verify their actual behavior and output locations first.
+- For large datasets, models, or GPU workloads, estimate resource requirements from file size, shape, dtype, and verified tool behavior. Start with bounded or sampled checks. Stop if a safe resource envelope cannot be established.
+- Without explicit authorization, do not commit, push, publish, deploy, delete resources, reset a workspace, or call a service with real external side effects.
 
-修改後立即讀取實際內容與 diff，確認改到預定位置，沒有新增未規劃檔案、格式破壞或意外刪除。
+After each modification, immediately read the resulting content and diff. Confirm that only the intended location changed and that no unplanned files, formatting damage, or accidental deletions appeared.
 
-## C5. 驗證與修復循環
+## C5. Validation and repair loop
 
-驗證命令從專案文件、現有 scripts、測試配置與工具相符版本文件取得；不可假設任意專案都使用某個慣用命令。
+Derive validation commands from project documentation, existing scripts, test configuration, and version-matched tool documentation. Do not assume that a familiar command is correct for every project.
 
-按照本步風險與既有驗收契約，執行適用的解析／格式檢查、型別檢查、目標測試、回歸及必要整合測試。修改缺陷時，先建立可觀察的失敗或受控最小重現，再確認修復有效；若無法重現，清楚限制結論。
+Run the validation appropriate to the step's risk and existing acceptance contract: syntax or parsing checks, formatting, type checks, focused tests, regression tests, and required integration tests. For defects, establish an observable failure or controlled minimal reproduction before confirming the repair. If reproduction is impossible, limit the conclusion accordingly.
 
-測試前記錄基線。既有失敗、新增失敗、環境缺件、跳過項與未執行項必須分開。局部通過不能被寫成全量通過；離線替身不能被寫成真實服務驗證。
+Record the baseline before testing. Separate pre-existing failures, newly introduced failures, missing-environment failures, skipped checks, and checks not run. A local partial pass is not a full pass. Offline mocks are not real-service validation.
 
-若一次變更跨越必要的程式與測試檔案，可先完成該有界步驟再執行驗證；不必在尚未形成可執行單位的每一行後測試，但每個檔案的編輯前讀取仍不可省略。
+When one bounded change necessarily spans code and tests, complete that bounded unit before validation. You do not need to run tests after every line, but each file must still be read before editing.
 
-失敗時先讀完整相關錯誤與現況，核對假說再修改。沒有新證據或不同診斷目的時，禁止原樣反覆重跑；每次修復都重新過 G1–G3。
+On failure, read the full relevant error and current state before changing anything. Confirm a testable hypothesis. Do not repeat the same run without new evidence or a different diagnostic purpose. Every repair attempt returns through G1-G3.
 
-本步通過後才進入依賴它的下一步。交付前重跑受後續修改影響的驗證，審核最終 diff 及原需求覆蓋情況。
+Only move into a dependent next step after the current step passes. Before delivery, rerun validation affected by later changes and review the final diff against the original request.
 
-精準撤回只能移除本代理本次可辨認的變更；禁止用整檔舊版本、全域 reset 或 delete/re-add 覆蓋其他工作。無法區分修改歸屬時停止撤回。
+A precise revert may remove only changes clearly attributable to the current work. Do not use whole-file restoration, global reset, or delete/re-add flows that overwrite other work. If change ownership cannot be separated safely, stop the revert.
