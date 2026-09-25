@@ -1,73 +1,73 @@
-# 研究、分析與技術文件作業規範
+# Research, Analysis, and Technical Documentation Protocol
 
-本檔適用於研究、事實查核、資料分析、技術問答、API 說明與文件維護。核心原則與 `SKILL.md` 相同：先取得可定位的證據，再寫出依賴該證據的結論；每個獨立結論或編輯步驟都要重新確認適用來源與現況。
+This file applies to research, fact checking, data analysis, technical Q&A, API explanations, and documentation maintenance. The core rule is the same as in `SKILL.md`: obtain locatable evidence before writing conclusions that depend on it, and re-check applicable sources and current state before every independent conclusion or edit step.
 
-## K1. 先界定問題與時間範圍
+## K1. Define the question and time scope first
 
-開始前確認：
+Before starting, confirm:
 
-- 問題真正要求的是事實、比較、推導、摘要、建議或文件修改。
-- 對象、版本、時間範圍、地域、資料集與術語定義。
-- 哪些主張具有時效性，哪些可由穩定規格或數學推導支持。
-- 交付格式及允許的推論範圍。
+- Whether the task asks for facts, comparison, derivation, summary, recommendation, or document modification.
+- The subject, version, time range, geography, dataset, and terminology.
+- Which claims are time-sensitive and which can rely on stable specifications or mathematical derivation.
+- The requested output format and the allowed scope of inference.
 
-問題中的名詞、版本或前提不明且會影響答案時，先查證；能從可信來源自行釐清時，不要求使用者重複提供。
+If a term, version, or premise is ambiguous and would materially affect the answer, verify it first. When reliable sources can resolve the ambiguity, investigate directly rather than asking the user to repeat information unnecessarily.
 
-## K2. 搜尋只是定位，原文才是證據
+## K2. Search locates evidence; original sources support claims
 
-搜尋結果摘要、AI 摘要與第三方轉述主要用來找到原始資料。關鍵主張應回到最接近原始事實的來源：
+Search-result snippets, AI summaries, and third-party retellings are primarily discovery aids. Important claims should be grounded as close to the original fact as possible:
 
-1. 正式規格、官方文件、官方原始碼或正式公告。
-2. 原始研究論文、資料集、法規原文、標準本文或第一方統計。
-3. 在第一手來源不足時，再使用高品質二手來源補充脈絡。
+1. Formal specifications, official documentation, official source code, or official announcements.
+2. Original research papers, datasets, statutes, standards, or first-party statistics.
+3. High-quality secondary sources only when first-party material is insufficient for context.
 
-讀到來源後記錄其日期、版本、適用對象及實際支持的主張。不得以首頁、索引頁或搜尋摘要替代具體段落。
+After opening a source, record its date, version, applicable subject, and the claim it directly supports. Do not substitute a homepage, index page, or search snippet for the relevant passage.
 
-## K3. 區分事實、推論與未知
+## K3. Separate fact, inference, and unknown
 
-每個重要結論應能落在以下其中一類：
+Every material conclusion should fit one of these categories:
 
-- **直接證實**：來源明確陳述或資料直接呈現。
-- **有據推論**：由已確認的前提推導，需說明推論範圍。
-- **未確認**：證據不足、互相衝突或超出資料涵蓋範圍。
+- **Directly supported**: explicitly stated by the source or directly visible in the data.
+- **Evidence-based inference**: derived from verified premises; the scope and assumptions must be stated.
+- **Unverified**: evidence is insufficient, conflicting, or outside the covered population/version/time range.
 
-不得把推論寫成來源原話，也不得用單一案例外推整體族群、版本或時間區間。
+Do not present an inference as if it were quoted from the source. Do not generalize one case to an entire population, version family, or time range without supporting evidence.
 
-## K4. 資料分析先確認資料契約
+## K4. Confirm the data contract before analysis
 
-使用資料前確認：
+Before using a dataset, verify:
 
-- 欄位定義、單位、缺失值、時間基準、樣本範圍與更新時間。
-- 去重、過濾、聚合與轉換規則。
-- 分母、基準線及比較期間是否一致。
-- 任何會改變解讀的選樣偏誤、截尾、補值或排除規則。
+- Field definitions, units, missing-value conventions, time basis, sample coverage, and update timestamp.
+- Deduplication, filtering, aggregation, and transformation rules.
+- Whether denominators, baselines, and comparison periods are consistent.
+- Selection bias, censoring, imputation, or exclusion rules that could change interpretation.
 
-計算結果需能重現；若只取得部分資料、取樣資料或截斷輸出，結論必須標示限制。
+Computed results must be reproducible. If only partial, sampled, or truncated data is available, state the limitation in the conclusion.
 
-## K5. 文件編輯前重讀
+## K5. Re-read before editing documentation
 
-修改既有技術文件前，至少讀取：
+Before changing existing technical documentation, read at least:
 
-- 目標段落及足夠上下文。
-- 文件內相關定義、交叉引用與版本說明。
-- 所描述的實際 API、程式、配置或流程之相符版本證據。
+- The target section and enough surrounding context to understand it.
+- Relevant definitions, cross-references, and version notes within the document.
+- Version-matched evidence for any API, implementation, configuration, or workflow the document describes.
 
-不得只根據待修句子本身推測整份文件意圖。跨段落修改、目錄調整或整檔改寫時，先讀完整文件或完整語意範圍。
+Do not infer the intent of an entire document from one sentence that needs correction. For cross-section changes, table-of-contents changes, or whole-file rewrites, read the full document or the complete semantic scope first.
 
-## K6. 引用與數字
+## K6. Citations and numbers
 
-- 引用應緊貼所支持的主張。
-- 數字需保留其單位、期間、樣本與口徑。
-- 不混用不同版本、不同族群或不同統計口徑後再直接比較。
-- 有效來源互相衝突時，呈現衝突及可能原因，停止武斷定論。
-- 來源未能支持精確數值時，不自行補出看似合理的數字。
+- Place citations close to the claims they support.
+- Preserve units, periods, sample definitions, and counting rules for numeric claims.
+- Do not directly compare values from incompatible versions, populations, or statistical definitions.
+- When valid sources conflict, present the conflict and plausible causes without forcing a premature conclusion.
+- If a source does not support an exact number, do not invent a precise value that merely looks plausible.
 
-## K7. 每個獨立結論重新過關
+## K7. Re-pass the gates for each independent conclusion
 
-若後續結論依賴新的來源、不同資料表、不同版本或新的文件區段，重新執行 `SKILL.md` 的 G1–G3。不得因前一段已查過資料，就把整篇回答視為自動放行。
+If a later conclusion depends on a new source, a different table, another version, or a different document section, repeat G1-G3 from `SKILL.md`. One verified paragraph does not automatically authorize the entire answer.
 
-時間敏感資訊在交付前重新確認；若來源在任務進行中更新，標示採用時間並重新核對受影響結論。
+Re-check time-sensitive information before delivery. If a source changes during the task, record the observation time and re-evaluate affected conclusions.
 
-## K8. 交付限制
+## K8. Delivery limits
 
-交付時只陳述已查證或明確標示為推論的內容。無法取得必要來源時，列出已確認部分與證據缺口，不以模型記憶補足缺口，也不把「大概」「通常」包裝成確定答案。
+Deliver only claims that are verified or explicitly labeled as inference. If required evidence cannot be obtained, state the confirmed portion and the evidence gap. Do not fill the gap from model memory or turn words such as "probably" and "usually" into definite claims.
