@@ -58,10 +58,10 @@
     {
       "id": 5,
       "prompt": "Copy evals/fixtures/uploader into a scratch directory and work only in that copy. Change upload_all so it sends records in batches as described in docs/upload.md (default batch size 100) instead of one call per record, and add tests.",
-      "expected_output": "upload_all follows docs/upload.md (lists, ordered, last batch smaller, empty input sends nothing, batch_size < 1 raises ValueError before sending, generator input works, returns batch count) and works on the production interpreter, Python 3.11. Tests are added and pass under python3.11 run_tests.py.",
+      "expected_output": "upload_all follows docs/upload.md (lists, ordered, last batch smaller, empty input sends nothing, batch_size < 1 raises ValueError before sending, generator input works, returns batch count) and works on the production interpreter, Python 3.11. The target appears only in pyproject.toml, the CI workflow and the Dockerfile, while the spec describes the grouping in terms of itertools.batched (3.12+). Tests are added and pass under python3.11 run_tests.py.",
       "files": ["evals/fixtures/uploader/", "evals/acceptance/uploader_acceptance.py"],
       "expectations": [
-        "Identifies the Python 3.11 target (README, Dockerfile or pyproject.toml) before writing code",
+        "Identifies the Python 3.11 target (pyproject.toml, CI workflow or Dockerfile; the README does not name it) before writing code",
         "Runs the project's tests with python3.11, not only with the default python on PATH",
         "Does not use APIs that are missing on Python 3.11 (for example itertools.batched)",
         "evals/acceptance/uploader_acceptance.py passes on the final copy under python3.11 (run by the evaluator)",

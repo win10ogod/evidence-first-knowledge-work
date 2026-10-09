@@ -12,7 +12,7 @@ description: >-
   conversation, brainstorming, or non-technical writing.
 license: MIT
 metadata:
-  version: "2.1.0"
+  version: "2.2.0"
   language: "en"
 ---
 
@@ -23,7 +23,7 @@ The most common way an agent damages engineering work is not a hard problem. It 
 ## Core rules
 
 1. **Evidence before writing.** Code, config, commands or conclusions that depend on an external contract (API, flag, schema, field, version behavior) need a source you opened in this task, matched to the version actually in use. "In use" means the runtime and dependencies the project targets (README, `pyproject.toml`, lockfile, CI, Dockerfile), which may differ from whatever is first on your PATH. Memory, familiarity and another agent's summary are leads to check, not evidence; versions drift and recalled details are where silent bugs come from.
-2. **Read the current target before every edit.** Files change between reads (your own earlier edits, the user, formatters, other agents). Re-read the exact region you will change, then inspect the diff right after.
+2. **Read the current target before every edit.** Files change between reads (your own earlier edits, the user, formatters, other agents). Re-read the exact region you will change. Right after the edit, look at the changed lines themselves (re-read the region, or `git diff`). A passing test or a signature probe shows the code runs, not that the edit says what you meant; stray text, a missed occurrence or an accidental deletion only shows up when you read it.
 3. **Report only what was observed.** Every check is PASS, FAIL or NOT RUN. A check that selected zero relevant tests is not a PASS. A focused test is not a full suite, and a mock is not the real service.
 4. **Stay inside the request.** If the user asked for analysis, do not edit. Change only the files the request needs. If you notice something else worth changing (a stale doc line, a status label, an unused helper), recommend it in your report instead of editing it: unrequested edits are surprises the user has to review. Do not widen scope, add dependencies, weaken tests or drop a hard requirement to make progress; report it instead.
 5. **Leave no residue.** Running code can change the workspace too: `__pycache__`, caches, build output, temp files. Run Python checks with `python -B` or `PYTHONDONTWRITEBYTECODE=1`, keep scratch copies outside the project, and remove artifacts you created. A read-only task must leave the project exactly as you found it.
@@ -38,7 +38,7 @@ A **step** is one change you can validate with one check. Code, its test and its
 | Level | When it applies (objective triggers) | Required |
 | --- | --- | --- |
 | **L0 Read-only** | Answering, researching, inspecting; no mutation | Cite what you opened; label each claim *verified*, *inferred* (state premises) or *unverified*; leave the workspace byte-identical |
-| **L1 Local edit** | Edits only code you have read in full, and relies on no external contract, or only on contracts already verified in this task at the same version and still visible in context | Re-read the target region now, edit, inspect diff, run the relevant check. One-line receipt |
+| **L1 Local edit** | Edits only code you have read in full, and relies on no external contract, or only on contracts already verified in this task at the same version and still visible in context | Re-read the target region now, edit, re-read the changed lines, run the project's documented check. One-line receipt |
 | **L2 Standard** | Any of: new reliance on an external API, flag, field or tool; new file; public interface change; crossing modules; a retry after a failure; verified evidence was compacted away | Full receipt (below), written **before** acting |
 | **L3 Guarded** | Any of: install or upgrade dependencies; delete or migrate data; commit, push, publish or deploy; calls with real external side effects or cost; long or expensive runs; possible concurrent writers | L2 + explicit authorization + recovery plan + a bounded first run |
 
