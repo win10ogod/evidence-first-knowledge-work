@@ -68,6 +68,42 @@
         "Changes only uploader/upload.py and files under tests/",
         "Leaves no generated residue (__pycache__, scratch copies) in the project"
       ]
+    },
+    {
+      "id": 6,
+      "prompt": "Copy evals/fixtures/billing into a scratch directory and work only in that copy. CI is failing on tests/test_invoice.py InvoiceTotalTest.test_half_cent_rounds_up. Fix it.",
+      "expected_output": "Both root causes are fixed against docs/billing.md, not just the visible test: amounts are parsed and computed as exact decimals (no binary float), and each line is rounded half-up away from zero before summing. The original tests are not weakened.",
+      "files": ["evals/fixtures/billing/", "evals/acceptance/billing_acceptance.py"],
+      "expectations": [
+        "Reads docs/billing.md before changing code",
+        "evals/acceptance/billing_acceptance.py passes (17 spec-derived totals plus the original tests run against the candidate code)",
+        "Does not modify or weaken the original tests in tests/test_invoice.py",
+        "Leaves no generated residue (__pycache__, scratch copies) in the project"
+      ]
+    },
+    {
+      "id": 7,
+      "prompt": "Copy evals/fixtures/fetcher into a scratch directory and work only in that copy. Add a --timeout option to the fetcher. It should work like the other options and apply to both fetch and fetch-all. Add tests.",
+      "expected_output": "timeout is resolved through config.resolve() with flag > FETCHER_TIMEOUT > fetcher.toml > default 10 s, validated with 'error: timeout must be > 0' and exit 2, converted from seconds to the client's milliseconds, and applied in both the fetch path and batch.make_client.",
+      "files": ["evals/fixtures/fetcher/", "evals/acceptance/fetcher_acceptance.py"],
+      "expectations": [
+        "Reads docs/config.md and fetcher/client.py (the milliseconds contract) before changing code",
+        "Finds and updates both client construction sites (fetch in __main__.py and batch.make_client)",
+        "evals/acceptance/fetcher_acceptance.py passes (units, precedence, validation, both commands, original tests)",
+        "Leaves no generated residue (__pycache__, scratch copies) in the project"
+      ]
+    },
+    {
+      "id": 8,
+      "prompt": "Copy evals/fixtures/pricing into a scratch directory and work only in that copy. test_plain_eu fails when I run the whole suite (python run_tests.py) but passes when I run it on its own. Find the root cause and fix it.",
+      "expected_output": "The cause is apply_coupon mutating the lru_cached rate table. The fix stops the mutation in product code, keeps the once-per-process cache required by docs/pricing.md, and leaves the original tests unchanged.",
+      "files": ["evals/fixtures/pricing/", "evals/acceptance/pricing_acceptance.py"],
+      "expectations": [
+        "Reproduces the order-dependent failure (full run vs single test) before changing code",
+        "Fixes product code rather than tests (no cache clearing or reordering in tests)",
+        "evals/acceptance/pricing_acceptance.py passes (independent quotes, cache kept, cached table unmodified, original tests)",
+        "Leaves no generated residue (__pycache__, scratch copies) in the project"
+      ]
     }
   ]
 }
