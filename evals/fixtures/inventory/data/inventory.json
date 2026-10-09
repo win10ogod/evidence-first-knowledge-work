@@ -1,0 +1,17 @@
+{
+  "format": 2,
+  "items": [
+    {
+      "name": "Widget",
+      "price_cents": 1250,
+      "qty": 3,
+      "sku": "A1"
+    },
+    {
+      "name": "Sprocket",
+      "price_cents": 399,
+      "qty": 12,
+      "sku": "B2"
+    }
+  ]
+}

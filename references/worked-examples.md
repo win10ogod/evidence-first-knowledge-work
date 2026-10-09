@@ -1,79 +1,81 @@
-# Worked Examples: Evidence, Decisions, and Recovery
+# Worked Examples
 
-These are fictional teaching examples. Paths, identifiers, observations, and contracts below belong only to the examples. They are not real tool receipts, instructions to run a command, or proof about a user's project. Replace them with actual observations; never paste an example's PASS into a task record.
+These examples are fictional. Their paths, revisions and results are not tool receipts and say nothing about the user's project. Use them as patterns only; never paste their content into a real record.
 
-## E1. A new exporter that must be reachable
+## Contents
 
-**Request:** add a line-record format to the existing export command; preserve the existing JSON output. The fictional project specification states that each record occupies one line and empty input produces no records.
+- E0. Choosing the level for each step
+- E1. A new export format that must be reachable
+- E2. No documentation describes the new algorithm
+- E3. Repeated patches do not fix a schema error
+- E4. The target changes between read and write
+- E5. Tests agree with the implementation, but both are wrong
+- E6. Resuming without repeating a disproven approach
 
-**Observed reads:** the project manifest identifies its runtime; its format guide defines serialization; `command.py` selects formats through `registry.py`; `json_writer.py` owns serialization; an existing command test invokes the real dispatch path. Each observation has a real location and receipt in an actual run.
+## E0. Choosing the level for each step
 
-**Requirements:** R1: the public command selects the new format. R2: its output follows the format guide, including empty input. R3: existing JSON behavior remains compatible.
+| Step | Level | Why |
+| --- | --- | --- |
+| Answer "what does `--dry-run` do in our deploy script?" | L0 | Read-only. Cite the script lines you read. |
+| Rename a local variable inside a function already read in full | L1 | Local edit; no new external contract. |
+| Replace `requests.get(url)` with `requests.get(url, timeout=10)` | L2 | Introduces reliance on a parameter not yet verified for the installed version. |
+| Same `timeout` change in a second module, later in the same task, docs still in context | L1 | The contract was verified at this version in this task. Still re-read the second target before editing. |
+| The previous attempt failed, try again | L2 | Retries are always at least L2: new evidence or hypothesis required. |
+| `pip install -U requests` | L3 | Changes dependencies; needs authorization and a recovery path. |
+| "It's just a one-liner" | Decided by the triggers | Size and confidence never lower the level. |
 
-**Owning-layer decision:** a serializer belongs next to the existing writer. Selection belongs in the registry because the observed command reads that registry. Finding a function named `export` elsewhere would not establish either responsibility.
+## E1. A new export format that must be reachable
 
-**Dependency-aware work:** inspect the writer interface and exact serialization API; add the bounded writer behavior and direct tests; integrate the registry connection and command test; exercise both formats through the command. Each independent modification re-reads its relevant documentation and targets before a refreshed contract.
+**Request:** add a `lines` format to the existing `export` command; JSON output must not change. The project's format guide says each record is one line, and empty input produces no output.
 
-Example completed pre-edit facts for the integration step:
+**Reconnaissance:** the manifest gives the runtime. `cli.py` selects writers through `REGISTRY` in `registry.py`, and `writers.py` owns serialization. `tests/test_cli.py` invokes the command through its real dispatch path.
+
+**Requirements:** R1, the public command accepts `--format lines`. R2, the output follows the guide, including empty input. R3, JSON behavior is unchanged.
+
+**Owning layers:** serialization goes in `writers.py`, beside the JSON writer. Selection goes in `registry.py`, because that is what `cli.py` reads. A function called `export_all` elsewhere would not establish either responsibility.
+
+**Steps:** S1 (L2) adds the writer and its direct tests. S2 (L2) registers it and adds a CLI test. S3 runs both formats through the CLI.
 
 ```text
-Step: S3; requirements: R1, R3
-Purpose: connect the already checked writer to the existing command dispatch.
-Source: the fictional project's format guide, revision r7, Registration section.
-Current reads: registry.py and the existing command tests at current revision r12.
-Proven gap: the command consults a registry that has no new-format entry.
-Allowed targets: registry.py and the command integration test.
-Invariant: existing JSON dispatch and output semantics stay unchanged.
-Validation: invoke both formats through the documented test entry; inspect selected tests.
-Stop: writer interface mismatch, unexpected target changes, or unrelated regression.
+S2 [L2] R1,R3 — register "lines" writer in REGISTRY
+DOC   docs/formats.md §Registration (HEAD, read now)
+STATE registry.py full file, tests/test_cli.py (read now)
+GAP   cli.py looks up REGISTRY[args.format]; no "lines" key
+SCOPE registry.py, tests/test_cli.py | KEEP "json" entry and output
+CHECK python -m unittest tests.test_cli -v → test_lines_format listed, all pass
+STOP  writer signature differs from registry contract | target changed
 ```
 
-**Insufficient evidence:** "The new writer's unit tests pass, so export is finished." The command could still reject the format.
+**Insufficient:** "The writer's unit tests pass, so export is done." The command could still reject `--format lines`.
 
-**Sufficient direction:** demonstrate the registry edge and run the real command test. If the writer passes but dispatch fails, keep R1 open and investigate the integration boundary. Do not rewrite the serializer merely because the visible error mentions export.
+**Sufficient:** show the registry edge, then run the CLI test and confirm it was selected. If the writer passes but dispatch fails, R1 stays OPEN; investigate the integration point instead of rewriting the serializer.
 
-## E2. No documentation contains the new algorithm
+## E2. No documentation describes the new algorithm
 
-**Request:** investigate and implement a lower-memory processing approach while preserving the specified output semantics.
+**Request:** reduce the memory used by processing while keeping the output semantics. **Known:** the input/output contract, the supported iteration API, and a baseline memory measurement. **Unknown:** whether chunked processing keeps data across chunks.
 
-**Known facts:** exact input/output contracts, supported iteration APIs, ownership rules, and a measured baseline from the current program. **Unknown:** whether the candidate design retains data across chunks.
+**Experiment:** one hypothesis (retained memory stays bounded as the number of chunks grows), verified interfaces, a bounded dataset, a known measurement method, a baseline, and stop conditions for resources. Compare several increasing workloads; one tiny sample cannot reveal growth.
 
-A valid experiment records one hypothesis: retained working data remains bounded as more chunks are processed. It uses verified interfaces, a bounded authorized dataset, known instrumentation, a baseline, and explicit resource stop conditions. It compares increasing workloads that can reveal retained state; a single tiny sample cannot establish scaling behavior.
+**Observation:** retained data grows with each chunk. Under the tested conditions this contradicts the hypothesis. Record the result, inspect the lifetime of the accumulator, and revise the design.
 
-**Possible observation:** retained data grows with each chunk. This contradicts the bounded-retention hypothesis under the tested conditions. Preserve that result, inspect lifetime/accumulation, and revise the candidate before attempting the full workload.
-
-**Invalid shortcut:** invent a memory number, treat one successful sample as proof, or guess an undocumented API parameter because the design is experimental.
-
-**Valid progress:** the experiment rejects an approach and narrows the next question. Product edits dependent on that approach remain blocked, while a new evidence-backed experiment can proceed. The absence of a published solution recipe is not itself a reason to abandon the task.
+**Invalid shortcuts:** inventing a memory figure, generalizing from one sample, or guessing an undocumented parameter because the work is "experimental". **Valid progress:** the experiment rejected one design and narrowed the next question.
 
 ## E3. Repeated patches do not fix a schema error
 
-**Observed failure:** a consumer rejects a record. Hypothesis H1 attributes it to producer serialization; a version-matched trace contradicts H1. H2 attributes it to an omitted field; a second probe shows the field is present. Both attempts and observations remain in the failure ledger.
+A consumer rejects a record. H1 blames producer serialization; a trace at the matching version contradicts it. H2 blames a missing field; a probe shows the field is present. Both go in the failure ledger.
 
-After these two evidence-backed failures, perform the diagnosis reset. Re-read the loaded consumer schema and actual adapter path. Suppose the new evidence reveals that the consumer loads an older schema through a wrapper. Investigate that version boundary before another producer patch.
+Two evidence-backed attempts have failed, so reset the diagnosis. Re-reading the consumer's loading path shows it loads an older schema through a wrapper. Investigate that version boundary before any further producer patch.
 
-**Invalid response:** try a third guessed field name, upgrade all dependencies, suppress the consumer exception, or alter tests to accept rejected records.
+**Invalid:** guessing a third field name, upgrading every dependency, suppressing the consumer's exception, or loosening the tests.
 
-**Valid next step:** compare the wrapper's documented contract with the active schema, identify the authorized compatibility behavior, and form a new bounded contract. If a product compatibility choice remains unresolved, ask for that choice while preserving unrelated progress.
+## E4. The target changes between read and write
 
-## E4. The target changes between reading and writing
+You read the target at revision A. Another writer updates it to B, and your revision-checked write is rejected. Read B and the diff from A to B, identify the other writer's changes, rebuild the patch against B, and validate the merged result. Do not force the old replacement or treat the rejection as a transient error to retry. Where the host has no write precondition, state the remaining race risk.
 
-A target was read at revision A. Another writer updates it to B. A revision-aware write rejects the old precondition.
+## E5. Tests agree with the implementation, but both are wrong
 
-Stop the overlapping write, read B and the relevant diff, and determine which changes belong to the other writer. Re-read the applicable specification, rebuild the patch against B, and validate the merged behavior. Do not force the old replacement, overwrite B with A, or label the conflict a transient error and blindly retry.
+The requirement says duplicate IDs must be rejected. The implementation silently drops duplicates, and its test builds the expected output with the same deduplication helper, so the test passes. Go back to the requirement: duplicate input must raise the documented error. Write a test against that behavior through the entry point, watch it fail, then fix the implementation. The old green test is not evidence; it encoded the same misunderstanding.
 
-A current-state receipt is useful evidence, but only a write precondition or equivalent host check can detect some read/write races. Where the host lacks that mechanism, state the residual concurrency limitation and avoid overlapping writers.
+## E6. Resuming without repeating a disproven approach
 
-## E5. Tests agree with the implementation but both are wrong
-
-The fictional requirement says duplicate identifiers must be rejected. An implementation silently drops duplicates. Its test builds expected output using the same deduplication helper, so the test passes.
-
-Read the original requirement before changing either file. Establish an independent expectation: duplicate input must trigger the documented rejection behavior. Add or correct a test that checks this observable behavior through the relevant entry point; then repair the implementation under fresh gates.
-
-Do not cite the old passing test as evidence of correctness. The old test encoded the same misunderstanding. A review by the same model is not independent merely because it uses a different heading or role name.
-
-## E6. Resume without redoing a disproven approach
-
-The checkpoint records R1 VERIFIED, R2 OPEN, H1 contradicted by a retained-data probe, and the next action: inspect the accumulator lifetime. On resumption, read the checkpoint, skill, current documents, targets, and diff. Verify that R1's result still applies; invalidate it only if its dependencies changed.
-
-Continue from the recorded next question. Do not re-run H1 because its failure is absent from a shortened conversation summary. If a needed receipt is inaccessible, mark it unavailable and reproduce the smallest necessary observation.
+The checkpoint says R1 VERIFIED, R2 OPEN, H1 contradicted by a retained-memory probe, and next action "inspect accumulator lifetime". On resumption, re-read SKILL.md, the checkpoint, the docs, the targets and the diff. Confirm R1's check still applies. Then continue from the recorded next action. Do not rerun H1 just because a shortened summary dropped it. If a receipt is no longer available, reproduce the smallest observation needed.

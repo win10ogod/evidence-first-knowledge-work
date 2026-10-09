@@ -1,52 +1,88 @@
-# Evaluating the Skill on Target Models
+# Evaluating the Skill
 
-This directory contains a narrow executable trace auditor, synthetic tests for that auditor, and open-ended evaluation recipes. It does not contain a model runner, a provider adapter, benchmark results, or a claim that smaller models now solve advanced tasks.
+This directory is for evaluators, not for the agent using the skill. Packaging tools exclude a root-level `evals/` directory, so none of this enters the agent's context. It contains runnable eval prompts, an instantiated fixture project with evaluator-owned acceptance checks, real test-runner captures, a trace auditor, and the tests for all bundled tools. Benchmark results are in [results/](results/): [v2.0 vs v1.1](results/2026-10-09-haiku-5-5/README.md), [v2.1 vs v2.0](results/2026-10-09-haiku-5-5-v2.1/README.md) [v2.2 vs v2.1 plus activation](results/2026-10-09-haiku-5-5-v2.2/README.md) and [hard tasks, v2.2 vs no skill](results/2026-10-09-haiku-5-5-hard-tasks/README.md), all on Haiku 5.5. Acceptance scripts run candidate code with `-B` and `PYTHONDONTWRITEBYTECODE=1` so that grading never creates the residue it measures.
 
-## Compare actual development outcomes
+## Contents
 
-Run the same target model with no skill, the previous skill revision, and this revision on equivalent isolated repository snapshots. Hold model version, tool access, relevant context, permissions, task specification, and budget comparable. Record actual usage rather than claiming equal costs. Repeat trials and keep failed runs; do not select only successful examples.
+| Path | Purpose |
+| --- | --- |
+| [evals.json](evals.json) | Fourteen runnable prompts with expectations (skill-creator schema). Evals 6-14 are the hard-task set described below |
+| [fixtures/exporter/](fixtures/exporter/) | A small Python CLI project with deliberate traps: an unused look-alike helper (`legacy.py`), and a runner that collects only `*_test.py` |
+| [acceptance/exporter_acceptance.py](acceptance/exporter_acceptance.py) | Evaluator-owned checks for eval 1. Fails on the untouched fixture and on a "test not collected" solution; passes on a correct one |
+| [fixtures/uploader/](fixtures/uploader/) | A Python 3.11 project (declared only in `pyproject.toml`, the CI workflow and the Dockerfile) whose spec describes the batching as `itertools.batched` semantics, an API that exists only on 3.12+ |
+| [acceptance/uploader_acceptance.py](acceptance/uploader_acceptance.py) | Evaluator-owned checks for eval 5, run on `python3.11`. A `batched`-based solution passes on 3.13 and fails here; a correct one passes on both |
+| [fixtures/](fixtures/) `billing`, `fetcher`, `pricing`, `scheduler`, `sessions`, `notifier`, `versions`, `inventory` | Hard-task fixtures for evals 6-13: multi-step debugging and cross-file integration where the visible test or the obvious edit is not enough (table below) |
+| [acceptance/](acceptance/) `*_acceptance.py` | One evaluator-owned script per fixture: spec-derived or oracle-derived cases, the pristine tests rerun against the candidate code, and the candidate's own suite |
+| [trigger-queries.json](trigger-queries.json) | 10 should-trigger and 10 near-miss queries for description optimization |
+| [fixtures/runner_outputs.json](fixtures/runner_outputs.json) | 16 real outputs from unittest, pytest, Jest, Vitest, Go and Cargo (zero-test and normal runs) |
+| [acceptance-cases.md](acceptance-cases.md) | 49 behavioral cases for reviewing transcripts |
+| [cases.json](cases.json) | Eight further setup recipes that need evaluator-built repositories |
+| [check_trace.py](check_trace.py) | Auditor for normalized step traces (format below) |
+| `test_*.py` | Tests for the auditor, the hook and the snapshot script |
 
-Use [cases.json](cases.json) as evaluator setup recipes. They require real, version-pinned test repositories and independent acceptance tests prepared by the evaluator. They are not already instantiated runnable benchmarks. Begin with unfamiliar-project integration and a failed-first-approach task, then add interrupted work and concurrent changes.
+Run all tool tests from the repository root (standard library only, no network):
 
-Keep two outcomes separate: process compliance and delivery quality. Observe requirement satisfaction through actual public entry points, regressions, unrequested changes, false completion claims, unnecessary blocking, repeated disproven attempts, and human intervention. Record tokens, tool calls, elapsed time, and execution cost as separate measurements, without replacing correctness with speed.
-
-If a stronger model or human supplies planning, diagnosis, or repair, log that assistance and report the assisted result separately. An evaluator may grade artifacts without secretly helping the candidate during the run. Keep independent acceptance tests outside the candidate's writable workspace and rerun them on its final artifact. Public recipes are not secret tests.
-
-## Executable trace audit
-
-[check_trace.py](check_trace.py) checks a **normalized JSON event array** for bounded file-mutation episodes. The evaluator must obtain records from the host's actual tool trace, including actual source reads and revisions, before normalization. Preserve the original trace and receipt mapping outside the candidate's writable workspace. Do not ask the candidate to fabricate a passing event array.
-
-No platform adapter is included. The evaluator must map the actual host schema without guessing event names or silently dropping unsupported operations. This auditor covers recorded file mutations only. Shell side effects, deployment authorization, source relevance, comprehension, and overall task correctness require additional review. It does not call tools, open receipt URLs, execute candidate code, or intercept operations.
-
-From this repository root, using an available Python 3 interpreter after reviewing these scripts:
-
-```text
+```bash
 python -B -m unittest discover -s evals -p 'test_*.py' -v
-python -B evals/check_trace.py /path/to/normalized-trace.json
 ```
 
-No third-party dependency or network access is needed by these commands. They read the supplied trace and print results. The auditor exits 0 for consistent supported events, 1 for a trace violation, and 2 for an input/CLI error. Its result always reports task outcome as NOT MEASURED and receipt authenticity as NOT VERIFIED. Input text is limited to 5,000,000 characters. The code has been checked with Python 3.13.5; other Python versions are not represented as tested.
+## Hard-task fixtures (evals 6-13)
 
-### Event contract, version 1
+Each fixture hides more than the visible symptom. The acceptance script names the trap it catches; every script was checked to pass a reference solution and to fail the untouched fixture and the listed trap solutions.
 
-Every event requires `seq` (strictly increasing positive integer), `kind`, `step` (nonempty unique episode ID), and `receipt` (original trace locator). The JSON document is an array in observed order. Paths and source IDs must be consistently normalized by the evaluator. One episode contains one independent mutation; an atomic multi-file tool call may name several targets. Several sequential edit calls need separate episodes and fresh evidence.
+| Eval | Fixture | What makes it hard | Trap solutions the acceptance rejects |
+| --- | --- | --- | --- |
+| 6 | `billing` | Failing rounding test; spec needs exact decimals **and** per-line half-up rounding | `Decimal` rounding on a float parse, banker's rounding, rounding only the sum |
+| 7 | `fetcher` | New option must go through the config precedence chain and a seconds-to-milliseconds client, in two construction sites | flag-only option, unit mix-up, one site missed |
+| 8 | `pricing` | Order-dependent failure caused by mutating an `lru_cache`d table | clearing the cache in tests, dropping the cache |
+| 9 | `scheduler` | DST gaps and folds in any IANA zone (30-minute and midnight shifts) | `+1h` hack, `normalize`, wall-clock comparison |
+| 10 | `sessions` | Visible boundary bug plus offsets discarded and string sorting | boundary-only fix, string sort, naive timestamps |
+| 11 | `notifier` | Vendored throttle's docstring says seconds, code and CHANGELOG say milliseconds | `Throttle(5, 1)`, fixed delays |
+| 12 | `versions` | Long range spec (caret/tilde on 0.x, X-ranges, hyphen partials, SemVer prerelease ordering and exclusion), answers from npm `semver` 7.6.0 | lexicographic prerelease compare, caret without the 0.x rule, no prerelease exclusion |
+| 13 | `inventory` | Discount touches model, storage format (bump, migration, sample), CLI exit status and message, CSV, list, and two money paths (`report.py` repeats the arithmetic) | `report.py` missed, float `round()` (5.005 -> 5.00), no format bump |
+| 14 | `sessions` | Control for eval 10: the same fixture, but the request asks for conformance to the whole spec | as eval 10 |
 
-| Kind | Additional required fields | Meaning |
+On Haiku 5.5 these tasks did not separate configurations by pass rate: 24/27 runs passed with v2.2 and 23/27 without the skill. The only reproducible failure was eval 10, where every run fixed only the named test, a scope choice. See [the hard-task results](results/2026-10-09-haiku-5-5-hard-tasks/README.md).
+
+## Comparing skill versions
+
+1. Copy the fixture into an isolated workspace for each run. Keep `acceptance/` outside the candidate's writable area.
+2. Run the same model on each `evals.json` prompt with (a) no skill, (b) the previous skill version, and (c) this version. Keep tools, permissions, context and budget comparable, and repeat each configuration several times.
+3. Grade the expectations from the transcript, and run the fixture's acceptance script, for example `python -I acceptance/exporter_acceptance.py <final copy>` for eval 1 or `python -I acceptance/versions_acceptance.py <final copy> fixtures/versions` for eval 12 (scripts for evals 6-13 take the pristine fixture as a second argument). The acceptance script executes candidate code, so run it in the sandbox.
+4. Record pass rate, tokens, tool calls and wall time separately. Keep failed runs. Log any human or stronger-model assistance and report assisted results separately.
+5. Test on every model you deploy with. Guidance that works for a large model may be insufficient for a small one, and the reverse can over-explain.
+
+The skill-creator workflow (with-skill and baseline subagents, a grader, `aggregate_benchmark`, and the review viewer) can consume `evals.json` directly. Use `trigger-queries.json` with its description-optimization loop.
+
+Judge two outcomes separately: **task outcome** (acceptance passes, no regressions, no unrequested changes) and **process** (reads before edits, honest PASS/FAIL/NOT RUN, no repeated disproven attempts, no unnecessary blocking). Penalize shrinking scope, weakening tests and doing nothing just as much as gate violations.
+
+## Trace auditor
+
+[check_trace.py](check_trace.py) checks a **normalized JSON event array** derived from the host's real tool trace. The evaluator builds this array and keeps the mapping back to the original receipts. Never ask the candidate to produce a passing trace.
+
+```bash
+python -B evals/check_trace.py trace.json               # stop at the first violation
+python -B evals/check_trace.py --all-errors trace.json  # report every invalid step
+```
+
+Exit codes: 0 consistent, 1 violation, 2 input error. Input is limited to 5,000,000 characters. Each result reports task outcome as NOT MEASURED and receipt authenticity as NOT VERIFIED.
+
+### Event contract (version 2)
+
+Every event needs `seq` (a strictly increasing positive integer), `kind`, `step` (episode ID) and `receipt` (a locator in the original trace). Revision identifiers must never repeat for different points in time; use a write counter or a hash plus sequence number.
+
+| Kind | Fields | Rules |
 | --- | --- | --- |
-| `begin` | `requirements`: nonempty ID list; `targets`: nonempty path list; `checks`: nonempty check-ID list; `sources`: source-to-version object; optional `depends_on`: prior episode IDs | A recorded bounded contract, established before its source/current-state receipts and mutation. This record states planned evidence, not a passed G3 gate. |
-| `read_doc` | `source`, `revision`, `section`, `complete: true` | Actual relevant documentation re-read in this episode, matching its planned version. |
-| `read_target` | `target`, `revision`, `complete: true` | Current target read. Use `ABSENT` only for observed absence when creating a target. |
-| `mutate` | `before` and `after`: matching target-to-revision objects | Actual affected targets and pre/post revisions; must fit scope, fresh reads, and passed prerequisites. At least one revision changes. |
-| `inspect` | `revisions`: exact post-mutation target-to-revision object | Observed inspection of the resulting change. |
-| `check` | `check`, `status`: `PASS`, `FAIL`, or `NOT RUN`; `revisions`; optional `test_count` and `exit_code` | Actual recorded check. A supplied PASS test count must be positive; a supplied PASS exit code must be zero. Missing optional counts are not proof of discovery. |
-| `end` | `status`: `PASS`, `FAIL`, or `BLOCKED`; `reason` required for FAIL/BLOCKED | PASS requires an inspected mutation and all planned checks to pass at the resulting revision. |
+| `begin` | `requirements`; `targets`; `checks`; `sources` (source → version); optional `level` (`L0`-`L3`, default `L2`), `depends_on`, `no_source_reason`, `authorization`, `recovery` | `sources` may be `{}` only with `no_source_reason`. L0 may have empty `targets` and `checks`. L1 may not touch a target of an earlier FAILed step. L3 needs `authorization` and `recovery` |
+| `read_doc` | `source`, `revision`, `section`, `complete: true` | Must match the planned version; before the mutation |
+| `read_target` | `target`, `revision`, `complete: true` | `ABSENT` for observed absence; a revision already replaced by a recorded mutation is stale |
+| `mutate` | `before`, `after` (target → revision) | Not allowed in L0. L2/L3 must re-read every source in this step. L1 may rely on a source read at the same version in an earlier step. Targets must be in scope and freshly read |
+| `inspect` | `revisions` | Must equal the post-mutation revisions |
+| `check` | `check`, `status` (`PASS`/`FAIL`/`NOT RUN`), `revisions`; optional `test_count`, `exit_code` | A PASS with `test_count` 0 or a non-zero `exit_code` is rejected |
+| `end` | `status` (`PASS`/`FAIL`/`BLOCKED`); `reason` unless PASS | L0 PASS needs at least one read; other PASS needs an inspected mutation and every planned check passing |
 
-An honest failed or blocked episode may be process-compliant and still deliver nothing. Read-only tasks are outside this format. Unrepresented operations require separate review, not an invented PASS episode. If a host mutates files during a test or formatter invocation, capture that mutation too; do not normalize it as a harmless check.
+An honest FAIL or BLOCKED episode is process-compliant even though it delivers nothing. Shell side effects, source relevance, comprehension and overall correctness are outside the auditor's scope. A self-authored trace can lie, so use trusted recording together with independent artifact checks.
 
-The fixtures in [test_check_trace.py](test_check_trace.py) illustrate this format with clearly labeled synthetic receipts. They test auditor behavior, not a model. They include missing or late documentation reads, stale target revisions, scope escape, missing inspection, invalid test counts, failed dependencies, and honest failure reporting.
+## Zero-test captures
 
-## Trust and reporting limits
-
-The auditor cannot authenticate a receipt string, inspect whether a source supports the chosen contract, detect omitted events, or prove a model understood a document. A malicious or self-authored normalized trace can lie. Use trusted recording plus independent artifact checks; a passing trace alone is never sufficient evidence of capability improvement.
-
-Keep the judge's expected outcomes tied to the original task. Do not reward an agent for shrinking scope, weakening tests, deleting hard requirements, or doing no work. Check both "violated a gate" and "stopped unnecessarily despite an authorized next probe".
+`fixtures/runner_outputs.json` was captured on 2026-10-09 with Python 3.13.16 unittest, pytest 9.1.1, Jest 29.7.0, Vitest 2.1.9, Go 1.24.7 and Cargo 1.97.0. Four of the zero-test runs exit with code 0: a Jest `-t` filter, a Go `-run` filter, Go with no test files, and Cargo. This is why `hooks/zero_tests_guard.py` reads the output instead of trusting exit codes. Re-capture with newer runner versions before relying on the patterns elsewhere.

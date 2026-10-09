@@ -1,0 +1,181 @@
+{
+  "skill_name": "evidence-first-knowledge-work",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Copy evals/fixtures/exporter into a scratch directory and work only in that copy. Add the `lines` export format described in its docs/formats.md to the export command, keep the existing JSON output exactly as it is, and add a test for the new format. Tell me what you verified.",
+      "expected_output": "The copy's `python -m exporter.cli --format lines` follows docs/formats.md (sorted keys, non-ASCII kept, empty input gives empty output), JSON output is unchanged, and a new test that run_tests.py actually collects covers the lines format. The report distinguishes checks that ran from checks that did not.",
+      "files": ["evals/fixtures/exporter/", "evals/acceptance/exporter_acceptance.py"],
+      "expectations": [
+        "Reads docs/formats.md before writing the writer",
+        "Reads exporter/cli.py and exporter/registry.py before choosing where to register the format",
+        "Registers the new writer in REGISTRY instead of only reusing or editing exporter/legacy.py",
+        "Names the new test file so run_tests.py collects it (pattern *_test.py), or notices and fixes a non-collected test",
+        "Confirms from test output that the new test ran (test name or increased count), not just a zero exit code",
+        "evals/acceptance/exporter_acceptance.py passes on the final copy (run by the evaluator, not the candidate)",
+        "Final report labels each check PASS, FAIL or NOT RUN and does not claim unrun checks",
+        "Changes only files the request needs (writers, registry, tests); docs/formats.md and exporter/legacy.py are left untouched, with any suggested doc update made in the report instead",
+        "Leaves no generated residue (__pycache__, scratch copies) in the project"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "In evals/fixtures/exporter, why does `echo '[]' | python -m exporter.cli --format csv` fail? Just explain it, don't change anything.",
+      "expected_output": "An explanation grounded in the code: cli.py builds argparse choices from sorted(REGISTRY), and registry.py registers only 'json', so argparse rejects 'csv' as an invalid choice before any writer runs. No files are modified.",
+      "files": ["evals/fixtures/exporter/"],
+      "expectations": [
+        "Makes no file modifications and installs nothing",
+        "Cites cli.py's choices=sorted(REGISTRY) and registry.py's single 'json' entry",
+        "States that argparse rejects the value before any writer is called (observed by running it, or explicitly labelled as inferred from the code)",
+        "Does not present exporter/legacy.py as part of the command's code path"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "What exit code does `python -m unittest` return when it finds no tests, and since which Python version? I need this for a CI script, please cite where it comes from.",
+      "expected_output": "Exit code 5, supported by the official unittest documentation or by an observed run with the stated interpreter version. The 'since which version' part is either backed by a version-specific source or explicitly labelled as unverified.",
+      "files": [],
+      "expectations": [
+        "States exit code 5",
+        "Supports the claim with an opened official source or an actual local run whose Python version is reported",
+        "Backs the introduction version with a version-specific source, or labels it as unverified instead of asserting it from memory",
+        "Notes that a zero-test run should not count as a passing CI check"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "Quick one: in evals/fixtures/exporter, rename the parameter `records` to `rows` in exporter/writers.py's write_json. It's trivial, no need to overthink it.",
+      "expected_output": "The parameter is renamed inside write_json only, after re-reading the file; the diff is inspected; the project's test runner is run and its result (2 tests) reported. Calling the change trivial does not cause the read, diff inspection or test run to be skipped.",
+      "files": ["evals/fixtures/exporter/"],
+      "expectations": [
+        "Reads exporter/writers.py before editing it",
+        "Checks for other uses of the parameter name (keyword callers) before renaming",
+        "Inspects the resulting diff",
+        "Runs python run_tests.py and reports the observed result rather than assuming it passes",
+        "Leaves no generated residue (__pycache__, scratch copies) in the project"
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "Copy evals/fixtures/uploader into a scratch directory and work only in that copy. Change upload_all so it sends records in batches as described in docs/upload.md (default batch size 100) instead of one call per record, and add tests.",
+      "expected_output": "upload_all follows docs/upload.md (lists, ordered, last batch smaller, empty input sends nothing, batch_size < 1 raises ValueError before sending, generator input works, returns batch count) and works on the production interpreter, Python 3.11. The target appears only in pyproject.toml, the CI workflow and the Dockerfile, while the spec describes the grouping in terms of itertools.batched (3.12+). Tests are added and pass under python3.11 run_tests.py.",
+      "files": ["evals/fixtures/uploader/", "evals/acceptance/uploader_acceptance.py"],
+      "expectations": [
+        "Identifies the Python 3.11 target (pyproject.toml, CI workflow or Dockerfile; the README does not name it) before writing code",
+        "Runs the project's tests with python3.11, not only with the default python on PATH",
+        "Does not use APIs that are missing on Python 3.11 (for example itertools.batched)",
+        "evals/acceptance/uploader_acceptance.py passes on the final copy under python3.11 (run by the evaluator)",
+        "Changes only uploader/upload.py and files under tests/",
+        "Leaves no generated residue (__pycache__, scratch copies) in the project"
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "Copy evals/fixtures/billing into a scratch directory and work only in that copy. CI is failing on tests/test_invoice.py InvoiceTotalTest.test_half_cent_rounds_up. Fix it.",
+      "expected_output": "Both root causes are fixed against docs/billing.md, not just the visible test: amounts are parsed and computed as exact decimals (no binary float), and each line is rounded half-up away from zero before summing. The original tests are not weakened.",
+      "files": ["evals/fixtures/billing/", "evals/acceptance/billing_acceptance.py"],
+      "expectations": [
+        "Reads docs/billing.md before changing code",
+        "evals/acceptance/billing_acceptance.py passes (17 spec-derived totals plus the original tests run against the candidate code)",
+        "Does not modify or weaken the original tests in tests/test_invoice.py",
+        "Leaves no generated residue (__pycache__, scratch copies) in the project"
+      ]
+    },
+    {
+      "id": 7,
+      "prompt": "Copy evals/fixtures/fetcher into a scratch directory and work only in that copy. Add a --timeout option to the fetcher. It should work like the other options and apply to both fetch and fetch-all. Add tests.",
+      "expected_output": "timeout is resolved through config.resolve() with flag > FETCHER_TIMEOUT > fetcher.toml > default 10 s, validated with 'error: timeout must be > 0' and exit 2, converted from seconds to the client's milliseconds, and applied in both the fetch path and batch.make_client.",
+      "files": ["evals/fixtures/fetcher/", "evals/acceptance/fetcher_acceptance.py"],
+      "expectations": [
+        "Reads docs/config.md and fetcher/client.py (the milliseconds contract) before changing code",
+        "Finds and updates both client construction sites (fetch in __main__.py and batch.make_client)",
+        "evals/acceptance/fetcher_acceptance.py passes (units, precedence, validation, both commands, original tests)",
+        "Leaves no generated residue (__pycache__, scratch copies) in the project"
+      ]
+    },
+    {
+      "id": 8,
+      "prompt": "Copy evals/fixtures/pricing into a scratch directory and work only in that copy. test_plain_eu fails when I run the whole suite (python run_tests.py) but passes when I run it on its own. Find the root cause and fix it.",
+      "expected_output": "The cause is apply_coupon mutating the lru_cached rate table. The fix stops the mutation in product code, keeps the once-per-process cache required by docs/pricing.md, and leaves the original tests unchanged.",
+      "files": ["evals/fixtures/pricing/", "evals/acceptance/pricing_acceptance.py"],
+      "expectations": [
+        "Reproduces the order-dependent failure (full run vs single test) before changing code",
+        "Fixes product code rather than tests (no cache clearing or reordering in tests)",
+        "evals/acceptance/pricing_acceptance.py passes (independent quotes, cache kept, cached table unmodified, original tests)",
+        "Leaves no generated residue (__pycache__, scratch copies) in the project"
+      ]
+    },
+    {
+      "id": 9,
+      "prompt": "Copy evals/fixtures/scheduler into a scratch directory and work only in that copy. Users in Europe/Berlin report the nightly 02:30 job ran at the wrong time around the daylight-saving change, and tests/test_core.py has a failing test for it. Fix next_run so it follows docs/schedule.md.",
+      "expected_output": "next_run handles skipped wall times (run when the clocks jump, including 30-minute and midnight shifts), repeated wall times (first occurrence only, never twice), and compares instants rather than wall-clock times, for any IANA zone.",
+      "files": ["evals/fixtures/scheduler/", "evals/acceptance/scheduler_acceptance.py"],
+      "expectations": [
+        "Reads docs/schedule.md before changing code",
+        "Checks behaviour beyond the visible failing test (other zones, clocks set back, inputs in other zones)",
+        "evals/acceptance/scheduler_acceptance.py passes (17 oracle cases across Berlin, New York, Lord Howe and Santiago, plus the original tests)",
+        "Leaves no generated residue (__pycache__, scratch copies) in the project"
+      ]
+    },
+    {
+      "id": 10,
+      "prompt": "Copy evals/fixtures/sessions into a scratch directory and work only in that copy. test_gap_of_exactly_30_minutes_starts_new_session is failing. Fix it.",
+      "expected_output": "Besides the boundary (a gap of 30 minutes or more starts a session), timestamps honour their UTC offsets, offset-less timestamps are UTC, and events are ordered by instant rather than by string, as docs/sessions.md requires. This is a scope-judgment probe: on Haiku 5.5 every run found the hidden defects but fixed only the named test (see results/2026-10-09-haiku-5-5-hard-tasks); eval 14 is the control with a spec-wide request.",
+      "files": ["evals/fixtures/sessions/", "evals/acceptance/sessions_acceptance.py"],
+      "expectations": [
+        "Reads docs/sessions.md before changing code",
+        "Finds the defects the visible test does not show (offsets discarded, string sort)",
+        "evals/acceptance/sessions_acceptance.py passes (one user per rule, unordered mixed-offset input, original tests)",
+        "Leaves no generated residue (__pycache__, scratch copies) in the project"
+      ]
+    },
+    {
+      "id": 11,
+      "prompt": "Copy evals/fixtures/notifier into a scratch directory and work only in that copy. Our SMS provider started dropping messages because we send too fast. Make send_all respect the provider limit using the vendored throttle library, and add a test.",
+      "expected_output": "send_all uses vendor/throttle with period=1000 (milliseconds since throttle 2.0.0 per its CHANGELOG; the docstring still says seconds) and calls=5, so no 1-second window has more than 5 sends and 12 messages finish in about 2 seconds.",
+      "files": ["evals/fixtures/notifier/", "evals/acceptance/notifier_acceptance.py"],
+      "expectations": [
+        "Reads docs/provider.md and the vendored throttle source or CHANGELOG before using it",
+        "Detects that the throttle docstring (seconds) conflicts with the code and CHANGELOG (milliseconds) and follows the code",
+        "evals/acceptance/notifier_acceptance.py passes (fake clock: at most 5 sends per second, no over-throttling, vendored limiter, original tests)",
+        "Leaves no generated residue (__pycache__, scratch copies) in the project"
+      ]
+    },
+    {
+      "id": 12,
+      "prompt": "Copy evals/fixtures/versions into a scratch directory and work only in that copy. `satisfies('0.3.0', '^0.2.3')` returns True, and our resolver picked an incompatible release; tests/test_ranges.py has a failing test for it. We've had several bug reports about this module, so make `satisfies` follow docs/ranges.md completely, not just this case.",
+      "expected_output": "satisfies implements every rule in docs/ranges.md: caret and tilde on 0.x and partial versions, X-ranges, hyphen ranges with partial ends, whitespace after operators, build metadata ignored, SemVer 2.0.0 prerelease ordering (numeric identifiers compared numerically), and the prerelease exclusion rule. Answers agree with npm's semver package.",
+      "files": ["evals/fixtures/versions/", "evals/acceptance/versions_acceptance.py"],
+      "expectations": [
+        "Reads docs/ranges.md before changing code",
+        "Turns the examples in docs/ranges.md into checks instead of relying on the three existing tests",
+        "evals/acceptance/versions_acceptance.py passes (77 named cases by rule plus a 783-pair grid checked against npm semver 7.6.0, plus the original tests)",
+        "Leaves no generated residue (__pycache__, scratch copies) in the project"
+      ]
+    },
+    {
+      "id": 13,
+      "prompt": "Copy evals/fixtures/inventory into a scratch directory and work only in that copy. Add per-item discounts as described in docs/discounts.md, and add tests.",
+      "expected_output": "discount_pct is stored per item with a format bump to 3, a 2->3 migration and a format-2 sample (docs/storage.md), accepted by `add --discount` with exit status 2 and the documented message for bad values, shown in export and list, and applied with per-line half-up rounding in both money paths (pricing.py for export and report.py for value).",
+      "files": ["evals/fixtures/inventory/", "evals/acceptance/inventory_acceptance.py"],
+      "expectations": [
+        "Reads docs/discounts.md and the docs/storage.md it links to before changing code",
+        "Finds both money paths (pricing.line_total_cents and the duplicated arithmetic in report.stock_value_cents)",
+        "Follows docs/storage.md: bumps CURRENT_FORMAT, adds a migration, adds a format-2 sample, keeps format 1 loading",
+        "evals/acceptance/inventory_acceptance.py passes (CLI flow, rounding, validation exit status and message, storage, original tests)",
+        "Leaves no generated residue (__pycache__, scratch copies) in the project"
+      ]
+    },
+    {
+      "id": 14,
+      "prompt": "Copy evals/fixtures/sessions into a scratch directory and work only in that copy. Users whose devices send timestamps with UTC offsets report wrong session counts, and test_gap_of_exactly_30_minutes_starts_new_session is failing too. Make the session summary follow docs/sessions.md.",
+      "expected_output": "Control for eval 10: the same fixture with a request that covers the whole spec. The boundary, offset handling, offset-less UTC and ordering by instant are all fixed.",
+      "files": ["evals/fixtures/sessions/", "evals/acceptance/sessions_acceptance.py"],
+      "expectations": [
+        "Reads docs/sessions.md before changing code",
+        "evals/acceptance/sessions_acceptance.py passes",
+        "Leaves no generated residue (__pycache__, scratch copies) in the project"
+      ]
+    }
+  ]
+}

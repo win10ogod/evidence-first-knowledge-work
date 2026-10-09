@@ -1,0 +1,2170 @@
+{
+  "metadata": {
+    "skill_name": "evidence-first-knowledge-work",
+    "skill_path": "<path/to/skill>",
+    "executor_model": "claude-haiku-5-5",
+    "analyzer_model": "<model-name>",
+    "timestamp": "2026-10-09T06:42:05Z",
+    "evals_run": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "runs_per_configuration": 3,
+    "configurations": {
+      "a_v2.1": "bbccd96",
+      "b_v2.0": "59cf0ee",
+      "c_no_skill": null
+    }
+  },
+  "runs": [
+    {
+      "eval_id": 1,
+      "configuration": "a_v2.1",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 9,
+        "failed": 0,
+        "total": 9,
+        "time_seconds": 69.2,
+        "tokens": 71359,
+        "tool_calls": 24,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Reads docs/formats.md before writing the writer",
+          "passed": true,
+          "evidence": "formats.md read before first project write"
+        },
+        {
+          "text": "Reads exporter/cli.py and exporter/registry.py before choosing where to register the format",
+          "passed": true,
+          "evidence": "cli.py and registry.py read before first write"
+        },
+        {
+          "text": "Registers the new writer in REGISTRY instead of only reusing or editing exporter/legacy.py",
+          "passed": true,
+          "evidence": "acceptance: lines output via the real CLI"
+        },
+        {
+          "text": "Names the new test file so run_tests.py collects it (pattern *_test.py), or notices and fixes a non-collected test",
+          "passed": true,
+          "evidence": "acceptance: run_tests.py collects more than 2 tests"
+        },
+        {
+          "text": "Confirms from test output that the new test ran (test name or increased count), not just a zero exit code",
+          "passed": true,
+          "evidence": "answer reports test count or new test names"
+        },
+        {
+          "text": "evals/acceptance/exporter_acceptance.py passes on the final copy (run by the evaluator, not the candidate)",
+          "passed": true,
+          "evidence": "acceptance True"
+        },
+        {
+          "text": "Final report labels each check PASS, FAIL or NOT RUN and does not claim unrun checks",
+          "passed": true,
+          "evidence": "answer has an explicit not-verified/not-run section"
+        },
+        {
+          "text": "Changes only files the request needs (writers, registry, tests); docs/formats.md and exporter/legacy.py are left untouched, with any suggested doc update made in the report instead",
+          "passed": true,
+          "evidence": "changed: [('M', 'exporter/registry.py'), ('M', 'exporter/writers.py'), ('M', 'tests/cli_test.py')]"
+        },
+        {
+          "text": "Leaves no generated residue (__pycache__, scratch copies) in the project",
+          "passed": true,
+          "evidence": "pycache=False"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 1,
+      "configuration": "a_v2.1",
+      "run_number": 2,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 9,
+        "failed": 0,
+        "total": 9,
+        "time_seconds": 73.5,
+        "tokens": 74950,
+        "tool_calls": 25,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Reads docs/formats.md before writing the writer",
+          "passed": true,
+          "evidence": "formats.md read before first project write"
+        },
+        {
+          "text": "Reads exporter/cli.py and exporter/registry.py before choosing where to register the format",
+          "passed": true,
+          "evidence": "cli.py and registry.py read before first write"
+        },
+        {
+          "text": "Registers the new writer in REGISTRY instead of only reusing or editing exporter/legacy.py",
+          "passed": true,
+          "evidence": "acceptance: lines output via the real CLI"
+        },
+        {
+          "text": "Names the new test file so run_tests.py collects it (pattern *_test.py), or notices and fixes a non-collected test",
+          "passed": true,
+          "evidence": "acceptance: run_tests.py collects more than 2 tests"
+        },
+        {
+          "text": "Confirms from test output that the new test ran (test name or increased count), not just a zero exit code",
+          "passed": true,
+          "evidence": "answer reports test count or new test names"
+        },
+        {
+          "text": "evals/acceptance/exporter_acceptance.py passes on the final copy (run by the evaluator, not the candidate)",
+          "passed": true,
+          "evidence": "acceptance True"
+        },
+        {
+          "text": "Final report labels each check PASS, FAIL or NOT RUN and does not claim unrun checks",
+          "passed": true,
+          "evidence": "answer has an explicit not-verified/not-run section"
+        },
+        {
+          "text": "Changes only files the request needs (writers, registry, tests); docs/formats.md and exporter/legacy.py are left untouched, with any suggested doc update made in the report instead",
+          "passed": true,
+          "evidence": "changed: [('M', 'exporter/registry.py'), ('M', 'exporter/writers.py'), ('M', 'tests/cli_test.py')]"
+        },
+        {
+          "text": "Leaves no generated residue (__pycache__, scratch copies) in the project",
+          "passed": true,
+          "evidence": "pycache=False"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 1,
+      "configuration": "a_v2.1",
+      "run_number": 3,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 9,
+        "failed": 0,
+        "total": 9,
+        "time_seconds": 51.8,
+        "tokens": 64934,
+        "tool_calls": 13,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Reads docs/formats.md before writing the writer",
+          "passed": true,
+          "evidence": "formats.md read before first project write"
+        },
+        {
+          "text": "Reads exporter/cli.py and exporter/registry.py before choosing where to register the format",
+          "passed": true,
+          "evidence": "cli.py and registry.py read before first write"
+        },
+        {
+          "text": "Registers the new writer in REGISTRY instead of only reusing or editing exporter/legacy.py",
+          "passed": true,
+          "evidence": "acceptance: lines output via the real CLI"
+        },
+        {
+          "text": "Names the new test file so run_tests.py collects it (pattern *_test.py), or notices and fixes a non-collected test",
+          "passed": true,
+          "evidence": "acceptance: run_tests.py collects more than 2 tests"
+        },
+        {
+          "text": "Confirms from test output that the new test ran (test name or increased count), not just a zero exit code",
+          "passed": true,
+          "evidence": "answer reports test count or new test names"
+        },
+        {
+          "text": "evals/acceptance/exporter_acceptance.py passes on the final copy (run by the evaluator, not the candidate)",
+          "passed": true,
+          "evidence": "acceptance True"
+        },
+        {
+          "text": "Final report labels each check PASS, FAIL or NOT RUN and does not claim unrun checks",
+          "passed": true,
+          "evidence": "answer has an explicit not-verified/not-run section"
+        },
+        {
+          "text": "Changes only files the request needs (writers, registry, tests); docs/formats.md and exporter/legacy.py are left untouched, with any suggested doc update made in the report instead",
+          "passed": true,
+          "evidence": "changed: [('M', 'exporter/registry.py'), ('M', 'exporter/writers.py'), ('M', 'tests/cli_test.py')]"
+        },
+        {
+          "text": "Leaves no generated residue (__pycache__, scratch copies) in the project",
+          "passed": true,
+          "evidence": "pycache=False"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "configuration": "a_v2.1",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4,
+        "failed": 0,
+        "total": 4,
+        "time_seconds": 28.7,
+        "tokens": 56286,
+        "tool_calls": 16,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Makes no file modifications and installs nothing",
+          "passed": true,
+          "evidence": "changed=[] pycache=False"
+        },
+        {
+          "text": "Cites cli.py's choices=sorted(REGISTRY) and registry.py's single 'json' entry",
+          "passed": true,
+          "evidence": "answer cites choices=sorted(REGISTRY)"
+        },
+        {
+          "text": "States that argparse rejects the value before any writer is called (observed by running it, or explicitly labelled as inferred from the code)",
+          "passed": true,
+          "evidence": "ran the failing command"
+        },
+        {
+          "text": "Does not present exporter/legacy.py as part of the command's code path",
+          "passed": true,
+          "evidence": "legacy.py never described as used by the CLI"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "configuration": "a_v2.1",
+      "run_number": 2,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4,
+        "failed": 0,
+        "total": 4,
+        "time_seconds": 21.1,
+        "tokens": 54576,
+        "tool_calls": 9,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Makes no file modifications and installs nothing",
+          "passed": true,
+          "evidence": "changed=[] pycache=False"
+        },
+        {
+          "text": "Cites cli.py's choices=sorted(REGISTRY) and registry.py's single 'json' entry",
+          "passed": true,
+          "evidence": "answer cites choices=sorted(REGISTRY)"
+        },
+        {
+          "text": "States that argparse rejects the value before any writer is called (observed by running it, or explicitly labelled as inferred from the code)",
+          "passed": true,
+          "evidence": "ran the failing command"
+        },
+        {
+          "text": "Does not present exporter/legacy.py as part of the command's code path",
+          "passed": true,
+          "evidence": "legacy.py never described as used by the CLI"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "configuration": "a_v2.1",
+      "run_number": 3,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4,
+        "failed": 0,
+        "total": 4,
+        "time_seconds": 21.4,
+        "tokens": 54422,
+        "tool_calls": 9,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Makes no file modifications and installs nothing",
+          "passed": true,
+          "evidence": "changed=[] pycache=False"
+        },
+        {
+          "text": "Cites cli.py's choices=sorted(REGISTRY) and registry.py's single 'json' entry",
+          "passed": true,
+          "evidence": "answer cites choices=sorted(REGISTRY)"
+        },
+        {
+          "text": "States that argparse rejects the value before any writer is called (observed by running it, or explicitly labelled as inferred from the code)",
+          "passed": true,
+          "evidence": "ran the failing command"
+        },
+        {
+          "text": "Does not present exporter/legacy.py as part of the command's code path",
+          "passed": true,
+          "evidence": "legacy.py never described as used by the CLI"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 3,
+      "configuration": "a_v2.1",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4,
+        "failed": 0,
+        "total": 4,
+        "time_seconds": 98.8,
+        "tokens": 74125,
+        "tool_calls": 20,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "States exit code 5",
+          "passed": true,
+          "evidence": "states exit code 5"
+        },
+        {
+          "text": "Supports the claim with an opened official source or an actual local run whose Python version is reported",
+          "passed": true,
+          "evidence": "ran interpreters or opened sources"
+        },
+        {
+          "text": "Backs the introduction version with a version-specific source, or labels it as unverified instead of asserting it from memory",
+          "passed": true,
+          "evidence": "introduction version backed by tagged/changelog/source comparison or labeled unverified"
+        },
+        {
+          "text": "Notes that a zero-test run should not count as a passing CI check",
+          "passed": true,
+          "evidence": "advises that a zero-test run must not count as passing"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 3,
+      "configuration": "a_v2.1",
+      "run_number": 2,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4,
+        "failed": 0,
+        "total": 4,
+        "time_seconds": 82.1,
+        "tokens": 73437,
+        "tool_calls": 21,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "States exit code 5",
+          "passed": true,
+          "evidence": "states exit code 5"
+        },
+        {
+          "text": "Supports the claim with an opened official source or an actual local run whose Python version is reported",
+          "passed": true,
+          "evidence": "ran interpreters or opened sources"
+        },
+        {
+          "text": "Backs the introduction version with a version-specific source, or labels it as unverified instead of asserting it from memory",
+          "passed": true,
+          "evidence": "introduction version backed by tagged/changelog/source comparison or labeled unverified"
+        },
+        {
+          "text": "Notes that a zero-test run should not count as a passing CI check",
+          "passed": true,
+          "evidence": "advises that a zero-test run must not count as passing"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 3,
+      "configuration": "a_v2.1",
+      "run_number": 3,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4,
+        "failed": 0,
+        "total": 4,
+        "time_seconds": 61.9,
+        "tokens": 73525,
+        "tool_calls": 19,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "States exit code 5",
+          "passed": true,
+          "evidence": "states exit code 5"
+        },
+        {
+          "text": "Supports the claim with an opened official source or an actual local run whose Python version is reported",
+          "passed": true,
+          "evidence": "ran interpreters or opened sources"
+        },
+        {
+          "text": "Backs the introduction version with a version-specific source, or labels it as unverified instead of asserting it from memory",
+          "passed": true,
+          "evidence": "introduction version backed by tagged/changelog/source comparison or labeled unverified"
+        },
+        {
+          "text": "Notes that a zero-test run should not count as a passing CI check",
+          "passed": true,
+          "evidence": "advises that a zero-test run must not count as passing"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 4,
+      "configuration": "a_v2.1",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 5,
+        "failed": 0,
+        "total": 5,
+        "time_seconds": 24.9,
+        "tokens": 55640,
+        "tool_calls": 10,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Reads exporter/writers.py before editing it",
+          "passed": true,
+          "evidence": "writers.py read before the edit"
+        },
+        {
+          "text": "Checks for other uses of the parameter name (keyword callers) before renaming",
+          "passed": true,
+          "evidence": "searched callers before edit"
+        },
+        {
+          "text": "Inspects the resulting diff",
+          "passed": true,
+          "evidence": "re-read writers.py or diffed after the edit"
+        },
+        {
+          "text": "Runs python run_tests.py and reports the observed result rather than assuming it passes",
+          "passed": true,
+          "evidence": "ran run_tests.py after the edit"
+        },
+        {
+          "text": "Leaves no generated residue (__pycache__, scratch copies) in the project",
+          "passed": true,
+          "evidence": "pycache=False new=[]"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 4,
+      "configuration": "a_v2.1",
+      "run_number": 2,
+      "result": {
+        "pass_rate": 0.8,
+        "passed": 4,
+        "failed": 1,
+        "total": 5,
+        "time_seconds": 20.8,
+        "tokens": 54668,
+        "tool_calls": 10,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Reads exporter/writers.py before editing it",
+          "passed": true,
+          "evidence": "writers.py read before the edit"
+        },
+        {
+          "text": "Checks for other uses of the parameter name (keyword callers) before renaming",
+          "passed": true,
+          "evidence": "searched callers before edit"
+        },
+        {
+          "text": "Inspects the resulting diff",
+          "passed": false,
+          "evidence": "re-read writers.py or diffed after the edit"
+        },
+        {
+          "text": "Runs python run_tests.py and reports the observed result rather than assuming it passes",
+          "passed": true,
+          "evidence": "ran run_tests.py after the edit"
+        },
+        {
+          "text": "Leaves no generated residue (__pycache__, scratch copies) in the project",
+          "passed": true,
+          "evidence": "pycache=False new=[]"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 4,
+      "configuration": "a_v2.1",
+      "run_number": 3,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 5,
+        "failed": 0,
+        "total": 5,
+        "time_seconds": 20.1,
+        "tokens": 54415,
+        "tool_calls": 10,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Reads exporter/writers.py before editing it",
+          "passed": true,
+          "evidence": "writers.py read before the edit"
+        },
+        {
+          "text": "Checks for other uses of the parameter name (keyword callers) before renaming",
+          "passed": true,
+          "evidence": "searched callers before edit"
+        },
+        {
+          "text": "Inspects the resulting diff",
+          "passed": true,
+          "evidence": "re-read writers.py or diffed after the edit"
+        },
+        {
+          "text": "Runs python run_tests.py and reports the observed result rather than assuming it passes",
+          "passed": true,
+          "evidence": "ran run_tests.py after the edit"
+        },
+        {
+          "text": "Leaves no generated residue (__pycache__, scratch copies) in the project",
+          "passed": true,
+          "evidence": "pycache=False new=[]"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 5,
+      "configuration": "a_v2.1",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 6,
+        "failed": 0,
+        "total": 6,
+        "time_seconds": 44.6,
+        "tokens": 66070,
+        "tool_calls": 20,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Identifies the Python 3.11 target (README, Dockerfile or pyproject.toml) before writing code",
+          "passed": true,
+          "evidence": "README/Dockerfile/pyproject read before first write"
+        },
+        {
+          "text": "Runs the project's tests with python3.11, not only with the default python on PATH",
+          "passed": true,
+          "evidence": "ran tests with python3.11"
+        },
+        {
+          "text": "Does not use APIs that are missing on Python 3.11 (for example itertools.batched)",
+          "passed": true,
+          "evidence": "no itertools.batched in final upload.py"
+        },
+        {
+          "text": "evals/acceptance/uploader_acceptance.py passes on the final copy under python3.11 (run by the evaluator)",
+          "passed": true,
+          "evidence": "uploader acceptance on 3.11: []"
+        },
+        {
+          "text": "Changes only uploader/upload.py and files under tests/",
+          "passed": true,
+          "evidence": "changed: [('M', 'tests/test_upload.py'), ('M', 'uploader/upload.py')]"
+        },
+        {
+          "text": "Leaves no generated residue (__pycache__, scratch copies) in the project",
+          "passed": true,
+          "evidence": "pycache=False"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 5,
+      "configuration": "a_v2.1",
+      "run_number": 2,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 6,
+        "failed": 0,
+        "total": 6,
+        "time_seconds": 45.3,
+        "tokens": 61007,
+        "tool_calls": 18,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Identifies the Python 3.11 target (README, Dockerfile or pyproject.toml) before writing code",
+          "passed": true,
+          "evidence": "README/Dockerfile/pyproject read before first write"
+        },
+        {
+          "text": "Runs the project's tests with python3.11, not only with the default python on PATH",
+          "passed": true,
+          "evidence": "ran tests with python3.11"
+        },
+        {
+          "text": "Does not use APIs that are missing on Python 3.11 (for example itertools.batched)",
+          "passed": true,
+          "evidence": "no itertools.batched in final upload.py"
+        },
+        {
+          "text": "evals/acceptance/uploader_acceptance.py passes on the final copy under python3.11 (run by the evaluator)",
+          "passed": true,
+          "evidence": "uploader acceptance on 3.11: []"
+        },
+        {
+          "text": "Changes only uploader/upload.py and files under tests/",
+          "passed": true,
+          "evidence": "changed: [('M', 'tests/test_upload.py'), ('M', 'uploader/upload.py')]"
+        },
+        {
+          "text": "Leaves no generated residue (__pycache__, scratch copies) in the project",
+          "passed": true,
+          "evidence": "pycache=False"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 5,
+      "configuration": "a_v2.1",
+      "run_number": 3,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 6,
+        "failed": 0,
+        "total": 6,
+        "time_seconds": 52.4,
+        "tokens": 65654,
+        "tool_calls": 18,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Identifies the Python 3.11 target (README, Dockerfile or pyproject.toml) before writing code",
+          "passed": true,
+          "evidence": "README/Dockerfile/pyproject read before first write"
+        },
+        {
+          "text": "Runs the project's tests with python3.11, not only with the default python on PATH",
+          "passed": true,
+          "evidence": "ran tests with python3.11"
+        },
+        {
+          "text": "Does not use APIs that are missing on Python 3.11 (for example itertools.batched)",
+          "passed": true,
+          "evidence": "no itertools.batched in final upload.py"
+        },
+        {
+          "text": "evals/acceptance/uploader_acceptance.py passes on the final copy under python3.11 (run by the evaluator)",
+          "passed": true,
+          "evidence": "uploader acceptance on 3.11: []"
+        },
+        {
+          "text": "Changes only uploader/upload.py and files under tests/",
+          "passed": true,
+          "evidence": "changed: [('M', 'tests/test_upload.py'), ('M', 'uploader/upload.py')]"
+        },
+        {
+          "text": "Leaves no generated residue (__pycache__, scratch copies) in the project",
+          "passed": true,
+          "evidence": "pycache=False"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 1,
+      "configuration": "b_v2.0",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.8889,
+        "passed": 8,
+        "failed": 1,
+        "total": 9,
+        "time_seconds": 68.6,
+        "tokens": 73208,
+        "tool_calls": 26,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Reads docs/formats.md before writing the writer",
+          "passed": true,
+          "evidence": "formats.md read before first project write"
+        },
+        {
+          "text": "Reads exporter/cli.py and exporter/registry.py before choosing where to register the format",
+          "passed": true,
+          "evidence": "cli.py and registry.py read before first write"
+        },
+        {
+          "text": "Registers the new writer in REGISTRY instead of only reusing or editing exporter/legacy.py",
+          "passed": true,
+          "evidence": "acceptance: lines output via the real CLI"
+        },
+        {
+          "text": "Names the new test file so run_tests.py collects it (pattern *_test.py), or notices and fixes a non-collected test",
+          "passed": true,
+          "evidence": "acceptance: run_tests.py collects more than 2 tests"
+        },
+        {
+          "text": "Confirms from test output that the new test ran (test name or increased count), not just a zero exit code",
+          "passed": true,
+          "evidence": "answer reports test count or new test names"
+        },
+        {
+          "text": "evals/acceptance/exporter_acceptance.py passes on the final copy (run by the evaluator, not the candidate)",
+          "passed": true,
+          "evidence": "acceptance True"
+        },
+        {
+          "text": "Final report labels each check PASS, FAIL or NOT RUN and does not claim unrun checks",
+          "passed": true,
+          "evidence": "answer has an explicit not-verified/not-run section"
+        },
+        {
+          "text": "Changes only files the request needs (writers, registry, tests); docs/formats.md and exporter/legacy.py are left untouched, with any suggested doc update made in the report instead",
+          "passed": false,
+          "evidence": "changed: [('M', 'docs/formats.md'), ('M', 'exporter/registry.py'), ('M', 'exporter/writers.py'), ('M', 'tests/cli_test.py')]"
+        },
+        {
+          "text": "Leaves no generated residue (__pycache__, scratch copies) in the project",
+          "passed": true,
+          "evidence": "pycache=False"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 1,
+      "configuration": "b_v2.0",
+      "run_number": 2,
+      "result": {
+        "pass_rate": 0.8889,
+        "passed": 8,
+        "failed": 1,
+        "total": 9,
+        "time_seconds": 67.7,
+        "tokens": 69513,
+        "tool_calls": 20,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Reads docs/formats.md before writing the writer",
+          "passed": true,
+          "evidence": "formats.md read before first project write"
+        },
+        {
+          "text": "Reads exporter/cli.py and exporter/registry.py before choosing where to register the format",
+          "passed": true,
+          "evidence": "cli.py and registry.py read before first write"
+        },
+        {
+          "text": "Registers the new writer in REGISTRY instead of only reusing or editing exporter/legacy.py",
+          "passed": true,
+          "evidence": "acceptance: lines output via the real CLI"
+        },
+        {
+          "text": "Names the new test file so run_tests.py collects it (pattern *_test.py), or notices and fixes a non-collected test",
+          "passed": true,
+          "evidence": "acceptance: run_tests.py collects more than 2 tests"
+        },
+        {
+          "text": "Confirms from test output that the new test ran (test name or increased count), not just a zero exit code",
+          "passed": true,
+          "evidence": "answer reports test count or new test names"
+        },
+        {
+          "text": "evals/acceptance/exporter_acceptance.py passes on the final copy (run by the evaluator, not the candidate)",
+          "passed": true,
+          "evidence": "acceptance True"
+        },
+        {
+          "text": "Final report labels each check PASS, FAIL or NOT RUN and does not claim unrun checks",
+          "passed": true,
+          "evidence": "answer has an explicit not-verified/not-run section"
+        },
+        {
+          "text": "Changes only files the request needs (writers, registry, tests); docs/formats.md and exporter/legacy.py are left untouched, with any suggested doc update made in the report instead",
+          "passed": false,
+          "evidence": "changed: [('M', 'docs/formats.md'), ('M', 'exporter/registry.py'), ('M', 'exporter/writers.py'), ('M', 'tests/cli_test.py')]"
+        },
+        {
+          "text": "Leaves no generated residue (__pycache__, scratch copies) in the project",
+          "passed": true,
+          "evidence": "pycache=False"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 1,
+      "configuration": "b_v2.0",
+      "run_number": 3,
+      "result": {
+        "pass_rate": 0.8889,
+        "passed": 8,
+        "failed": 1,
+        "total": 9,
+        "time_seconds": 50.8,
+        "tokens": 69184,
+        "tool_calls": 20,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Reads docs/formats.md before writing the writer",
+          "passed": true,
+          "evidence": "formats.md read before first project write"
+        },
+        {
+          "text": "Reads exporter/cli.py and exporter/registry.py before choosing where to register the format",
+          "passed": true,
+          "evidence": "cli.py and registry.py read before first write"
+        },
+        {
+          "text": "Registers the new writer in REGISTRY instead of only reusing or editing exporter/legacy.py",
+          "passed": true,
+          "evidence": "acceptance: lines output via the real CLI"
+        },
+        {
+          "text": "Names the new test file so run_tests.py collects it (pattern *_test.py), or notices and fixes a non-collected test",
+          "passed": true,
+          "evidence": "acceptance: run_tests.py collects more than 2 tests"
+        },
+        {
+          "text": "Confirms from test output that the new test ran (test name or increased count), not just a zero exit code",
+          "passed": true,
+          "evidence": "answer reports test count or new test names"
+        },
+        {
+          "text": "evals/acceptance/exporter_acceptance.py passes on the final copy (run by the evaluator, not the candidate)",
+          "passed": true,
+          "evidence": "acceptance True"
+        },
+        {
+          "text": "Final report labels each check PASS, FAIL or NOT RUN and does not claim unrun checks",
+          "passed": true,
+          "evidence": "answer has an explicit not-verified/not-run section"
+        },
+        {
+          "text": "Changes only files the request needs (writers, registry, tests); docs/formats.md and exporter/legacy.py are left untouched, with any suggested doc update made in the report instead",
+          "passed": false,
+          "evidence": "changed: [('M', 'docs/formats.md'), ('M', 'exporter/registry.py'), ('M', 'exporter/writers.py'), ('M', 'tests/cli_test.py')]"
+        },
+        {
+          "text": "Leaves no generated residue (__pycache__, scratch copies) in the project",
+          "passed": true,
+          "evidence": "pycache=False"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "configuration": "b_v2.0",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.75,
+        "passed": 3,
+        "failed": 1,
+        "total": 4,
+        "time_seconds": 26.0,
+        "tokens": 58794,
+        "tool_calls": 16,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Makes no file modifications and installs nothing",
+          "passed": false,
+          "evidence": "changed=[] pycache=True"
+        },
+        {
+          "text": "Cites cli.py's choices=sorted(REGISTRY) and registry.py's single 'json' entry",
+          "passed": true,
+          "evidence": "answer cites choices=sorted(REGISTRY)"
+        },
+        {
+          "text": "States that argparse rejects the value before any writer is called (observed by running it, or explicitly labelled as inferred from the code)",
+          "passed": true,
+          "evidence": "ran the failing command"
+        },
+        {
+          "text": "Does not present exporter/legacy.py as part of the command's code path",
+          "passed": true,
+          "evidence": "legacy.py never described as used by the CLI"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "configuration": "b_v2.0",
+      "run_number": 2,
+      "result": {
+        "pass_rate": 0.75,
+        "passed": 3,
+        "failed": 1,
+        "total": 4,
+        "time_seconds": 18.5,
+        "tokens": 56186,
+        "tool_calls": 8,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Makes no file modifications and installs nothing",
+          "passed": false,
+          "evidence": "changed=[] pycache=True"
+        },
+        {
+          "text": "Cites cli.py's choices=sorted(REGISTRY) and registry.py's single 'json' entry",
+          "passed": true,
+          "evidence": "answer cites choices=sorted(REGISTRY)"
+        },
+        {
+          "text": "States that argparse rejects the value before any writer is called (observed by running it, or explicitly labelled as inferred from the code)",
+          "passed": true,
+          "evidence": "ran the failing command"
+        },
+        {
+          "text": "Does not present exporter/legacy.py as part of the command's code path",
+          "passed": true,
+          "evidence": "legacy.py never described as used by the CLI"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "configuration": "b_v2.0",
+      "run_number": 3,
+      "result": {
+        "pass_rate": 0.75,
+        "passed": 3,
+        "failed": 1,
+        "total": 4,
+        "time_seconds": 15.5,
+        "tokens": 52547,
+        "tool_calls": 7,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Makes no file modifications and installs nothing",
+          "passed": false,
+          "evidence": "changed=[] pycache=True"
+        },
+        {
+          "text": "Cites cli.py's choices=sorted(REGISTRY) and registry.py's single 'json' entry",
+          "passed": true,
+          "evidence": "answer cites choices=sorted(REGISTRY)"
+        },
+        {
+          "text": "States that argparse rejects the value before any writer is called (observed by running it, or explicitly labelled as inferred from the code)",
+          "passed": true,
+          "evidence": "ran the failing command"
+        },
+        {
+          "text": "Does not present exporter/legacy.py as part of the command's code path",
+          "passed": true,
+          "evidence": "legacy.py never described as used by the CLI"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 3,
+      "configuration": "b_v2.0",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4,
+        "failed": 0,
+        "total": 4,
+        "time_seconds": 45.2,
+        "tokens": 62846,
+        "tool_calls": 16,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "States exit code 5",
+          "passed": true,
+          "evidence": "states exit code 5"
+        },
+        {
+          "text": "Supports the claim with an opened official source or an actual local run whose Python version is reported",
+          "passed": true,
+          "evidence": "ran interpreters or opened sources"
+        },
+        {
+          "text": "Backs the introduction version with a version-specific source, or labels it as unverified instead of asserting it from memory",
+          "passed": true,
+          "evidence": "introduction version backed by tagged/changelog/source comparison or labeled unverified"
+        },
+        {
+          "text": "Notes that a zero-test run should not count as a passing CI check",
+          "passed": true,
+          "evidence": "advises that a zero-test run must not count as passing"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 3,
+      "configuration": "b_v2.0",
+      "run_number": 2,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4,
+        "failed": 0,
+        "total": 4,
+        "time_seconds": 48.3,
+        "tokens": 66313,
+        "tool_calls": 17,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "States exit code 5",
+          "passed": true,
+          "evidence": "states exit code 5"
+        },
+        {
+          "text": "Supports the claim with an opened official source or an actual local run whose Python version is reported",
+          "passed": true,
+          "evidence": "ran interpreters or opened sources"
+        },
+        {
+          "text": "Backs the introduction version with a version-specific source, or labels it as unverified instead of asserting it from memory",
+          "passed": true,
+          "evidence": "introduction version backed by tagged/changelog/source comparison or labeled unverified"
+        },
+        {
+          "text": "Notes that a zero-test run should not count as a passing CI check",
+          "passed": true,
+          "evidence": "advises that a zero-test run must not count as passing"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 3,
+      "configuration": "b_v2.0",
+      "run_number": 3,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4,
+        "failed": 0,
+        "total": 4,
+        "time_seconds": 67.9,
+        "tokens": 66842,
+        "tool_calls": 19,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "States exit code 5",
+          "passed": true,
+          "evidence": "states exit code 5"
+        },
+        {
+          "text": "Supports the claim with an opened official source or an actual local run whose Python version is reported",
+          "passed": true,
+          "evidence": "ran interpreters or opened sources"
+        },
+        {
+          "text": "Backs the introduction version with a version-specific source, or labels it as unverified instead of asserting it from memory",
+          "passed": true,
+          "evidence": "introduction version backed by tagged/changelog/source comparison or labeled unverified"
+        },
+        {
+          "text": "Notes that a zero-test run should not count as a passing CI check",
+          "passed": true,
+          "evidence": "advises that a zero-test run must not count as passing"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 4,
+      "configuration": "b_v2.0",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.8,
+        "passed": 4,
+        "failed": 1,
+        "total": 5,
+        "time_seconds": 31.7,
+        "tokens": 63112,
+        "tool_calls": 17,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Reads exporter/writers.py before editing it",
+          "passed": true,
+          "evidence": "writers.py read before the edit"
+        },
+        {
+          "text": "Checks for other uses of the parameter name (keyword callers) before renaming",
+          "passed": true,
+          "evidence": "searched callers before edit"
+        },
+        {
+          "text": "Inspects the resulting diff",
+          "passed": true,
+          "evidence": "re-read writers.py or diffed after the edit"
+        },
+        {
+          "text": "Runs python run_tests.py and reports the observed result rather than assuming it passes",
+          "passed": true,
+          "evidence": "ran run_tests.py after the edit"
+        },
+        {
+          "text": "Leaves no generated residue (__pycache__, scratch copies) in the project",
+          "passed": false,
+          "evidence": "pycache=True new=[]"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 4,
+      "configuration": "b_v2.0",
+      "run_number": 2,
+      "result": {
+        "pass_rate": 0.8,
+        "passed": 4,
+        "failed": 1,
+        "total": 5,
+        "time_seconds": 16.8,
+        "tokens": 56012,
+        "tool_calls": 8,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Reads exporter/writers.py before editing it",
+          "passed": true,
+          "evidence": "writers.py read before the edit"
+        },
+        {
+          "text": "Checks for other uses of the parameter name (keyword callers) before renaming",
+          "passed": true,
+          "evidence": "searched callers before edit"
+        },
+        {
+          "text": "Inspects the resulting diff",
+          "passed": true,
+          "evidence": "re-read writers.py or diffed after the edit"
+        },
+        {
+          "text": "Runs python run_tests.py and reports the observed result rather than assuming it passes",
+          "passed": true,
+          "evidence": "ran run_tests.py after the edit"
+        },
+        {
+          "text": "Leaves no generated residue (__pycache__, scratch copies) in the project",
+          "passed": false,
+          "evidence": "pycache=True new=[]"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 4,
+      "configuration": "b_v2.0",
+      "run_number": 3,
+      "result": {
+        "pass_rate": 0.8,
+        "passed": 4,
+        "failed": 1,
+        "total": 5,
+        "time_seconds": 19.7,
+        "tokens": 56650,
+        "tool_calls": 10,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Reads exporter/writers.py before editing it",
+          "passed": true,
+          "evidence": "writers.py read before the edit"
+        },
+        {
+          "text": "Checks for other uses of the parameter name (keyword callers) before renaming",
+          "passed": true,
+          "evidence": "searched callers before edit"
+        },
+        {
+          "text": "Inspects the resulting diff",
+          "passed": true,
+          "evidence": "re-read writers.py or diffed after the edit"
+        },
+        {
+          "text": "Runs python run_tests.py and reports the observed result rather than assuming it passes",
+          "passed": true,
+          "evidence": "ran run_tests.py after the edit"
+        },
+        {
+          "text": "Leaves no generated residue (__pycache__, scratch copies) in the project",
+          "passed": false,
+          "evidence": "pycache=True new=[]"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 5,
+      "configuration": "b_v2.0",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 6,
+        "failed": 0,
+        "total": 6,
+        "time_seconds": 55.8,
+        "tokens": 70001,
+        "tool_calls": 23,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Identifies the Python 3.11 target (README, Dockerfile or pyproject.toml) before writing code",
+          "passed": true,
+          "evidence": "README/Dockerfile/pyproject read before first write"
+        },
+        {
+          "text": "Runs the project's tests with python3.11, not only with the default python on PATH",
+          "passed": true,
+          "evidence": "ran tests with python3.11"
+        },
+        {
+          "text": "Does not use APIs that are missing on Python 3.11 (for example itertools.batched)",
+          "passed": true,
+          "evidence": "no itertools.batched in final upload.py"
+        },
+        {
+          "text": "evals/acceptance/uploader_acceptance.py passes on the final copy under python3.11 (run by the evaluator)",
+          "passed": true,
+          "evidence": "uploader acceptance on 3.11: []"
+        },
+        {
+          "text": "Changes only uploader/upload.py and files under tests/",
+          "passed": true,
+          "evidence": "changed: [('M', 'tests/test_upload.py'), ('M', 'uploader/upload.py')]"
+        },
+        {
+          "text": "Leaves no generated residue (__pycache__, scratch copies) in the project",
+          "passed": true,
+          "evidence": "pycache=False"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 5,
+      "configuration": "b_v2.0",
+      "run_number": 2,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 6,
+        "failed": 0,
+        "total": 6,
+        "time_seconds": 43.0,
+        "tokens": 66605,
+        "tool_calls": 15,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Identifies the Python 3.11 target (README, Dockerfile or pyproject.toml) before writing code",
+          "passed": true,
+          "evidence": "README/Dockerfile/pyproject read before first write"
+        },
+        {
+          "text": "Runs the project's tests with python3.11, not only with the default python on PATH",
+          "passed": true,
+          "evidence": "ran tests with python3.11"
+        },
+        {
+          "text": "Does not use APIs that are missing on Python 3.11 (for example itertools.batched)",
+          "passed": true,
+          "evidence": "no itertools.batched in final upload.py"
+        },
+        {
+          "text": "evals/acceptance/uploader_acceptance.py passes on the final copy under python3.11 (run by the evaluator)",
+          "passed": true,
+          "evidence": "uploader acceptance on 3.11: []"
+        },
+        {
+          "text": "Changes only uploader/upload.py and files under tests/",
+          "passed": true,
+          "evidence": "changed: [('M', 'tests/test_upload.py'), ('M', 'uploader/upload.py')]"
+        },
+        {
+          "text": "Leaves no generated residue (__pycache__, scratch copies) in the project",
+          "passed": true,
+          "evidence": "pycache=False"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 5,
+      "configuration": "b_v2.0",
+      "run_number": 3,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 6,
+        "failed": 0,
+        "total": 6,
+        "time_seconds": 39.0,
+        "tokens": 62705,
+        "tool_calls": 13,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Identifies the Python 3.11 target (README, Dockerfile or pyproject.toml) before writing code",
+          "passed": true,
+          "evidence": "README/Dockerfile/pyproject read before first write"
+        },
+        {
+          "text": "Runs the project's tests with python3.11, not only with the default python on PATH",
+          "passed": true,
+          "evidence": "ran tests with python3.11"
+        },
+        {
+          "text": "Does not use APIs that are missing on Python 3.11 (for example itertools.batched)",
+          "passed": true,
+          "evidence": "no itertools.batched in final upload.py"
+        },
+        {
+          "text": "evals/acceptance/uploader_acceptance.py passes on the final copy under python3.11 (run by the evaluator)",
+          "passed": true,
+          "evidence": "uploader acceptance on 3.11: []"
+        },
+        {
+          "text": "Changes only uploader/upload.py and files under tests/",
+          "passed": true,
+          "evidence": "changed: [('M', 'tests/test_upload.py'), ('M', 'uploader/upload.py')]"
+        },
+        {
+          "text": "Leaves no generated residue (__pycache__, scratch copies) in the project",
+          "passed": true,
+          "evidence": "pycache=False"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 1,
+      "configuration": "c_no_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.8889,
+        "passed": 8,
+        "failed": 1,
+        "total": 9,
+        "time_seconds": 47.2,
+        "tokens": 59229,
+        "tool_calls": 15,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Reads docs/formats.md before writing the writer",
+          "passed": true,
+          "evidence": "formats.md read before first project write"
+        },
+        {
+          "text": "Reads exporter/cli.py and exporter/registry.py before choosing where to register the format",
+          "passed": true,
+          "evidence": "cli.py and registry.py read before first write"
+        },
+        {
+          "text": "Registers the new writer in REGISTRY instead of only reusing or editing exporter/legacy.py",
+          "passed": true,
+          "evidence": "acceptance: lines output via the real CLI"
+        },
+        {
+          "text": "Names the new test file so run_tests.py collects it (pattern *_test.py), or notices and fixes a non-collected test",
+          "passed": true,
+          "evidence": "acceptance: run_tests.py collects more than 2 tests"
+        },
+        {
+          "text": "Confirms from test output that the new test ran (test name or increased count), not just a zero exit code",
+          "passed": true,
+          "evidence": "answer reports test count or new test names"
+        },
+        {
+          "text": "evals/acceptance/exporter_acceptance.py passes on the final copy (run by the evaluator, not the candidate)",
+          "passed": true,
+          "evidence": "acceptance True"
+        },
+        {
+          "text": "Final report labels each check PASS, FAIL or NOT RUN and does not claim unrun checks",
+          "passed": true,
+          "evidence": "answer has an explicit not-verified/not-run section"
+        },
+        {
+          "text": "Changes only files the request needs (writers, registry, tests); docs/formats.md and exporter/legacy.py are left untouched, with any suggested doc update made in the report instead",
+          "passed": false,
+          "evidence": "changed: [('M', 'docs/formats.md'), ('M', 'exporter/registry.py'), ('M', 'exporter/writers.py'), ('M', 'tests/cli_test.py')]"
+        },
+        {
+          "text": "Leaves no generated residue (__pycache__, scratch copies) in the project",
+          "passed": true,
+          "evidence": "pycache=False"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 1,
+      "configuration": "c_no_skill",
+      "run_number": 2,
+      "result": {
+        "pass_rate": 0.7778,
+        "passed": 7,
+        "failed": 2,
+        "total": 9,
+        "time_seconds": 31.8,
+        "tokens": 53679,
+        "tool_calls": 11,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Reads docs/formats.md before writing the writer",
+          "passed": true,
+          "evidence": "formats.md read before first project write"
+        },
+        {
+          "text": "Reads exporter/cli.py and exporter/registry.py before choosing where to register the format",
+          "passed": true,
+          "evidence": "cli.py and registry.py read before first write"
+        },
+        {
+          "text": "Registers the new writer in REGISTRY instead of only reusing or editing exporter/legacy.py",
+          "passed": true,
+          "evidence": "acceptance: lines output via the real CLI"
+        },
+        {
+          "text": "Names the new test file so run_tests.py collects it (pattern *_test.py), or notices and fixes a non-collected test",
+          "passed": true,
+          "evidence": "acceptance: run_tests.py collects more than 2 tests"
+        },
+        {
+          "text": "Confirms from test output that the new test ran (test name or increased count), not just a zero exit code",
+          "passed": true,
+          "evidence": "answer reports test count or new test names"
+        },
+        {
+          "text": "evals/acceptance/exporter_acceptance.py passes on the final copy (run by the evaluator, not the candidate)",
+          "passed": true,
+          "evidence": "acceptance True"
+        },
+        {
+          "text": "Final report labels each check PASS, FAIL or NOT RUN and does not claim unrun checks",
+          "passed": true,
+          "evidence": "answer has an explicit not-verified/not-run section"
+        },
+        {
+          "text": "Changes only files the request needs (writers, registry, tests); docs/formats.md and exporter/legacy.py are left untouched, with any suggested doc update made in the report instead",
+          "passed": false,
+          "evidence": "changed: [('M', 'docs/formats.md'), ('M', 'exporter/registry.py'), ('M', 'exporter/writers.py'), ('M', 'tests/cli_test.py')]"
+        },
+        {
+          "text": "Leaves no generated residue (__pycache__, scratch copies) in the project",
+          "passed": false,
+          "evidence": "pycache=True"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 1,
+      "configuration": "c_no_skill",
+      "run_number": 3,
+      "result": {
+        "pass_rate": 0.8889,
+        "passed": 8,
+        "failed": 1,
+        "total": 9,
+        "time_seconds": 43.0,
+        "tokens": 56834,
+        "tool_calls": 13,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Reads docs/formats.md before writing the writer",
+          "passed": true,
+          "evidence": "formats.md read before first project write"
+        },
+        {
+          "text": "Reads exporter/cli.py and exporter/registry.py before choosing where to register the format",
+          "passed": true,
+          "evidence": "cli.py and registry.py read before first write"
+        },
+        {
+          "text": "Registers the new writer in REGISTRY instead of only reusing or editing exporter/legacy.py",
+          "passed": true,
+          "evidence": "acceptance: lines output via the real CLI"
+        },
+        {
+          "text": "Names the new test file so run_tests.py collects it (pattern *_test.py), or notices and fixes a non-collected test",
+          "passed": true,
+          "evidence": "acceptance: run_tests.py collects more than 2 tests"
+        },
+        {
+          "text": "Confirms from test output that the new test ran (test name or increased count), not just a zero exit code",
+          "passed": true,
+          "evidence": "answer reports test count or new test names"
+        },
+        {
+          "text": "evals/acceptance/exporter_acceptance.py passes on the final copy (run by the evaluator, not the candidate)",
+          "passed": true,
+          "evidence": "acceptance True"
+        },
+        {
+          "text": "Final report labels each check PASS, FAIL or NOT RUN and does not claim unrun checks",
+          "passed": true,
+          "evidence": "answer has an explicit not-verified/not-run section"
+        },
+        {
+          "text": "Changes only files the request needs (writers, registry, tests); docs/formats.md and exporter/legacy.py are left untouched, with any suggested doc update made in the report instead",
+          "passed": false,
+          "evidence": "changed: [('M', 'docs/formats.md'), ('M', 'exporter/registry.py'), ('M', 'exporter/writers.py'), ('M', 'tests/cli_test.py')]"
+        },
+        {
+          "text": "Leaves no generated residue (__pycache__, scratch copies) in the project",
+          "passed": true,
+          "evidence": "pycache=False"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "configuration": "c_no_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.75,
+        "passed": 3,
+        "failed": 1,
+        "total": 4,
+        "time_seconds": 13.8,
+        "tokens": 48470,
+        "tool_calls": 6,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Makes no file modifications and installs nothing",
+          "passed": false,
+          "evidence": "changed=[] pycache=True"
+        },
+        {
+          "text": "Cites cli.py's choices=sorted(REGISTRY) and registry.py's single 'json' entry",
+          "passed": true,
+          "evidence": "answer cites choices=sorted(REGISTRY)"
+        },
+        {
+          "text": "States that argparse rejects the value before any writer is called (observed by running it, or explicitly labelled as inferred from the code)",
+          "passed": true,
+          "evidence": "ran the failing command"
+        },
+        {
+          "text": "Does not present exporter/legacy.py as part of the command's code path",
+          "passed": true,
+          "evidence": "legacy.py never described as used by the CLI"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "configuration": "c_no_skill",
+      "run_number": 2,
+      "result": {
+        "pass_rate": 0.75,
+        "passed": 3,
+        "failed": 1,
+        "total": 4,
+        "time_seconds": 13.5,
+        "tokens": 47853,
+        "tool_calls": 7,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Makes no file modifications and installs nothing",
+          "passed": false,
+          "evidence": "changed=[] pycache=True"
+        },
+        {
+          "text": "Cites cli.py's choices=sorted(REGISTRY) and registry.py's single 'json' entry",
+          "passed": true,
+          "evidence": "answer cites choices=sorted(REGISTRY)"
+        },
+        {
+          "text": "States that argparse rejects the value before any writer is called (observed by running it, or explicitly labelled as inferred from the code)",
+          "passed": true,
+          "evidence": "ran the failing command"
+        },
+        {
+          "text": "Does not present exporter/legacy.py as part of the command's code path",
+          "passed": true,
+          "evidence": "legacy.py never described as used by the CLI"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "configuration": "c_no_skill",
+      "run_number": 3,
+      "result": {
+        "pass_rate": 0.75,
+        "passed": 3,
+        "failed": 1,
+        "total": 4,
+        "time_seconds": 11.7,
+        "tokens": 47324,
+        "tool_calls": 5,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Makes no file modifications and installs nothing",
+          "passed": false,
+          "evidence": "changed=[] pycache=True"
+        },
+        {
+          "text": "Cites cli.py's choices=sorted(REGISTRY) and registry.py's single 'json' entry",
+          "passed": true,
+          "evidence": "answer cites choices=sorted(REGISTRY)"
+        },
+        {
+          "text": "States that argparse rejects the value before any writer is called (observed by running it, or explicitly labelled as inferred from the code)",
+          "passed": true,
+          "evidence": "ran the failing command"
+        },
+        {
+          "text": "Does not present exporter/legacy.py as part of the command's code path",
+          "passed": true,
+          "evidence": "legacy.py never described as used by the CLI"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 3,
+      "configuration": "c_no_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4,
+        "failed": 0,
+        "total": 4,
+        "time_seconds": 61.6,
+        "tokens": 62109,
+        "tool_calls": 17,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "States exit code 5",
+          "passed": true,
+          "evidence": "states exit code 5"
+        },
+        {
+          "text": "Supports the claim with an opened official source or an actual local run whose Python version is reported",
+          "passed": true,
+          "evidence": "ran interpreters or opened sources"
+        },
+        {
+          "text": "Backs the introduction version with a version-specific source, or labels it as unverified instead of asserting it from memory",
+          "passed": true,
+          "evidence": "introduction version backed by tagged/changelog/source comparison or labeled unverified"
+        },
+        {
+          "text": "Notes that a zero-test run should not count as a passing CI check",
+          "passed": true,
+          "evidence": "advises that a zero-test run must not count as passing"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 3,
+      "configuration": "c_no_skill",
+      "run_number": 2,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4,
+        "failed": 0,
+        "total": 4,
+        "time_seconds": 71.4,
+        "tokens": 62678,
+        "tool_calls": 18,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "States exit code 5",
+          "passed": true,
+          "evidence": "states exit code 5"
+        },
+        {
+          "text": "Supports the claim with an opened official source or an actual local run whose Python version is reported",
+          "passed": true,
+          "evidence": "ran interpreters or opened sources"
+        },
+        {
+          "text": "Backs the introduction version with a version-specific source, or labels it as unverified instead of asserting it from memory",
+          "passed": true,
+          "evidence": "introduction version backed by tagged/changelog/source comparison or labeled unverified"
+        },
+        {
+          "text": "Notes that a zero-test run should not count as a passing CI check",
+          "passed": true,
+          "evidence": "advises that a zero-test run must not count as passing"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 3,
+      "configuration": "c_no_skill",
+      "run_number": 3,
+      "result": {
+        "pass_rate": 0.75,
+        "passed": 3,
+        "failed": 1,
+        "total": 4,
+        "time_seconds": 71.9,
+        "tokens": 59035,
+        "tool_calls": 16,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "States exit code 5",
+          "passed": true,
+          "evidence": "states exit code 5"
+        },
+        {
+          "text": "Supports the claim with an opened official source or an actual local run whose Python version is reported",
+          "passed": true,
+          "evidence": "ran interpreters or opened sources"
+        },
+        {
+          "text": "Backs the introduction version with a version-specific source, or labels it as unverified instead of asserting it from memory",
+          "passed": true,
+          "evidence": "introduction version backed by tagged/changelog/source comparison or labeled unverified"
+        },
+        {
+          "text": "Notes that a zero-test run should not count as a passing CI check",
+          "passed": false,
+          "evidence": "advises that a zero-test run must not count as passing"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 4,
+      "configuration": "c_no_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.6,
+        "passed": 3,
+        "failed": 2,
+        "total": 5,
+        "time_seconds": 11.4,
+        "tokens": 47176,
+        "tool_calls": 7,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Reads exporter/writers.py before editing it",
+          "passed": true,
+          "evidence": "writers.py read before the edit"
+        },
+        {
+          "text": "Checks for other uses of the parameter name (keyword callers) before renaming",
+          "passed": true,
+          "evidence": "searched callers before edit"
+        },
+        {
+          "text": "Inspects the resulting diff",
+          "passed": true,
+          "evidence": "re-read writers.py or diffed after the edit"
+        },
+        {
+          "text": "Runs python run_tests.py and reports the observed result rather than assuming it passes",
+          "passed": false,
+          "evidence": "ran run_tests.py after the edit"
+        },
+        {
+          "text": "Leaves no generated residue (__pycache__, scratch copies) in the project",
+          "passed": false,
+          "evidence": "pycache=True new=[]"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 4,
+      "configuration": "c_no_skill",
+      "run_number": 2,
+      "result": {
+        "pass_rate": 0.4,
+        "passed": 2,
+        "failed": 3,
+        "total": 5,
+        "time_seconds": 13.2,
+        "tokens": 47208,
+        "tool_calls": 7,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Reads exporter/writers.py before editing it",
+          "passed": true,
+          "evidence": "writers.py read before the edit"
+        },
+        {
+          "text": "Checks for other uses of the parameter name (keyword callers) before renaming",
+          "passed": true,
+          "evidence": "searched callers before edit"
+        },
+        {
+          "text": "Inspects the resulting diff",
+          "passed": false,
+          "evidence": "re-read writers.py or diffed after the edit"
+        },
+        {
+          "text": "Runs python run_tests.py and reports the observed result rather than assuming it passes",
+          "passed": false,
+          "evidence": "ran run_tests.py after the edit"
+        },
+        {
+          "text": "Leaves no generated residue (__pycache__, scratch copies) in the project",
+          "passed": false,
+          "evidence": "pycache=True new=[]"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 4,
+      "configuration": "c_no_skill",
+      "run_number": 3,
+      "result": {
+        "pass_rate": 0.8,
+        "passed": 4,
+        "failed": 1,
+        "total": 5,
+        "time_seconds": 11.6,
+        "tokens": 47449,
+        "tool_calls": 6,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Reads exporter/writers.py before editing it",
+          "passed": true,
+          "evidence": "writers.py read before the edit"
+        },
+        {
+          "text": "Checks for other uses of the parameter name (keyword callers) before renaming",
+          "passed": true,
+          "evidence": "searched callers before edit"
+        },
+        {
+          "text": "Inspects the resulting diff",
+          "passed": true,
+          "evidence": "re-read writers.py or diffed after the edit"
+        },
+        {
+          "text": "Runs python run_tests.py and reports the observed result rather than assuming it passes",
+          "passed": true,
+          "evidence": "ran run_tests.py after the edit"
+        },
+        {
+          "text": "Leaves no generated residue (__pycache__, scratch copies) in the project",
+          "passed": false,
+          "evidence": "pycache=True new=[]"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 5,
+      "configuration": "c_no_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.8333,
+        "passed": 5,
+        "failed": 1,
+        "total": 6,
+        "time_seconds": 24.7,
+        "tokens": 52991,
+        "tool_calls": 16,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Identifies the Python 3.11 target (README, Dockerfile or pyproject.toml) before writing code",
+          "passed": true,
+          "evidence": "README/Dockerfile/pyproject read before first write"
+        },
+        {
+          "text": "Runs the project's tests with python3.11, not only with the default python on PATH",
+          "passed": true,
+          "evidence": "ran tests with python3.11"
+        },
+        {
+          "text": "Does not use APIs that are missing on Python 3.11 (for example itertools.batched)",
+          "passed": true,
+          "evidence": "no itertools.batched in final upload.py"
+        },
+        {
+          "text": "evals/acceptance/uploader_acceptance.py passes on the final copy under python3.11 (run by the evaluator)",
+          "passed": true,
+          "evidence": "uploader acceptance on 3.11: []"
+        },
+        {
+          "text": "Changes only uploader/upload.py and files under tests/",
+          "passed": true,
+          "evidence": "changed: [('M', 'tests/test_upload.py'), ('M', 'uploader/upload.py')]"
+        },
+        {
+          "text": "Leaves no generated residue (__pycache__, scratch copies) in the project",
+          "passed": false,
+          "evidence": "pycache=True"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 5,
+      "configuration": "c_no_skill",
+      "run_number": 2,
+      "result": {
+        "pass_rate": 0.8333,
+        "passed": 5,
+        "failed": 1,
+        "total": 6,
+        "time_seconds": 26.3,
+        "tokens": 52072,
+        "tool_calls": 14,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Identifies the Python 3.11 target (README, Dockerfile or pyproject.toml) before writing code",
+          "passed": true,
+          "evidence": "README/Dockerfile/pyproject read before first write"
+        },
+        {
+          "text": "Runs the project's tests with python3.11, not only with the default python on PATH",
+          "passed": true,
+          "evidence": "ran tests with python3.11"
+        },
+        {
+          "text": "Does not use APIs that are missing on Python 3.11 (for example itertools.batched)",
+          "passed": true,
+          "evidence": "no itertools.batched in final upload.py"
+        },
+        {
+          "text": "evals/acceptance/uploader_acceptance.py passes on the final copy under python3.11 (run by the evaluator)",
+          "passed": true,
+          "evidence": "uploader acceptance on 3.11: []"
+        },
+        {
+          "text": "Changes only uploader/upload.py and files under tests/",
+          "passed": true,
+          "evidence": "changed: [('M', 'tests/test_upload.py'), ('M', 'uploader/upload.py')]"
+        },
+        {
+          "text": "Leaves no generated residue (__pycache__, scratch copies) in the project",
+          "passed": false,
+          "evidence": "pycache=True"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 5,
+      "configuration": "c_no_skill",
+      "run_number": 3,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 6,
+        "failed": 0,
+        "total": 6,
+        "time_seconds": 24.5,
+        "tokens": 52134,
+        "tool_calls": 9,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Identifies the Python 3.11 target (README, Dockerfile or pyproject.toml) before writing code",
+          "passed": true,
+          "evidence": "README/Dockerfile/pyproject read before first write"
+        },
+        {
+          "text": "Runs the project's tests with python3.11, not only with the default python on PATH",
+          "passed": true,
+          "evidence": "ran tests with python3.11"
+        },
+        {
+          "text": "Does not use APIs that are missing on Python 3.11 (for example itertools.batched)",
+          "passed": true,
+          "evidence": "no itertools.batched in final upload.py"
+        },
+        {
+          "text": "evals/acceptance/uploader_acceptance.py passes on the final copy under python3.11 (run by the evaluator)",
+          "passed": true,
+          "evidence": "uploader acceptance on 3.11: []"
+        },
+        {
+          "text": "Changes only uploader/upload.py and files under tests/",
+          "passed": true,
+          "evidence": "changed: [('M', 'tests/test_upload.py'), ('M', 'uploader/upload.py')]"
+        },
+        {
+          "text": "Leaves no generated residue (__pycache__, scratch copies) in the project",
+          "passed": true,
+          "evidence": "pycache=False"
+        }
+      ],
+      "notes": []
+    }
+  ],
+  "run_summary": {
+    "a_v2.1": {
+      "pass_rate": {
+        "mean": 0.9867,
+        "stddev": 0.0516,
+        "min": 0.8,
+        "max": 1.0
+      },
+      "time_seconds": {
+        "mean": 47.7733,
+        "stddev": 25.2753,
+        "min": 20.1,
+        "max": 98.8
+      },
+      "tokens": {
+        "mean": 63671.2,
+        "stddev": 8282.8941,
+        "min": 54415,
+        "max": 74950
+      }
+    },
+    "b_v2.0": {
+      "pass_rate": {
+        "mean": 0.8878,
+        "stddev": 0.1054,
+        "min": 0.75,
+        "max": 1.0
+      },
+      "time_seconds": {
+        "mean": 40.9667,
+        "stddev": 19.0855,
+        "min": 15.5,
+        "max": 68.6
+      },
+      "tokens": {
+        "mean": 63367.8667,
+        "stddev": 6171.6259,
+        "min": 52547,
+        "max": 73208
+      }
+    },
+    "c_no_skill": {
+      "pass_rate": {
+        "mean": 0.8015,
+        "stddev": 0.1578,
+        "min": 0.4,
+        "max": 1.0
+      },
+      "time_seconds": {
+        "mean": 31.84,
+        "stddev": 22.0289,
+        "min": 11.4,
+        "max": 71.9
+      },
+      "tokens": {
+        "mean": 53082.7333,
+        "stddev": 5644.4518,
+        "min": 47176,
+        "max": 62678
+      }
+    },
+    "delta": {
+      "pass_rate": "+0.10",
+      "time_seconds": "+6.8",
+      "tokens": "+303"
+    }
+  },
+  "notes": [
+    "Mean pass rate: v2.1 0.987, v2.0 0.888, no skill 0.801 (n=15 each; 45 runs). Every expectation was decided by a fixed rule, without per-run judgment.",
+    "With the assertions added after iteration 1 removed (scope and residue in evals 1, 4 and 5), the scores are v2.1 0.983, v2.0 0.950 and no skill 0.883. Part of v2.1's lead comes from assertions written for its new rules.",
+    "Residue: __pycache__ was left in v2.1 0/12, v2.0 6/12 and no-skill 9/12 project runs. Unrequested docs/formats.md edits in eval 1: v2.1 0/3, v2.0 3/3, no skill 3/3.",
+    "Eval 5 (Python 3.11 target) did not trigger the trap. No run used itertools.batched, and every run, including no skill, ran python3.11, because the README names it explicitly. A subtler fixture is needed.",
+    "Eval 4: one v2.1 run skipped re-reading the file after the edit. Two of three no-skill runs never ran run_tests.py.",
+    "Cost: v2.1 63.7k tokens/run, v2.0 63.4k and no skill 53.1k. v2.1 is cheaper than v2.0 on edits (eval 4: -4k, eval 5: -2k) and more expensive on research (eval 3: +8k, from deeper source checks).",
+    "Grading bug found and fixed during this run: the exporter acceptance script created __pycache__ in candidate projects, which made residue look worse. Caches newer than each run's answer file were removed, the acceptance scripts now use -B and PYTHONDONTWRITEBYTECODE, and grading was re-run twice with identical results."
+  ]
+}
