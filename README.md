@@ -1,6 +1,6 @@
 # evidence-first-knowledge-work
 
-**Version 2.1.0 | English | MIT**
+**Version 2.2.0 | English | MIT**
 
 An Agent Skill that stops the most common way agents damage engineering work: confident guesses. Examples are a parameter remembered from another version, an edit to a file that changed since it was read, a test run that selected zero tests, or a "done" nobody checked. It is written to work with smaller models as well as larger ones.
 
@@ -41,9 +41,11 @@ mkdir -p <dest> && git archive --prefix=evidence-first-knowledge-work/ HEAD | ta
 | Claude Code (personal) | `~/.claude/skills` |
 | Codex (project) | `<project>/.agents/skills` |
 
-Then merge [project-instructions.snippet.md](project-instructions.snippet.md) into your existing `CLAUDE.md` or `AGENTS.md`. Replace `<SKILL_DIR>` with the actual install path. Read your existing instructions first, do not overwrite them, and start a new session so the host picks up the change.[1][2][3][4]
+**Then merge [project-instructions.snippet.md](project-instructions.snippet.md) into your existing `CLAUDE.md` or `AGENTS.md`. This step is required for automatic use.** Replace `<SKILL_DIR>` with the actual install path. Read your existing instructions first, do not overwrite them, and start a new session so the host picks up the change.[1][2][3][4]
 
-Invoke the skill explicitly with `/evidence-first-knowledge-work` (Claude Code) or `$evidence-first-knowledge-work` (Codex), or let the description trigger it automatically. The frontmatter uses only portable fields (`name`, `description`, `license`, `metadata`), so the same SKILL.md also uploads to claude.ai and the Skills API.[3][5]
+Why it is required: models rarely load a general working-method skill from its description for tasks they believe they can handle directly. On Haiku 5.5 the skill loaded 1 time in 20 engineering requests without the snippet, and 20 in 20 with it, with 0 of 10 false activations on non-engineering requests. Five rounds of description optimization did not change this ([data](evals/results/2026-10-09-haiku-5-5-v2.2/README.md#2-activation-in-real-use)).
+
+You can also invoke the skill explicitly with `/evidence-first-knowledge-work` (Claude Code) or `$evidence-first-knowledge-work` (Codex). The frontmatter uses only portable fields (`name`, `description`, `license`, `metadata`), so the same SKILL.md also uploads to claude.ai and the Skills API.[3][5]
 
 ### Optional: zero-test hook (Claude Code)
 
@@ -59,6 +61,7 @@ The tool tests show that the bundled tools behave as specified. They do not meas
 
 Benchmarks on Haiku 5.5:
 
+- [v2.2 vs v2.1 vs no skill, plus activation](evals/results/2026-10-09-haiku-5-5-v2.2/README.md): 36 runs, mechanical grading. Mean pass rate v2.2 1.000, v2.1 0.983, no skill 0.766. Residue 0/12, 0/12 and 10/12. v2.2 uses about 25% more tokens than no skill. Activation: 1/20 without the project snippet, 20/20 with it.
 - [v2.1 vs v2.0 vs no skill](evals/results/2026-10-09-haiku-5-5-v2.1/README.md): 45 runs, mechanical grading. Mean pass rate v2.1 0.987, v2.0 0.888, no skill 0.801. Generated residue in 0/12, 6/12 and 9/12 project runs respectively. v2.1 costs the same tokens as v2.0 and about 20% more than no skill.
 - [v2.0 vs v1.1 vs no skill](evals/results/2026-10-09-haiku-5-5/README.md): 24 runs. Mean pass rate 1.00, 0.94 and 0.78.
 

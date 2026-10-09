@@ -1,0 +1,198 @@
+{
+ "model": "claude-haiku-5-5",
+ "harness": "skill-creator run_eval/run_loop (claude -p, Claude Code 2.1.295)",
+ "baseline_description": {
+  "summary": {
+   "total": 20,
+   "passed": 10,
+   "failed": 10
+  },
+  "results": [
+   {
+    "query": "add a --dry-run flag to scripts/migrate_users.py that prints what would change without writing to postgres",
+    "should_trigger": true,
+    "triggers": 0,
+    "runs": 3
+   },
+   {
+    "query": "can you bump the httpx timeout in our api client (src/clients/billing.py) to 30s? we're on httpx 0.27 i think, the calls keep timing out in staging",
+    "should_trigger": true,
+    "triggers": 0,
+    "runs": 3
+   },
+   {
+    "query": "Our GitHub Actions job runs `pytest -k smoke` and it's green but I just noticed it finishes in 0.3s. Can you figure out whether the smoke tests are actually running and fix the workflow if not?",
+    "should_trigger": true,
+    "triggers": 1,
+    "runs": 3
+   },
+   {
+    "query": "Does pandas 2.2 still accept `inplace=True` on DataFrame.fillna or was that deprecated? I want to update the cleaning step in etl/clean.py accordingly",
+    "should_trigger": true,
+    "triggers": 0,
+    "runs": 3
+   },
+   {
+    "query": "the docker build fails after I upgraded node from 18 to 22, error is about node-gyp and better-sqlite3. here's the log: gyp ERR! find Python... can you fix the Dockerfile",
+    "should_trigger": true,
+    "triggers": 0,
+    "runs": 3
+   },
+   {
+    "query": "Please update docs/api/authentication.md so it matches what the /v2/token endpoint in server/routes/auth.ts actually returns now",
+    "should_trigger": true,
+    "triggers": 0,
+    "runs": 3
+   },
+   {
+    "query": "I tried twice to fix the flaky test_order_sync and it still fails ~1 in 5 runs on CI. Can you take over and find the real cause?",
+    "should_trigger": true,
+    "triggers": 0,
+    "runs": 3
+   },
+   {
+    "query": "Compare our Q3 churn numbers in data/churn_q3.csv with the Q2 report the finance team sent (q2_churn.xlsx) and tell me if churn really went up",
+    "should_trigger": true,
+    "triggers": 0,
+    "runs": 3
+   },
+   {
+    "query": "just a tiny change: in settings.yaml switch the redis url to use TLS (rediss://) for prod",
+    "should_trigger": true,
+    "triggers": 0,
+    "runs": 3
+   },
+   {
+    "query": "what's the right way to configure boto3 retries with adaptive mode for S3 uploads in our lambda? we pin boto3 1.34 in requirements.txt",
+    "should_trigger": true,
+    "triggers": 0,
+    "runs": 3
+   },
+   {
+    "query": "write me a short poem about debugging at 3am for our team's slack channel",
+    "should_trigger": false,
+    "triggers": 0,
+    "runs": 3
+   },
+   {
+    "query": "brainstorm 10 possible names for our new internal developer portal, something catchy",
+    "should_trigger": false,
+    "triggers": 0,
+    "runs": 3
+   },
+   {
+    "query": "can you help me write a polite email to my manager asking to move our 1:1 to thursday",
+    "should_trigger": false,
+    "triggers": 0,
+    "runs": 3
+   },
+   {
+    "query": "explain like i'm five what an API is, my mom asked me at dinner and i blanked",
+    "should_trigger": false,
+    "triggers": 0,
+    "runs": 3
+   },
+   {
+    "query": "turn these meeting notes into a bullet list of action items: - Sam to own onboarding doc - revisit pricing next week - Priya demo on Friday",
+    "should_trigger": false,
+    "triggers": 0,
+    "runs": 3
+   },
+   {
+    "query": "make a slide deck outline for my talk on 'why we moved to a monorepo', 8 slides, high level, no code",
+    "should_trigger": false,
+    "triggers": 0,
+    "runs": 3
+   },
+   {
+    "query": "give me feedback on the tone of my cover letter for a backend engineer job, I'll paste it below",
+    "should_trigger": false,
+    "triggers": 0,
+    "runs": 3
+   },
+   {
+    "query": "what are some good books about software architecture for a junior dev? just recommendations",
+    "should_trigger": false,
+    "triggers": 0,
+    "runs": 3
+   },
+   {
+    "query": "rewrite this paragraph from our careers page to sound warmer and less corporate: 'We leverage synergies to deliver value...'",
+    "should_trigger": false,
+    "triggers": 0,
+    "runs": 3
+   },
+   {
+    "query": "translate this product announcement into Japanese, keep the marketing tone",
+    "should_trigger": false,
+    "triggers": 0,
+    "runs": 3
+   }
+  ]
+ },
+ "optimization_loop": {
+  "exit_reason": "max_iterations (5)",
+  "best_description": "Evidence-first workflow for engineering and technical research. Verifies version-matched documentation and current file state before writing, works in small steps with short receipts, diagnoses failures from evidence instead of guessing, and reports only checks that actually ran. Use whenever editing code or configuration, calling an API, SDK, CLI or library, debugging or fixing tests, answering technical questions whose answer depends on exact versions or behavior, analyzing data, or writing technical documentation, including small, familiar or urgent changes. Not needed for casual conversation, brainstorming, or non-technical writing.",
+  "best_score": "4/8",
+  "best_train_score": "6/12",
+  "best_test_score": "4/8",
+  "iterations_run": 5,
+  "holdout": 0.4,
+  "history": [
+   {
+    "iteration": 1,
+    "train": "6/12",
+    "test": "4/8",
+    "description": "Evidence-first workflow for engineering and technical research. Verifies version-matched documentation and current file state before writing, works in small steps with short receipts, diagnoses failures from evidence instead of guessing, and reports only checks that actually ran. Use whenever editing code or configuration, calling an API, SDK, CLI or library, debugging or fixing tests, answering technical questions whose answer depends on exact versions or behavior, analyzing data, or writing technical documentation, including small, familiar or urgent changes. Not needed for casual conversation, brainstorming, or non-technical writing."
+   },
+   {
+    "iteration": 2,
+    "train": "6/12",
+    "test": "4/8",
+    "description": "Use this skill when the user asks you to change, fix, or add to code, config, infrastructure, or docs in a real project, even if the change looks small, routine, or urgent. This includes: editing settings or config values, tuning timeouts or client options, fixing builds, Dockerfiles, or CI workflows, chasing flaky or failing tests, and updating documentation so it matches current code behavior. It also covers questions or calls whose correct answer depends on an exact library, SDK, CLI, or API version, and analysis of data files. The skill checks the real files and versions before acting. Skip it for casual chat, brainstorming, creative or marketing copy, translation, and general reading recommendations."
+   },
+   {
+    "iteration": 3,
+    "train": "6/12",
+    "test": "4/8",
+    "description": "Use this skill for hands-on engineering work on a real project: changing, fixing, or diagnosing code, configuration, settings, timeouts or client options, builds, containers, CI pipelines, or tests, and updating docs that must match current behavior. Use it when a failure needs investigating from logs or test output, and when an answer or edit depends on the exact version of a library, SDK, CLI, or API, or on what a data file contains. Apply it even when the change looks tiny or urgent. Skip it for casual chat, brainstorming, creative or marketing writing, translation, and general recommendations."
+   },
+   {
+    "iteration": 4,
+    "train": "6/12",
+    "test": "4/8",
+    "description": "Use this skill when a user wants a change, fix, or diagnosis made in a live engineering project: editing code, config files, environment values, or settings; tuning client options such as timeouts or retries; repairing failing builds, Docker images, or CI jobs; investigating flaky or misbehaving tests from their output; or updating documentation so it matches what the code does now. Also use it when an answer or edit hinges on the exact version of a library, SDK, CLI, or API, or on the contents of a data file. Apply it to small, routine, or urgent requests too. Skip it for conversation, brainstorming, creative or marketing copy, translation, and general reading or tool recommendations."
+   },
+   {
+    "iteration": 5,
+    "train": "6/12",
+    "test": "4/8",
+    "description": "Handle hands-on engineering work in a real codebase or its infrastructure: changing or diagnosing source, config, environment values or settings; adjusting client parameters such as timeouts, retries or pool sizes; repairing failing builds, containers, CI pipelines or test runs from their logs or output; keeping docs in step with current code; and answering any question whose correct answer depends on the exact version of a library, SDK, CLI or API, or on the contents of a data file. Applies to small, routine or urgent changes too. Skip for conversation, brainstorming, creative or marketing writing, translation, and general reading or tool recommendations."
+   }
+  ]
+ },
+ "explicit_description_control": {
+  "description": "Required first step for ANY request that edits code, configuration, tests, CI or documentation, ... Always invoke this skill before reading or changing project files, even for small or urgent changes.",
+  "haiku_triggers_per_query_of_2": [
+   1,
+   0,
+   0,
+   1,
+   0
+  ],
+  "opus_triggers_per_query_of_2": [
+   0,
+   1,
+   0,
+   0,
+   1
+  ]
+ },
+ "snippet_activation": {
+  "setup": "skill installed in .claude/skills/; snip_on adds project-instructions.snippet.md as CLAUDE.md; 10 should-trigger queries x 2 runs each",
+  "snip_on_loaded": 20,
+  "snip_off_loaded": 1,
+  "runs_each": 20,
+  "negatives_loaded_with_snippet": "0/10 (one run per should-not-trigger query)"
+ }
+}

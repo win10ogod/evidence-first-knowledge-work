@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.2.0
+
+- Core rule 2 and L1 now require reading the changed lines after an edit, and explain why a passing test or signature probe does not replace it. This was the only miss v2.1 repeated across two benchmark rounds.
+- Installation: the project snippet is now documented as **required** for automatic use. Measured on Haiku 5.5, the skill loaded 1/20 times without it and 20/20 with it, with 0/10 false activations. Five rounds of skill-creator description optimization found no wording that beat the current description on held-out queries, so the description is unchanged.
+- Eval 5 hides the Python 3.11 target: the README no longer names it, only `pyproject.toml`, CI and the Dockerfile do, and the spec now names `itertools.batched`.
+- Result: on Haiku 5.5 (36 runs), mean pass rate v2.2 1.000, v2.1 0.983, no skill 0.766, at the same token cost as v2.1. See `evals/results/2026-10-09-haiku-5-5-v2.2`.
+
 ## 2.1.0
 
 Driven by the 2026-10-09 Haiku 5.5 benchmark (`evals/results/2026-10-09-haiku-5-5`).
