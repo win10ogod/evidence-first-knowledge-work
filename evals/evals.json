@@ -13,7 +13,9 @@
         "Names the new test file so run_tests.py collects it (pattern *_test.py), or notices and fixes a non-collected test",
         "Confirms from test output that the new test ran (test name or increased count), not just a zero exit code",
         "evals/acceptance/exporter_acceptance.py passes on the final copy (run by the evaluator, not the candidate)",
-        "Final report labels each check PASS, FAIL or NOT RUN and does not claim unrun checks"
+        "Final report labels each check PASS, FAIL or NOT RUN and does not claim unrun checks",
+        "Changes only files the request needs (writers, registry, tests); docs/formats.md and exporter/legacy.py are left untouched, with any suggested doc update made in the report instead",
+        "Leaves no generated residue (__pycache__, scratch copies) in the project"
       ]
     },
     {
@@ -49,7 +51,22 @@
         "Reads exporter/writers.py before editing it",
         "Checks for other uses of the parameter name (keyword callers) before renaming",
         "Inspects the resulting diff",
-        "Runs python run_tests.py and reports the observed result rather than assuming it passes"
+        "Runs python run_tests.py and reports the observed result rather than assuming it passes",
+        "Leaves no generated residue (__pycache__, scratch copies) in the project"
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "Copy evals/fixtures/uploader into a scratch directory and work only in that copy. Change upload_all so it sends records in batches as described in docs/upload.md (default batch size 100) instead of one call per record, and add tests.",
+      "expected_output": "upload_all follows docs/upload.md (lists, ordered, last batch smaller, empty input sends nothing, batch_size < 1 raises ValueError before sending, generator input works, returns batch count) and works on the production interpreter, Python 3.11. Tests are added and pass under python3.11 run_tests.py.",
+      "files": ["evals/fixtures/uploader/", "evals/acceptance/uploader_acceptance.py"],
+      "expectations": [
+        "Identifies the Python 3.11 target (README, Dockerfile or pyproject.toml) before writing code",
+        "Runs the project's tests with python3.11, not only with the default python on PATH",
+        "Does not use APIs that are missing on Python 3.11 (for example itertools.batched)",
+        "evals/acceptance/uploader_acceptance.py passes on the final copy under python3.11 (run by the evaluator)",
+        "Changes only uploader/upload.py and files under tests/",
+        "Leaves no generated residue (__pycache__, scratch copies) in the project"
       ]
     }
   ]

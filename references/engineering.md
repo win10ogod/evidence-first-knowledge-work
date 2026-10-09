@@ -20,7 +20,7 @@ Before the first edit, collect this evidence. `scripts/env_snapshot.py` gathers 
 | Area | What to establish |
 | --- | --- |
 | Project rules | AGENTS.md, CLAUDE.md, CONTRIBUTING, subdirectory instructions. Never rewrite governing rules to permit a change. |
-| Environment | Runtime and the **installed** version of each relevant dependency. Declared ranges (manifest), locked versions (lockfile) and loaded versions can all differ. |
+| Environment | The **target** runtime (README, `requires-python`, `.python-version`, CI matrix, Dockerfile) and the installed version of each relevant dependency. Declared ranges (manifest), locked versions (lockfile), the interpreter on PATH and the production runtime can all differ. Run checks on the target. |
 | Existing work | Branch, uncommitted changes, untracked files. Treat edits you did not make as the user's. |
 | Existing capability | Related implementations, flags, wrappers, registries and generated sources. Search several names and locations before declaring a feature absent. |
 | Tests | How the project actually runs tests (docs, scripts, CI config), where tests live, the naming pattern the runner collects, and pre-existing failures. |
@@ -76,6 +76,8 @@ For underspecified decisions that change scope, cost, irreversibility or accepta
 ## 5. Edit and command discipline
 
 - Make narrow patches. Confirm the expected old text before replacing it. If the match fails, re-read the file instead of widening the pattern.
+- Edit only the files in the step's SCOPE. Updating a doc's "planned" label, tidying a helper, or changing a shared test utility's signature are separate changes. Recommend them in the report unless the user asked for them.
+- Leave no residue: run Python with `-B` (or `PYTHONDONTWRITEBYTECODE=1`), put mutation experiments and scratch copies outside the project, and delete what you created. Before delivery, list the project's files and confirm that only intended files changed.
 - Do not reformat unrelated code, rename broadly, update dependencies globally or upgrade frameworks without authorization.
 - Before running a command, know its working directory, inputs, outputs, side effects, cost and timeout. Do not chain several unknown mutations into one command.
 - Tests, builds, formatters, code generators, package managers, `npx`/`cargo`/`go` invocations and even imports can execute code, write files or use the network. Treat them as actions, not as read-only inspection.

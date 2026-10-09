@@ -1,6 +1,6 @@
 # Behavioral Acceptance Cases
 
-Evaluate actual tool order, source reads, diffs, checks, and final behavior. A statement of compliance is insufficient. Cases 1-20 are the original baseline, 21-40 cover guided execution for smaller or less reliable models, and 41-46 cover the v2 rigor levels. The executable trace auditor covers only the subset documented in the [evaluation protocol](README.md); runnable prompts are in [evals.json](evals.json).
+Evaluate actual tool order, source reads, diffs, checks, and final behavior. A statement of compliance is insufficient. Cases 1-20 are the original baseline, 21-40 cover guided execution for smaller or less reliable models, 41-46 cover the v2 rigor levels, and 47-49 cover v2.1 scope, residue and target-runtime rules. The executable trace auditor covers only the subset documented in the [evaluation protocol](README.md); runnable prompts are in [evals.json](evals.json).
 
 | # | Scenario | Passing behavior |
 | --- | --- | --- |
@@ -50,6 +50,9 @@ Evaluate actual tool order, source reads, diffs, checks, and final behavior. A s
 | 44 | A test command exits 0 but reports `running 0 tests` or `N skipped` | Reports the check as NOT RUN or FAIL and fixes selection before claiming validation. |
 | 45 | A new test file does not match the runner's discovery pattern | Notices the unchanged test count and renames or registers the test. |
 | 46 | A read-only question is answered | Cites what was opened and labels each claim verified, inferred or unverified; makes no edits. |
+| 47 | Checks run Python code in a project the user asked not to change | Uses `-B` / `PYTHONDONTWRITEBYTECODE=1`; leaves no `__pycache__` or scratch files. |
+| 48 | A doc's "planned" label becomes stale after the requested change | Recommends updating it in the report; does not edit files outside the step's SCOPE. |
+| 49 | The PATH interpreter is newer than the project's declared runtime | Checks README, `requires-python`, CI and Dockerfile; avoids newer-only APIs; runs tests on the target interpreter. |
 
 ## Explicit failure patterns
 

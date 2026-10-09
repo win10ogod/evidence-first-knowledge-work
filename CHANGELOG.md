@@ -1,5 +1,16 @@
 # Changelog
 
+## 2.1.0
+
+Driven by the 2026-10-09 Haiku 5.5 benchmark (`evals/results/2026-10-09-haiku-5-5`).
+
+- New core rule **Leave no residue**: run Python with `-B`, keep scratch copies outside the project, and remove what you created. A read-only task leaves the project byte-identical. (In the benchmark, 10 of 18 runs left `__pycache__` behind.)
+- **Stay inside the request** now says to recommend side changes (doc status labels, helpers) instead of making them, and SCOPE in the receipt is binding. (4 of 6 eval-1 runs edited `docs/formats.md` unasked.)
+- "Version in use" now means the project's **target runtime** (README, `requires-python`, CI, Dockerfile), not the interpreter on PATH. Added target-interpreter recipes.
+- Research: added fallbacks for when an official docs site is unreachable (raw files at a release tag, local stdlib sources) and a method for "since which version" questions (changelog entry or adjacent-tag comparison).
+- Cost: SKILL.md alone is enough for L0 and L1 work; `engineering.md` and `completion-review.md` are only required for L2 and L3 steps.
+- Evals: added eval 5 (`fixtures/uploader`, a Python 3.11 target with an `itertools.batched` trap) and scope and residue expectations for evals 1 and 4.
+
 ## 2.0.0
 
 Restructured to follow current skill-authoring guidance: concise core, progressive disclosure, explanations of why, utility scripts, and evaluation first.

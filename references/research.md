@@ -24,6 +24,8 @@ Search results, AI summaries and blog posts help you find sources. Base claims o
 2. Original papers, datasets, statutes, standards, first-party statistics.
 3. High-quality secondary sources, used only for context the primary sources lack.
 
+For "since which version" questions, look for the changelog or release-notes entry. Without one, compare the source at the last tag lacking the behavior and the first tag that has it. When an official site is unreachable, the version-tagged copy in the project's repository is still a primary source; see `verification-recipes.md` §9.
+
 For each source you rely on, note the URL or path, its date or version, the section, and the claim the passage directly supports. A homepage or index page does not support a specific claim. If a fact needs network access you do not have, label it unverified; do not fill it in from memory.
 
 ## 3. Classify every material claim

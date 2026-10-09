@@ -1,6 +1,6 @@
 # evidence-first-knowledge-work
 
-**Version 2.0.0 | English | MIT**
+**Version 2.1.0 | English | MIT**
 
 An Agent Skill that stops the most common way agents damage engineering work: confident guesses. Examples are a parameter remembered from another version, an edit to a file that changed since it was read, a test run that selected zero tests, or a "done" nobody checked. It is written to work with smaller models as well as larger ones.
 
@@ -12,7 +12,7 @@ See [CHANGELOG.md](CHANGELOG.md) for what changed from 1.x.
 
 | Path | Loaded | Purpose |
 | --- | --- | --- |
-| [SKILL.md](SKILL.md) | When the skill triggers | Core rules, rigor levels, receipt format, the loop, stop rules, routing table (~2.3k tokens) |
+| [SKILL.md](SKILL.md) | When the skill triggers | Core rules, rigor levels, receipt format, the loop, stop rules, routing table (~2.6k tokens) |
 | [references/engineering.md](references/engineering.md) | Code/config/CLI/test work | Reconnaissance, execution paths, API checklist, decomposition, edit and validation discipline |
 | [references/verification-recipes.md](references/verification-recipes.md) | When an exact command is needed | Versions, signatures, CLI flags and test selection for Python, Node, Go, Rust and git |
 | [references/research.md](references/research.md) | Research, Q&A, data, docs | Primary sources, claim labels, data contracts, numbers, documentation edits |

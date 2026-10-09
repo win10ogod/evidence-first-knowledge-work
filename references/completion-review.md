@@ -30,7 +30,7 @@ Look for implemented-but-unregistered features, unused helpers, stale callers, m
 
 ## V4. Integrity of the diff
 
-List the files that actually changed. Confirm there are no unrequested dependencies, unrelated refactors, removed or weakened tests, swallowed errors, leaked secrets or unexplained generated files. Correcting a test requires evidence that the old test contradicted the requirement. Check that documentation and examples match the final behavior.
+List the files that actually changed, including generated residue such as `__pycache__` and scratch files. Confirm that every changed file was needed for the request, and that there are no unrequested doc or label edits, dependencies, unrelated refactors, removed or weakened tests, swallowed errors, leaked secrets or unexplained generated files. Correcting a test requires evidence that the old test contradicted the requirement. Check that documentation and examples match the final behavior.
 
 ## V5. Report outcome and process separately
 

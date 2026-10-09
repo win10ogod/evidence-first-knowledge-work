@@ -48,7 +48,18 @@ python -c "import importlib.util as u; print(u.find_spec('<top_level_module>').o
 - To find a signature, read the source file located above, or any `.pyi` stub next to it or in `types-<dist>`.
 - ⚠ `python -c "import inspect, mod; print(inspect.signature(mod.func))"` imports the module and runs its import-time code.
 - ⚠ `python -m pydoc mod.func` also imports the module.
-- Standard library: the docs are versioned per minor release (`docs.python.org/3.12/library/...`). Check "Changed in version" notes against `python --version`.
+- Standard library: the docs are versioned per minor release (`docs.python.org/3.12/library/...`). Check "Added in version" and "Changed in version" notes against the **target** version, not just `python --version`.
+
+**Find the target interpreter before relying on any stdlib or language feature.** The project may target an older Python than the one on PATH:
+
+```bash
+grep -n "requires-python\|python_requires" pyproject.toml setup.cfg setup.py 2>/dev/null
+cat .python-version runtime.txt 2>/dev/null; grep -rn "python-version\|FROM python" .github/workflows Dockerfile 2>/dev/null
+ls /usr/bin/python3* /usr/local/bin/python3* 2>/dev/null     # which interpreters exist here
+python3.11 -B -c "import itertools; print(hasattr(itertools, 'batched'))"   # probe a feature on the target
+```
+
+Run the project's checks with that interpreter (for example `python3.11 -B run_tests.py`). A feature added in 3.12, such as `itertools.batched`, passes on a 3.13 PATH interpreter and fails in a 3.11 production image.
 
 ## 4. Node.js / TypeScript
 
@@ -112,3 +123,16 @@ The optional hook in `hooks/zero_tests_guard.py` flags these signals automatical
 - Prefer versioned URLs: `docs.python.org/3.12/`, Read the Docs `/en/<version>/`, and GitHub `tree/<tag>/` or `blob/<tag>/`.
 - Record the URL, the version or date shown on the page, the section, and the claim the passage supports.
 - For time-sensitive facts (prices, limits, deprecations, current releases), fetch the page during this task. Do not reuse an earlier session's reading.
+
+**When the official docs site is unreachable**, the same text is usually in the project's repository at a release tag:
+
+```text
+https://raw.githubusercontent.com/<org>/<repo>/<tag>/<path>
+  CPython docs:      .../python/cpython/v3.12.0/Doc/library/unittest.rst
+  CPython changelog: .../python/cpython/v3.12.0/Misc/NEWS.d/3.12.0b1.rst
+  CPython stdlib:    .../python/cpython/v3.12.0/Lib/unittest/main.py
+```
+
+Locally installed stdlib sources (`/usr/lib/python3.X/`) are version-matched evidence as well.
+
+**"Since which version?"** Look for the changelog or release-notes entry. If there isn't one, compare the source at adjacent release tags: the last tag without the behavior and the first tag with it. Behavior can also change within a minor series (for example between x.y.1 and x.y.3), so check the patch release you name.

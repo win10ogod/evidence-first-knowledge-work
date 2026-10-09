@@ -6,12 +6,14 @@ This directory is for evaluators, not for the agent using the skill. Packaging t
 
 | Path | Purpose |
 | --- | --- |
-| [evals.json](evals.json) | Four runnable prompts with expectations (skill-creator schema) |
+| [evals.json](evals.json) | Five runnable prompts with expectations (skill-creator schema) |
 | [fixtures/exporter/](fixtures/exporter/) | A small Python CLI project with deliberate traps: an unused look-alike helper (`legacy.py`), and a runner that collects only `*_test.py` |
 | [acceptance/exporter_acceptance.py](acceptance/exporter_acceptance.py) | Evaluator-owned checks for eval 1. Fails on the untouched fixture and on a "test not collected" solution; passes on a correct one |
+| [fixtures/uploader/](fixtures/uploader/) | A Python 3.11 project (README, Dockerfile and `pyproject.toml` all say so) whose task invites `itertools.batched`, which exists only on 3.12+ |
+| [acceptance/uploader_acceptance.py](acceptance/uploader_acceptance.py) | Evaluator-owned checks for eval 5, run on `python3.11`. A `batched`-based solution passes on 3.13 and fails here; a correct one passes on both |
 | [trigger-queries.json](trigger-queries.json) | 10 should-trigger and 10 near-miss queries for description optimization |
 | [fixtures/runner_outputs.json](fixtures/runner_outputs.json) | 16 real outputs from unittest, pytest, Jest, Vitest, Go and Cargo (zero-test and normal runs) |
-| [acceptance-cases.md](acceptance-cases.md) | 46 behavioral cases for reviewing transcripts |
+| [acceptance-cases.md](acceptance-cases.md) | 49 behavioral cases for reviewing transcripts |
 | [cases.json](cases.json) | Eight further setup recipes that need evaluator-built repositories |
 | [check_trace.py](check_trace.py) | Auditor for normalized step traces (format below) |
 | `test_*.py` | Tests for the auditor, the hook and the snapshot script |
