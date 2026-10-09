@@ -104,6 +104,42 @@
         "evals/acceptance/pricing_acceptance.py passes (independent quotes, cache kept, cached table unmodified, original tests)",
         "Leaves no generated residue (__pycache__, scratch copies) in the project"
       ]
+    },
+    {
+      "id": 9,
+      "prompt": "Copy evals/fixtures/scheduler into a scratch directory and work only in that copy. Users in Europe/Berlin report the nightly 02:30 job ran at the wrong time around the daylight-saving change, and tests/test_core.py has a failing test for it. Fix next_run so it follows docs/schedule.md.",
+      "expected_output": "next_run handles skipped wall times (run when the clocks jump, including 30-minute and midnight shifts), repeated wall times (first occurrence only, never twice), and compares instants rather than wall-clock times, for any IANA zone.",
+      "files": ["evals/fixtures/scheduler/", "evals/acceptance/scheduler_acceptance.py"],
+      "expectations": [
+        "Reads docs/schedule.md before changing code",
+        "Checks behaviour beyond the visible failing test (other zones, clocks set back, inputs in other zones)",
+        "evals/acceptance/scheduler_acceptance.py passes (17 oracle cases across Berlin, New York, Lord Howe and Santiago, plus the original tests)",
+        "Leaves no generated residue (__pycache__, scratch copies) in the project"
+      ]
+    },
+    {
+      "id": 10,
+      "prompt": "Copy evals/fixtures/sessions into a scratch directory and work only in that copy. test_gap_of_exactly_30_minutes_starts_new_session is failing. Fix it.",
+      "expected_output": "Besides the boundary (a gap of 30 minutes or more starts a session), timestamps honour their UTC offsets, offset-less timestamps are UTC, and events are ordered by instant rather than by string, as docs/sessions.md requires.",
+      "files": ["evals/fixtures/sessions/", "evals/acceptance/sessions_acceptance.py"],
+      "expectations": [
+        "Reads docs/sessions.md before changing code",
+        "Finds the defects the visible test does not show (offsets discarded, string sort)",
+        "evals/acceptance/sessions_acceptance.py passes (one user per rule, unordered mixed-offset input, original tests)",
+        "Leaves no generated residue (__pycache__, scratch copies) in the project"
+      ]
+    },
+    {
+      "id": 11,
+      "prompt": "Copy evals/fixtures/notifier into a scratch directory and work only in that copy. Our SMS provider started dropping messages because we send too fast. Make send_all respect the provider limit using the vendored throttle library, and add a test.",
+      "expected_output": "send_all uses vendor/throttle with period=1000 (milliseconds since throttle 2.0.0 per its CHANGELOG; the docstring still says seconds) and calls=5, so no 1-second window has more than 5 sends and 12 messages finish in about 2 seconds.",
+      "files": ["evals/fixtures/notifier/", "evals/acceptance/notifier_acceptance.py"],
+      "expectations": [
+        "Reads docs/provider.md and the vendored throttle source or CHANGELOG before using it",
+        "Detects that the throttle docstring (seconds) conflicts with the code and CHANGELOG (milliseconds) and follows the code",
+        "evals/acceptance/notifier_acceptance.py passes (fake clock: at most 5 sends per second, no over-throttling, vendored limiter, original tests)",
+        "Leaves no generated residue (__pycache__, scratch copies) in the project"
+      ]
     }
   ]
 }
