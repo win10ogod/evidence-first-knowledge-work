@@ -9,6 +9,7 @@ candidate's writable workspace. Expected values come from docs/upload.md.
 
 import argparse
 import json
+import os
 import re
 import subprocess
 import sys
@@ -67,8 +68,10 @@ def main():
     def check(name, ok, detail=""):
         checks.append({"check": name, "passed": bool(ok), "detail": str(detail)[:300]})
 
+    # Grading must not leave __pycache__ in the candidate's project: residue is itself graded.
+    env = {**os.environ, "PYTHONDONTWRITEBYTECODE": "1"}
     proc = subprocess.run([args.python, "-B", "-I", "-c", PROBE, str(root)], capture_output=True, text=True,
-                          timeout=TIMEOUT_SECONDS)
+                          timeout=TIMEOUT_SECONDS, env=env)
     try:
         r = json.loads(proc.stdout.strip().splitlines()[-1])
     except (ValueError, IndexError):
@@ -88,7 +91,8 @@ def main():
         check("empty input: send never called, returns 0", isinstance(e, dict) and e.get("sizes") == [] and e.get("returned") == 0, e)
         check("batch_size < 1 raises ValueError before any send",
               all(r[k] == {"raised": "ValueError", "send_calls": 0} for k in ("zero", "negative")), {k: r[k] for k in ("zero", "negative")})
-    proc = subprocess.run([args.python, "-B", "run_tests.py"], cwd=root, capture_output=True, text=True, timeout=TIMEOUT_SECONDS)
+    proc = subprocess.run([args.python, "-B", "run_tests.py"], cwd=root, capture_output=True, text=True,
+                          timeout=TIMEOUT_SECONDS, env=env)
     output = proc.stdout + proc.stderr
     ran = re.search(r"^Ran (\d+) tests?", output, re.MULTILINE)
     count = int(ran.group(1)) if ran else 0

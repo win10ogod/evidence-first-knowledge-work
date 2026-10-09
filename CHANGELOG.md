@@ -9,6 +9,8 @@ Driven by the 2026-10-09 Haiku 5.5 benchmark (`evals/results/2026-10-09-haiku-5-
 - "Version in use" now means the project's **target runtime** (README, `requires-python`, CI, Dockerfile), not the interpreter on PATH. Added target-interpreter recipes.
 - Research: added fallbacks for when an official docs site is unreachable (raw files at a release tag, local stdlib sources) and a method for "since which version" questions (changelog entry or adjacent-tag comparison).
 - Cost: SKILL.md alone is enough for L0 and L1 work; `engineering.md` and `completion-review.md` are only required for L2 and L3 steps.
+- Result: on Haiku 5.5 (45 runs, mechanical grading), mean pass rate went from v2.0 0.888 to v2.1 0.987 (no skill 0.801), and residue from 6/12 to 0/12 at the same token cost as v2.0; see `evals/results/2026-10-09-haiku-5-5-v2.1`.
+- Evals: acceptance scripts no longer create `__pycache__` in candidate projects.
 - Evals: added eval 5 (`fixtures/uploader`, a Python 3.11 target with an `itertools.batched` trap) and scope and residue expectations for evals 1 and 4.
 
 ## 2.0.0

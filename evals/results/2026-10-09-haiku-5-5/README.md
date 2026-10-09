@@ -33,6 +33,10 @@ Each run worked in its own copy of `fixtures/exporter`, in a directory with a ra
 - **Not prevented by either version:** unrequested edits to `docs/formats.md` (marking `lines` as supported) in eval 1. This is a candidate rule for the next revision.
 - **Research quality varies by run, not by condition:** the best-sourced eval 3 answer came from a no-skill run, which cited the 3.12.0b1 NEWS entry. One v1.1 run found that the skip condition changed between 3.12.1 and 3.12.3. Both claims were checked against CPython tags.
 
+## Correction
+
+The eval-1 `pycache_left` flags in `runs.json` were first recorded after the acceptance script had run. That script created `__pycache__` itself, so all six flags read True. They are now corrected to the values observed before grading: True for the two no-skill runs, False for the rest. The table above already used those values, and the pass rates are unaffected. See the [v2.1 benchmark](../2026-10-09-haiku-5-5-v2.1/README.md#grading-bug-found-and-fixed) for details.
+
 ## Limitations
 
 - Two runs per cell. Treat the differences as directional.

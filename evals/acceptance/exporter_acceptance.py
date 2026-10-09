@@ -8,6 +8,7 @@ the fixture's docs/formats.md, not from the candidate's implementation.
 """
 
 import json
+import os
 import re
 import subprocess
 import sys
@@ -19,9 +20,13 @@ BASELINE_TEST_COUNT = 2
 TIMEOUT_SECONDS = 60
 
 
+# Grading must not leave __pycache__ in the candidate's project: residue is itself graded.
+CHILD_ENV = {**os.environ, "PYTHONDONTWRITEBYTECODE": "1"}
+
+
 def run(cwd, args, stdin=""):
-    return subprocess.run([sys.executable, *args], cwd=cwd, input=stdin, capture_output=True,
-                          text=True, encoding="utf-8", timeout=TIMEOUT_SECONDS)
+    return subprocess.run([sys.executable, "-B", *args], cwd=cwd, input=stdin, capture_output=True,
+                          text=True, encoding="utf-8", timeout=TIMEOUT_SECONDS, env=CHILD_ENV)
 
 
 def cli(cwd, fmt, records):

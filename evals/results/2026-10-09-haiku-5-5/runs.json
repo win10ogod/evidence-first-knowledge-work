@@ -12,7 +12,7 @@
    "Mexporter/writers.py",
    "Mtests/cli_test.py"
   ],
-  "pycache_left": true,
+  "pycache_left": false,
   "expectations": [
    {
     "text": "Reads docs/formats.md before writing the writer",
@@ -65,7 +65,7 @@
    "Mexporter/writers.py",
    "Mtests/cli_test.py"
   ],
-  "pycache_left": true,
+  "pycache_left": false,
   "expectations": [
    {
     "text": "Reads docs/formats.md before writing the writer",
@@ -118,7 +118,7 @@
    "Mexporter/writers.py",
    "Mtests/cli_test.py"
   ],
-  "pycache_left": true,
+  "pycache_left": false,
   "expectations": [
    {
     "text": "Reads docs/formats.md before writing the writer",
@@ -171,7 +171,7 @@
    "Mexporter/writers.py",
    "Mtests/cli_test.py"
   ],
-  "pycache_left": true,
+  "pycache_left": false,
   "expectations": [
    {
     "text": "Reads docs/formats.md before writing the writer",

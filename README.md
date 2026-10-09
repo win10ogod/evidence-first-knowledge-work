@@ -57,7 +57,12 @@ python -B -m unittest discover -s evals -p 'test_*.py' -v   # 46 tests: auditor,
 
 The tool tests show that the bundled tools behave as specified. They do not measure whether a model performs better with the skill. To measure that, run the prompts in [evals/evals.json](evals/evals.json) with and without the skill on the models you deploy, as described in [evals/README.md](evals/README.md).
 
-A first comparison on Haiku 5.5 (24 runs) is in [evals/results/2026-10-09-haiku-5-5](evals/results/2026-10-09-haiku-5-5/README.md). Mean expectation pass rate was v2.0 1.00, v1.1 0.94 and no skill 0.78. v2.0 used 12% fewer tokens than v1.1 and 24% more than no skill. With n=2 per cell and non-blind grading, treat these as directional.
+Benchmarks on Haiku 5.5:
+
+- [v2.1 vs v2.0 vs no skill](evals/results/2026-10-09-haiku-5-5-v2.1/README.md): 45 runs, mechanical grading. Mean pass rate v2.1 0.987, v2.0 0.888, no skill 0.801. Generated residue in 0/12, 6/12 and 9/12 project runs respectively. v2.1 costs the same tokens as v2.0 and about 20% more than no skill.
+- [v2.0 vs v1.1 vs no skill](evals/results/2026-10-09-haiku-5-5/README.md): 24 runs. Mean pass rate 1.00, 0.94 and 0.78.
+
+Both are small samples graded by the skill's author, so treat them as directional.
 
 ## Limits
 
