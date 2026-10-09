@@ -61,6 +61,8 @@ The tool tests show that the bundled tools behave as specified. They do not meas
 
 Benchmarks on Haiku 5.5:
 
+- [Hard tasks, v2.2 vs no skill](evals/results/2026-10-09-haiku-5-5-hard-tasks/README.md): 54 runs over 9 multi-step debugging and cross-file integration tasks (DST folds, npm range grammar against 783 oracle answers, a seven-site change with a format migration). Acceptance passed in 24/27 runs with v2.2 and 23/27 without: Haiku 5.5 solved these tasks on its own. The only reproducible failure, 0/6 in both arms, was a scope choice: fixing only the named test while reporting the other bugs it found. Residue 0/27 with v2.2, 19/27 without.
+
 - [v2.2 vs v2.1 vs no skill, plus activation](evals/results/2026-10-09-haiku-5-5-v2.2/README.md): 36 runs, mechanical grading. Mean pass rate v2.2 1.000, v2.1 0.983, no skill 0.766. Residue 0/12, 0/12 and 10/12. v2.2 uses about 25% more tokens than no skill. Activation: 1/20 without the project snippet, 20/20 with it.
 - [v2.1 vs v2.0 vs no skill](evals/results/2026-10-09-haiku-5-5-v2.1/README.md): 45 runs, mechanical grading. Mean pass rate v2.1 0.987, v2.0 0.888, no skill 0.801. Generated residue in 0/12, 6/12 and 9/12 project runs respectively. v2.1 costs the same tokens as v2.0 and about 20% more than no skill.
 - [v2.0 vs v1.1 vs no skill](evals/results/2026-10-09-haiku-5-5/README.md): 24 runs. Mean pass rate 1.00, 0.94 and 0.78.

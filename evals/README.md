@@ -1,12 +1,12 @@
 # Evaluating the Skill
 
-This directory is for evaluators, not for the agent using the skill. Packaging tools exclude a root-level `evals/` directory, so none of this enters the agent's context. It contains runnable eval prompts, an instantiated fixture project with evaluator-owned acceptance checks, real test-runner captures, a trace auditor, and the tests for all bundled tools. Benchmark results are in [results/](results/): [v2.0 vs v1.1](results/2026-10-09-haiku-5-5/README.md), [v2.1 vs v2.0](results/2026-10-09-haiku-5-5-v2.1/README.md) and [v2.2 vs v2.1 plus activation](results/2026-10-09-haiku-5-5-v2.2/README.md), all on Haiku 5.5. Acceptance scripts run candidate code with `-B` and `PYTHONDONTWRITEBYTECODE=1` so that grading never creates the residue it measures.
+This directory is for evaluators, not for the agent using the skill. Packaging tools exclude a root-level `evals/` directory, so none of this enters the agent's context. It contains runnable eval prompts, an instantiated fixture project with evaluator-owned acceptance checks, real test-runner captures, a trace auditor, and the tests for all bundled tools. Benchmark results are in [results/](results/): [v2.0 vs v1.1](results/2026-10-09-haiku-5-5/README.md), [v2.1 vs v2.0](results/2026-10-09-haiku-5-5-v2.1/README.md) [v2.2 vs v2.1 plus activation](results/2026-10-09-haiku-5-5-v2.2/README.md) and [hard tasks, v2.2 vs no skill](results/2026-10-09-haiku-5-5-hard-tasks/README.md), all on Haiku 5.5. Acceptance scripts run candidate code with `-B` and `PYTHONDONTWRITEBYTECODE=1` so that grading never creates the residue it measures.
 
 ## Contents
 
 | Path | Purpose |
 | --- | --- |
-| [evals.json](evals.json) | Thirteen runnable prompts with expectations (skill-creator schema). Evals 6-13 are the hard-task set described below |
+| [evals.json](evals.json) | Fourteen runnable prompts with expectations (skill-creator schema). Evals 6-14 are the hard-task set described below |
 | [fixtures/exporter/](fixtures/exporter/) | A small Python CLI project with deliberate traps: an unused look-alike helper (`legacy.py`), and a runner that collects only `*_test.py` |
 | [acceptance/exporter_acceptance.py](acceptance/exporter_acceptance.py) | Evaluator-owned checks for eval 1. Fails on the untouched fixture and on a "test not collected" solution; passes on a correct one |
 | [fixtures/uploader/](fixtures/uploader/) | A Python 3.11 project (declared only in `pyproject.toml`, the CI workflow and the Dockerfile) whose spec describes the batching as `itertools.batched` semantics, an API that exists only on 3.12+ |
@@ -40,6 +40,9 @@ Each fixture hides more than the visible symptom. The acceptance script names th
 | 11 | `notifier` | Vendored throttle's docstring says seconds, code and CHANGELOG say milliseconds | `Throttle(5, 1)`, fixed delays |
 | 12 | `versions` | Long range spec (caret/tilde on 0.x, X-ranges, hyphen partials, SemVer prerelease ordering and exclusion), answers from npm `semver` 7.6.0 | lexicographic prerelease compare, caret without the 0.x rule, no prerelease exclusion |
 | 13 | `inventory` | Discount touches model, storage format (bump, migration, sample), CLI exit status and message, CSV, list, and two money paths (`report.py` repeats the arithmetic) | `report.py` missed, float `round()` (5.005 -> 5.00), no format bump |
+| 14 | `sessions` | Control for eval 10: the same fixture, but the request asks for conformance to the whole spec | as eval 10 |
+
+On Haiku 5.5 these tasks did not separate configurations by pass rate: 24/27 runs passed with v2.2 and 23/27 without the skill. The only reproducible failure was eval 10, where every run fixed only the named test, a scope choice. See [the hard-task results](results/2026-10-09-haiku-5-5-hard-tasks/README.md).
 
 ## Comparing skill versions
 

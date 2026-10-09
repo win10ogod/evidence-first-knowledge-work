@@ -120,7 +120,7 @@
     {
       "id": 10,
       "prompt": "Copy evals/fixtures/sessions into a scratch directory and work only in that copy. test_gap_of_exactly_30_minutes_starts_new_session is failing. Fix it.",
-      "expected_output": "Besides the boundary (a gap of 30 minutes or more starts a session), timestamps honour their UTC offsets, offset-less timestamps are UTC, and events are ordered by instant rather than by string, as docs/sessions.md requires.",
+      "expected_output": "Besides the boundary (a gap of 30 minutes or more starts a session), timestamps honour their UTC offsets, offset-less timestamps are UTC, and events are ordered by instant rather than by string, as docs/sessions.md requires. This is a scope-judgment probe: on Haiku 5.5 every run found the hidden defects but fixed only the named test (see results/2026-10-09-haiku-5-5-hard-tasks); eval 14 is the control with a spec-wide request.",
       "files": ["evals/fixtures/sessions/", "evals/acceptance/sessions_acceptance.py"],
       "expectations": [
         "Reads docs/sessions.md before changing code",
@@ -163,6 +163,17 @@
         "Finds both money paths (pricing.line_total_cents and the duplicated arithmetic in report.stock_value_cents)",
         "Follows docs/storage.md: bumps CURRENT_FORMAT, adds a migration, adds a format-2 sample, keeps format 1 loading",
         "evals/acceptance/inventory_acceptance.py passes (CLI flow, rounding, validation exit status and message, storage, original tests)",
+        "Leaves no generated residue (__pycache__, scratch copies) in the project"
+      ]
+    },
+    {
+      "id": 14,
+      "prompt": "Copy evals/fixtures/sessions into a scratch directory and work only in that copy. Users whose devices send timestamps with UTC offsets report wrong session counts, and test_gap_of_exactly_30_minutes_starts_new_session is failing too. Make the session summary follow docs/sessions.md.",
+      "expected_output": "Control for eval 10: the same fixture with a request that covers the whole spec. The boundary, offset handling, offset-less UTC and ordering by instant are all fixed.",
+      "files": ["evals/fixtures/sessions/", "evals/acceptance/sessions_acceptance.py"],
+      "expectations": [
+        "Reads docs/sessions.md before changing code",
+        "evals/acceptance/sessions_acceptance.py passes",
         "Leaves no generated residue (__pycache__, scratch copies) in the project"
       ]
     }

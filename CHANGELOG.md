@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased (evals only)
+
+- Evals 6-14: hard-task fixtures for multi-step debugging and cross-file integration (`billing`, `fetcher`, `pricing`, `scheduler`, `sessions`, `notifier`, `versions`, `inventory`). Each has an evaluator-owned acceptance script that reruns the pristine tests and was checked against a reference solution and the listed trap solutions. `versions` answers come from npm `semver` 7.6.0.
+- Result: on Haiku 5.5 (54 runs), acceptance passed in 24/27 runs with v2.2 and 23/27 without the skill. The one reproducible failure (eval 10, 0/6 in both arms) was a scope choice, not a capability gap. See `evals/results/2026-10-09-haiku-5-5-hard-tasks`. The skill is unchanged.
+
 ## 2.2.0
 
 - Core rule 2 and L1 now require reading the changed lines after an edit, and explain why a passing test or signature probe does not replace it. This was the only miss v2.1 repeated across two benchmark rounds.

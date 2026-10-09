@@ -1,0 +1,1072 @@
+[
+ {
+  "round": 1,
+  "rid": "209060d8",
+  "eval": "eval-6-billing-rounding",
+  "config": "v2.2",
+  "run": 1,
+  "acceptance": true,
+  "fails": [],
+  "changed": [
+   "Mbilling/invoice.py",
+   "Mbilling/money.py"
+  ],
+  "subagent_tokens": 72186,
+  "tool_calls": 19,
+  "duration_ms": 62739,
+  "left_pycache": false,
+  "read_spec_doc": true
+ },
+ {
+  "round": 1,
+  "rid": "53f747e2",
+  "eval": "eval-6-billing-rounding",
+  "config": "v2.2",
+  "run": 2,
+  "acceptance": true,
+  "fails": [],
+  "changed": [
+   "Mbilling/invoice.py",
+   "Mbilling/money.py"
+  ],
+  "subagent_tokens": 82919,
+  "tool_calls": 29,
+  "duration_ms": 79266,
+  "left_pycache": false,
+  "read_spec_doc": true
+ },
+ {
+  "round": 1,
+  "rid": "41dedecb",
+  "eval": "eval-6-billing-rounding",
+  "config": "v2.2",
+  "run": 3,
+  "acceptance": true,
+  "fails": [],
+  "changed": [
+   "Mbilling/invoice.py",
+   "Mbilling/money.py"
+  ],
+  "subagent_tokens": 74781,
+  "tool_calls": 18,
+  "duration_ms": 77985,
+  "left_pycache": false,
+  "read_spec_doc": true
+ },
+ {
+  "round": 1,
+  "rid": "04105c71",
+  "eval": "eval-6-billing-rounding",
+  "config": "no_skill",
+  "run": 1,
+  "acceptance": true,
+  "fails": [],
+  "changed": [
+   "Mbilling/invoice.py",
+   "Mbilling/money.py"
+  ],
+  "subagent_tokens": 54672,
+  "tool_calls": 8,
+  "duration_ms": 33741,
+  "left_pycache": true,
+  "read_spec_doc": true
+ },
+ {
+  "round": 1,
+  "rid": "7f38dd34",
+  "eval": "eval-6-billing-rounding",
+  "config": "no_skill",
+  "run": 2,
+  "acceptance": true,
+  "fails": [],
+  "changed": [
+   "Mbilling/invoice.py",
+   "Mbilling/money.py"
+  ],
+  "subagent_tokens": 55643,
+  "tool_calls": 10,
+  "duration_ms": 35411,
+  "left_pycache": false,
+  "read_spec_doc": true
+ },
+ {
+  "round": 1,
+  "rid": "fc83d69e",
+  "eval": "eval-6-billing-rounding",
+  "config": "no_skill",
+  "run": 3,
+  "acceptance": true,
+  "fails": [],
+  "changed": [
+   "Mbilling/invoice.py",
+   "Mbilling/money.py"
+  ],
+  "subagent_tokens": 55553,
+  "tool_calls": 10,
+  "duration_ms": 37965,
+  "left_pycache": false,
+  "read_spec_doc": true
+ },
+ {
+  "round": 1,
+  "rid": "a607c240",
+  "eval": "eval-7-fetcher-timeout",
+  "config": "v2.2",
+  "run": 1,
+  "acceptance": true,
+  "fails": [],
+  "changed": [
+   "Mfetcher/__main__.py",
+   "Mfetcher/batch.py",
+   "Mfetcher/config.py",
+   "Mtests/test_cli.py"
+  ],
+  "subagent_tokens": 96278,
+  "tool_calls": 34,
+  "duration_ms": 143036,
+  "left_pycache": false,
+  "read_spec_doc": true
+ },
+ {
+  "round": 1,
+  "rid": "591824c7",
+  "eval": "eval-7-fetcher-timeout",
+  "config": "v2.2",
+  "run": 2,
+  "acceptance": true,
+  "fails": [],
+  "changed": [
+   "Mfetcher/__main__.py",
+   "Mfetcher/batch.py",
+   "Mfetcher/config.py",
+   "Mtests/test_cli.py"
+  ],
+  "subagent_tokens": 87399,
+  "tool_calls": 35,
+  "duration_ms": 118884,
+  "left_pycache": false,
+  "read_spec_doc": true
+ },
+ {
+  "round": 1,
+  "rid": "6444e824",
+  "eval": "eval-7-fetcher-timeout",
+  "config": "v2.2",
+  "run": 3,
+  "acceptance": true,
+  "fails": [],
+  "changed": [
+   "Mfetcher/__main__.py",
+   "Mfetcher/batch.py",
+   "Mfetcher/config.py",
+   "Mtests/test_cli.py"
+  ],
+  "subagent_tokens": 84877,
+  "tool_calls": 22,
+  "duration_ms": 101177,
+  "left_pycache": false,
+  "read_spec_doc": true
+ },
+ {
+  "round": 1,
+  "rid": "beb01fa0",
+  "eval": "eval-7-fetcher-timeout",
+  "config": "no_skill",
+  "run": 1,
+  "acceptance": false,
+  "fails": [
+   "--timeout 0 -> exit 2, 'error: timeout must be > 0'",
+   "negative value in file -> exit 2"
+  ],
+  "changed": [
+   "Mdocs/config.md",
+   "Mfetcher/__main__.py",
+   "Mfetcher/batch.py",
+   "Mfetcher/config.py",
+   "Mtests/test_cli.py"
+  ],
+  "subagent_tokens": 60760,
+  "tool_calls": 15,
+  "duration_ms": 50516,
+  "left_pycache": true,
+  "read_spec_doc": true
+ },
+ {
+  "round": 1,
+  "rid": "0c60fee3",
+  "eval": "eval-7-fetcher-timeout",
+  "config": "no_skill",
+  "run": 2,
+  "acceptance": true,
+  "fails": [],
+  "changed": [
+   "+tests/test_config.py",
+   "Mdocs/config.md",
+   "Mfetcher/__main__.py",
+   "Mfetcher/batch.py",
+   "Mfetcher/config.py",
+   "Mtests/test_cli.py"
+  ],
+  "subagent_tokens": 63731,
+  "tool_calls": 24,
+  "duration_ms": 55927,
+  "left_pycache": true,
+  "read_spec_doc": true
+ },
+ {
+  "round": 1,
+  "rid": "1ffe1091",
+  "eval": "eval-7-fetcher-timeout",
+  "config": "no_skill",
+  "run": 3,
+  "acceptance": true,
+  "fails": [],
+  "changed": [
+   "Mdocs/config.md",
+   "Mfetcher/__main__.py",
+   "Mfetcher/batch.py",
+   "Mfetcher/config.py",
+   "Mtests/test_cli.py"
+  ],
+  "subagent_tokens": 63268,
+  "tool_calls": 16,
+  "duration_ms": 59432,
+  "left_pycache": true,
+  "read_spec_doc": true
+ },
+ {
+  "round": 1,
+  "rid": "0bd42e87",
+  "eval": "eval-8-pricing-cache",
+  "config": "v2.2",
+  "run": 1,
+  "acceptance": true,
+  "fails": [],
+  "changed": [
+   "Mpricing/coupons.py"
+  ],
+  "subagent_tokens": 57197,
+  "tool_calls": 10,
+  "duration_ms": 31878,
+  "left_pycache": false,
+  "read_spec_doc": true
+ },
+ {
+  "round": 1,
+  "rid": "c1e310be",
+  "eval": "eval-8-pricing-cache",
+  "config": "v2.2",
+  "run": 2,
+  "acceptance": true,
+  "fails": [],
+  "changed": [
+   "Mpricing/coupons.py"
+  ],
+  "subagent_tokens": 58127,
+  "tool_calls": 12,
+  "duration_ms": 31728,
+  "left_pycache": false,
+  "read_spec_doc": true
+ },
+ {
+  "round": 1,
+  "rid": "10d2febc",
+  "eval": "eval-8-pricing-cache",
+  "config": "v2.2",
+  "run": 3,
+  "acceptance": true,
+  "fails": [],
+  "changed": [
+   "Mpricing/coupons.py"
+  ],
+  "subagent_tokens": 56079,
+  "tool_calls": 10,
+  "duration_ms": 27519,
+  "left_pycache": false,
+  "read_spec_doc": true
+ },
+ {
+  "round": 1,
+  "rid": "c7933d5c",
+  "eval": "eval-8-pricing-cache",
+  "config": "no_skill",
+  "run": 1,
+  "acceptance": true,
+  "fails": [],
+  "changed": [
+   "Mpricing/coupons.py"
+  ],
+  "subagent_tokens": 51716,
+  "tool_calls": 9,
+  "duration_ms": 25442,
+  "left_pycache": true,
+  "read_spec_doc": true
+ },
+ {
+  "round": 1,
+  "rid": "7525a0c1",
+  "eval": "eval-8-pricing-cache",
+  "config": "no_skill",
+  "run": 2,
+  "acceptance": true,
+  "fails": [],
+  "changed": [
+   "Mpricing/coupons.py"
+  ],
+  "subagent_tokens": 50940,
+  "tool_calls": 9,
+  "duration_ms": 22395,
+  "left_pycache": true,
+  "read_spec_doc": true
+ },
+ {
+  "round": 1,
+  "rid": "5381c643",
+  "eval": "eval-8-pricing-cache",
+  "config": "no_skill",
+  "run": 3,
+  "acceptance": true,
+  "fails": [],
+  "changed": [
+   "Mpricing/coupons.py",
+   "Mtests/test_quote.py"
+  ],
+  "subagent_tokens": 50362,
+  "tool_calls": 8,
+  "duration_ms": 21047,
+  "left_pycache": true,
+  "read_spec_doc": true
+ },
+ {
+  "round": 2,
+  "rid": "7e85bb4f",
+  "eval": "eval-10-sessions-multibug",
+  "config": "v2.2",
+  "run": 1,
+  "acceptance": false,
+  "fails": [
+   "u1: offsets and offset-less UTC mixed (08:00Z, 08:20Z, 08:40Z): {'sessions': 2, 'total_seconds': 1200}",
+   "u2: unordered input with an offset (11:55Z, 12:00Z, 12:10Z): {'sessions': 2, 'total_seconds': 300}",
+   "u3: string order differs from time order (11:05Z, 11:20Z, 11:30Z): {'sessions': 2, 'total_seconds': 600}",
+   "u6: offset-less 'T' timestamp is UTC (same instant as 09:00+01:00): {'sessions': 2, 'total_seconds': 0}"
+  ],
+  "changed": [
+   "Msessions/summary.py"
+  ],
+  "subagent_tokens": 66624,
+  "tool_calls": 22,
+  "duration_ms": 42742,
+  "left_pycache": false,
+  "read_spec_doc": true
+ },
+ {
+  "round": 2,
+  "rid": "e50725d1",
+  "eval": "eval-10-sessions-multibug",
+  "config": "v2.2",
+  "run": 2,
+  "acceptance": false,
+  "fails": [
+   "u1: offsets and offset-less UTC mixed (08:00Z, 08:20Z, 08:40Z): {'sessions': 2, 'total_seconds': 1200}",
+   "u2: unordered input with an offset (11:55Z, 12:00Z, 12:10Z): {'sessions': 2, 'total_seconds': 300}",
+   "u3: string order differs from time order (11:05Z, 11:20Z, 11:30Z): {'sessions': 2, 'total_seconds': 600}",
+   "u6: offset-less 'T' timestamp is UTC (same instant as 09:00+01:00): {'sessions': 2, 'total_seconds': 0}"
+  ],
+  "changed": [
+   "Msessions/summary.py"
+  ],
+  "subagent_tokens": 58130,
+  "tool_calls": 11,
+  "duration_ms": 31568,
+  "left_pycache": false,
+  "read_spec_doc": true
+ },
+ {
+  "round": 2,
+  "rid": "fe3591b5",
+  "eval": "eval-10-sessions-multibug",
+  "config": "v2.2",
+  "run": 3,
+  "acceptance": false,
+  "fails": [
+   "u1: offsets and offset-less UTC mixed (08:00Z, 08:20Z, 08:40Z): {'sessions': 2, 'total_seconds': 1200}",
+   "u2: unordered input with an offset (11:55Z, 12:00Z, 12:10Z): {'sessions': 2, 'total_seconds': 300}",
+   "u3: string order differs from time order (11:05Z, 11:20Z, 11:30Z): {'sessions': 2, 'total_seconds': 600}",
+   "u6: offset-less 'T' timestamp is UTC (same instant as 09:00+01:00): {'sessions': 2, 'total_seconds': 0}"
+  ],
+  "changed": [
+   "Msessions/summary.py"
+  ],
+  "subagent_tokens": 58731,
+  "tool_calls": 16,
+  "duration_ms": 33569,
+  "left_pycache": false,
+  "read_spec_doc": true
+ },
+ {
+  "round": 2,
+  "rid": "460da95b",
+  "eval": "eval-10-sessions-multibug",
+  "config": "no_skill",
+  "run": 1,
+  "acceptance": false,
+  "fails": [
+   "u1: offsets and offset-less UTC mixed (08:00Z, 08:20Z, 08:40Z): {'sessions': 2, 'total_seconds': 1200}",
+   "u2: unordered input with an offset (11:55Z, 12:00Z, 12:10Z): {'sessions': 2, 'total_seconds': 300}",
+   "u3: string order differs from time order (11:05Z, 11:20Z, 11:30Z): {'sessions': 2, 'total_seconds': 600}",
+   "u6: offset-less 'T' timestamp is UTC (same instant as 09:00+01:00): {'sessions': 2, 'total_seconds': 0}"
+  ],
+  "changed": [
+   "Msessions/summary.py"
+  ],
+  "subagent_tokens": 52107,
+  "tool_calls": 9,
+  "duration_ms": 24360,
+  "left_pycache": true,
+  "read_spec_doc": true
+ },
+ {
+  "round": 2,
+  "rid": "46fa5c03",
+  "eval": "eval-10-sessions-multibug",
+  "config": "no_skill",
+  "run": 2,
+  "acceptance": false,
+  "fails": [
+   "u1: offsets and offset-less UTC mixed (08:00Z, 08:20Z, 08:40Z): {'sessions': 2, 'total_seconds': 1200}",
+   "u2: unordered input with an offset (11:55Z, 12:00Z, 12:10Z): {'sessions': 2, 'total_seconds': 300}",
+   "u3: string order differs from time order (11:05Z, 11:20Z, 11:30Z): {'sessions': 2, 'total_seconds': 600}",
+   "u6: offset-less 'T' timestamp is UTC (same instant as 09:00+01:00): {'sessions': 2, 'total_seconds': 0}"
+  ],
+  "changed": [
+   "Msessions/summary.py"
+  ],
+  "subagent_tokens": 50477,
+  "tool_calls": 8,
+  "duration_ms": 18082,
+  "left_pycache": true,
+  "read_spec_doc": true
+ },
+ {
+  "round": 2,
+  "rid": "c4d88864",
+  "eval": "eval-10-sessions-multibug",
+  "config": "no_skill",
+  "run": 3,
+  "acceptance": false,
+  "fails": [
+   "u1: offsets and offset-less UTC mixed (08:00Z, 08:20Z, 08:40Z): {'sessions': 2, 'total_seconds': 1200}",
+   "u2: unordered input with an offset (11:55Z, 12:00Z, 12:10Z): {'sessions': 2, 'total_seconds': 300}",
+   "u3: string order differs from time order (11:05Z, 11:20Z, 11:30Z): {'sessions': 2, 'total_seconds': 600}",
+   "u6: offset-less 'T' timestamp is UTC (same instant as 09:00+01:00): {'sessions': 2, 'total_seconds': 0}"
+  ],
+  "changed": [
+   "Msessions/summary.py"
+  ],
+  "subagent_tokens": 51539,
+  "tool_calls": 8,
+  "duration_ms": 20542,
+  "left_pycache": true,
+  "read_spec_doc": true
+ },
+ {
+  "round": 2,
+  "rid": "0640b384",
+  "eval": "eval-11-notifier-stale-docstring",
+  "config": "v2.2",
+  "run": 1,
+  "acceptance": true,
+  "fails": [],
+  "changed": [
+   "Mnotifier/send.py",
+   "Mtests/test_send.py"
+  ],
+  "subagent_tokens": 64615,
+  "tool_calls": 14,
+  "duration_ms": 58728,
+  "left_pycache": false,
+  "read_spec_doc": true
+ },
+ {
+  "round": 2,
+  "rid": "75cab238",
+  "eval": "eval-11-notifier-stale-docstring",
+  "config": "v2.2",
+  "run": 2,
+  "acceptance": true,
+  "fails": [],
+  "changed": [
+   "Mnotifier/send.py",
+   "Mtests/test_send.py"
+  ],
+  "subagent_tokens": 77922,
+  "tool_calls": 20,
+  "duration_ms": 79307,
+  "left_pycache": false,
+  "read_spec_doc": true
+ },
+ {
+  "round": 2,
+  "rid": "8951d868",
+  "eval": "eval-11-notifier-stale-docstring",
+  "config": "v2.2",
+  "run": 3,
+  "acceptance": true,
+  "fails": [],
+  "changed": [
+   "Mnotifier/send.py",
+   "Mtests/test_send.py"
+  ],
+  "subagent_tokens": 72143,
+  "tool_calls": 16,
+  "duration_ms": 76547,
+  "left_pycache": false,
+  "read_spec_doc": true
+ },
+ {
+  "round": 2,
+  "rid": "061f63ce",
+  "eval": "eval-11-notifier-stale-docstring",
+  "config": "no_skill",
+  "run": 1,
+  "acceptance": true,
+  "fails": [],
+  "changed": [
+   "Mnotifier/send.py",
+   "Mtests/test_send.py"
+  ],
+  "subagent_tokens": 55790,
+  "tool_calls": 18,
+  "duration_ms": 41082,
+  "left_pycache": true,
+  "read_spec_doc": true
+ },
+ {
+  "round": 2,
+  "rid": "e4a2d440",
+  "eval": "eval-11-notifier-stale-docstring",
+  "config": "no_skill",
+  "run": 2,
+  "acceptance": true,
+  "fails": [],
+  "changed": [
+   "Mnotifier/send.py",
+   "Mtests/test_send.py"
+  ],
+  "subagent_tokens": 54563,
+  "tool_calls": 9,
+  "duration_ms": 37584,
+  "left_pycache": true,
+  "read_spec_doc": true
+ },
+ {
+  "round": 2,
+  "rid": "c8da9eb2",
+  "eval": "eval-11-notifier-stale-docstring",
+  "config": "no_skill",
+  "run": 3,
+  "acceptance": true,
+  "fails": [],
+  "changed": [
+   "Mnotifier/send.py",
+   "Mtests/test_send.py"
+  ],
+  "subagent_tokens": 55942,
+  "tool_calls": 17,
+  "duration_ms": 43943,
+  "left_pycache": true,
+  "read_spec_doc": true
+ },
+ {
+  "round": 2,
+  "rid": "d64e4fb9",
+  "eval": "eval-9-scheduler-dst",
+  "config": "v2.2",
+  "run": 1,
+  "acceptance": true,
+  "fails": [],
+  "changed": [
+   "Mscheduler/core.py"
+  ],
+  "subagent_tokens": 74559,
+  "tool_calls": 15,
+  "duration_ms": 95855,
+  "left_pycache": false,
+  "read_spec_doc": true
+ },
+ {
+  "round": 2,
+  "rid": "5c4a4bf0",
+  "eval": "eval-9-scheduler-dst",
+  "config": "v2.2",
+  "run": 2,
+  "acceptance": true,
+  "fails": [],
+  "changed": [
+   "Mscheduler/core.py"
+  ],
+  "subagent_tokens": 91825,
+  "tool_calls": 24,
+  "duration_ms": 147682,
+  "left_pycache": false,
+  "read_spec_doc": true
+ },
+ {
+  "round": 2,
+  "rid": "0928c2ce",
+  "eval": "eval-9-scheduler-dst",
+  "config": "v2.2",
+  "run": 3,
+  "acceptance": true,
+  "fails": [],
+  "changed": [
+   "Mscheduler/core.py"
+  ],
+  "subagent_tokens": 101213,
+  "tool_calls": 25,
+  "duration_ms": 728359,
+  "note": "timing reconstructed from the transcript after a container restart; duration may include queueing",
+  "left_pycache": false,
+  "read_spec_doc": true
+ },
+ {
+  "round": 2,
+  "rid": "052f5941",
+  "eval": "eval-9-scheduler-dst",
+  "config": "no_skill",
+  "run": 1,
+  "acceptance": true,
+  "fails": [],
+  "changed": [
+   "Mscheduler/core.py"
+  ],
+  "subagent_tokens": 67140,
+  "tool_calls": 9,
+  "duration_ms": 137912,
+  "left_pycache": true,
+  "read_spec_doc": true
+ },
+ {
+  "round": 2,
+  "rid": "2f1bd62a",
+  "eval": "eval-9-scheduler-dst",
+  "config": "no_skill",
+  "run": 2,
+  "acceptance": true,
+  "fails": [],
+  "changed": [
+   "Mscheduler/core.py"
+  ],
+  "subagent_tokens": 67284,
+  "tool_calls": 10,
+  "duration_ms": 87247,
+  "left_pycache": false,
+  "read_spec_doc": true
+ },
+ {
+  "round": 2,
+  "rid": "efca4fc8",
+  "eval": "eval-9-scheduler-dst",
+  "config": "no_skill",
+  "run": 3,
+  "acceptance": true,
+  "fails": [],
+  "changed": [
+   "Mscheduler/core.py"
+  ],
+  "subagent_tokens": 79334,
+  "tool_calls": 17,
+  "duration_ms": 141592,
+  "left_pycache": true,
+  "read_spec_doc": true
+ },
+ {
+  "round": 3,
+  "rid": "8da62bd6",
+  "eval": "eval-10b-sessions-scoped",
+  "config": "v2.2",
+  "run": 1,
+  "acceptance": true,
+  "fails": [],
+  "changed": [
+   "Msessions/parse.py",
+   "Msessions/summary.py",
+   "Mtests/test_summary.py"
+  ],
+  "subagent_tokens": 75620,
+  "tool_calls": 17,
+  "duration_ms": 66402,
+  "left_pycache": false,
+  "read_spec_doc": true
+ },
+ {
+  "round": 3,
+  "rid": "35bf7178",
+  "eval": "eval-10b-sessions-scoped",
+  "config": "v2.2",
+  "run": 2,
+  "acceptance": true,
+  "fails": [],
+  "changed": [
+   "Msessions/parse.py",
+   "Msessions/summary.py"
+  ],
+  "subagent_tokens": 75723,
+  "tool_calls": 17,
+  "duration_ms": 67221,
+  "left_pycache": false,
+  "read_spec_doc": true
+ },
+ {
+  "round": 3,
+  "rid": "62b6a3d6",
+  "eval": "eval-10b-sessions-scoped",
+  "config": "v2.2",
+  "run": 3,
+  "acceptance": true,
+  "fails": [],
+  "changed": [
+   "Msessions/parse.py",
+   "Msessions/summary.py",
+   "Mtests/test_summary.py"
+  ],
+  "subagent_tokens": 74307,
+  "tool_calls": 17,
+  "duration_ms": 71645,
+  "left_pycache": false,
+  "read_spec_doc": true
+ },
+ {
+  "round": 3,
+  "rid": "0661f675",
+  "eval": "eval-10b-sessions-scoped",
+  "config": "no_skill",
+  "run": 1,
+  "acceptance": true,
+  "fails": [],
+  "changed": [
+   "Msessions/parse.py",
+   "Msessions/summary.py",
+   "Mtests/test_summary.py"
+  ],
+  "subagent_tokens": 56852,
+  "tool_calls": 12,
+  "duration_ms": 38999,
+  "left_pycache": false,
+  "read_spec_doc": true
+ },
+ {
+  "round": 3,
+  "rid": "0a9a2750",
+  "eval": "eval-10b-sessions-scoped",
+  "config": "no_skill",
+  "run": 2,
+  "acceptance": true,
+  "fails": [],
+  "changed": [
+   "Msessions/parse.py",
+   "Msessions/summary.py",
+   "Mtests/test_summary.py"
+  ],
+  "subagent_tokens": 59464,
+  "tool_calls": 17,
+  "duration_ms": 45577,
+  "left_pycache": true,
+  "read_spec_doc": true
+ },
+ {
+  "round": 3,
+  "rid": "3722e0a7",
+  "eval": "eval-10b-sessions-scoped",
+  "config": "no_skill",
+  "run": 3,
+  "acceptance": true,
+  "fails": [],
+  "changed": [
+   "Msessions/parse.py",
+   "Msessions/summary.py"
+  ],
+  "subagent_tokens": 58659,
+  "tool_calls": 12,
+  "duration_ms": 42995,
+  "left_pycache": false,
+  "read_spec_doc": true
+ },
+ {
+  "round": 3,
+  "rid": "f6eb61c2",
+  "eval": "eval-12-versions-ranges",
+  "config": "v2.2",
+  "run": 1,
+  "acceptance": true,
+  "fails": [],
+  "changed": [
+   "Mtests/test_ranges.py",
+   "Mversions/ranges.py",
+   "Mversions/version.py"
+  ],
+  "subagent_tokens": 120863,
+  "tool_calls": 21,
+  "duration_ms": 227665,
+  "left_pycache": false,
+  "read_spec_doc": true
+ },
+ {
+  "round": 3,
+  "rid": "4c4f1fa2",
+  "eval": "eval-12-versions-ranges",
+  "config": "v2.2",
+  "run": 2,
+  "acceptance": true,
+  "fails": [],
+  "changed": [
+   "Mtests/test_ranges.py",
+   "Mversions/ranges.py",
+   "Mversions/version.py"
+  ],
+  "subagent_tokens": 109247,
+  "tool_calls": 21,
+  "duration_ms": 200456,
+  "left_pycache": false,
+  "read_spec_doc": true
+ },
+ {
+  "round": 3,
+  "rid": "85dbe1a0",
+  "eval": "eval-12-versions-ranges",
+  "config": "v2.2",
+  "run": 3,
+  "acceptance": true,
+  "fails": [],
+  "changed": [
+   "Mtests/test_ranges.py",
+   "Mversions/ranges.py",
+   "Mversions/version.py"
+  ],
+  "subagent_tokens": 117978,
+  "tool_calls": 27,
+  "duration_ms": 200928,
+  "left_pycache": false,
+  "read_spec_doc": true
+ },
+ {
+  "round": 3,
+  "rid": "0040e234",
+  "eval": "eval-12-versions-ranges",
+  "config": "no_skill",
+  "run": 1,
+  "acceptance": true,
+  "fails": [],
+  "changed": [
+   "Mtests/test_ranges.py",
+   "Mversions/ranges.py",
+   "Mversions/version.py"
+  ],
+  "subagent_tokens": 111890,
+  "tool_calls": 28,
+  "duration_ms": 230668,
+  "left_pycache": false,
+  "read_spec_doc": true
+ },
+ {
+  "round": 3,
+  "rid": "80dfed84",
+  "eval": "eval-12-versions-ranges",
+  "config": "no_skill",
+  "run": 2,
+  "acceptance": true,
+  "fails": [],
+  "changed": [
+   "Mtests/test_ranges.py",
+   "Mversions/ranges.py",
+   "Mversions/version.py"
+  ],
+  "subagent_tokens": 90721,
+  "tool_calls": 18,
+  "duration_ms": 157253,
+  "left_pycache": false,
+  "read_spec_doc": true
+ },
+ {
+  "round": 3,
+  "rid": "a35f425b",
+  "eval": "eval-12-versions-ranges",
+  "config": "no_skill",
+  "run": 3,
+  "acceptance": true,
+  "fails": [],
+  "changed": [
+   "Atests/test_version.py",
+   "Mtests/test_ranges.py",
+   "Mversions/ranges.py",
+   "Mversions/version.py"
+  ],
+  "subagent_tokens": 99418,
+  "tool_calls": 15,
+  "duration_ms": 191135,
+  "left_pycache": true,
+  "read_spec_doc": true
+ },
+ {
+  "round": 3,
+  "rid": "69667706",
+  "eval": "eval-13-inventory-discounts",
+  "config": "v2.2",
+  "run": 1,
+  "acceptance": true,
+  "fails": [],
+  "changed": [
+   "Atests/data/format2.json",
+   "Atests/test_pricing.py",
+   "Mdocs/storage.md",
+   "Minventory/__main__.py",
+   "Minventory/export.py",
+   "Minventory/model.py",
+   "Minventory/pricing.py",
+   "Minventory/report.py",
+   "Minventory/store.py",
+   "Mtests/test_cli.py",
+   "Mtests/test_store.py"
+  ],
+  "subagent_tokens": 90473,
+  "tool_calls": 31,
+  "duration_ms": 119058,
+  "left_pycache": false,
+  "read_spec_doc": true
+ },
+ {
+  "round": 3,
+  "rid": "799598e4",
+  "eval": "eval-13-inventory-discounts",
+  "config": "v2.2",
+  "run": 2,
+  "acceptance": true,
+  "fails": [],
+  "changed": [
+   "Atests/data/format2.json",
+   "Atests/test_pricing.py",
+   "Mdocs/storage.md",
+   "Minventory/__main__.py",
+   "Minventory/export.py",
+   "Minventory/model.py",
+   "Minventory/pricing.py",
+   "Minventory/report.py",
+   "Minventory/store.py",
+   "Mtests/test_cli.py",
+   "Mtests/test_store.py"
+  ],
+  "subagent_tokens": 94639,
+  "tool_calls": 35,
+  "duration_ms": 124887,
+  "left_pycache": false,
+  "read_spec_doc": true
+ },
+ {
+  "round": 3,
+  "rid": "24f6ddb8",
+  "eval": "eval-13-inventory-discounts",
+  "config": "v2.2",
+  "run": 3,
+  "acceptance": true,
+  "fails": [],
+  "changed": [
+   "Atests/data/format2.json",
+   "Atests/test_pricing.py",
+   "Mdocs/storage.md",
+   "Minventory/__main__.py",
+   "Minventory/export.py",
+   "Minventory/model.py",
+   "Minventory/pricing.py",
+   "Minventory/report.py",
+   "Minventory/store.py",
+   "Mtests/test_cli.py",
+   "Mtests/test_store.py"
+  ],
+  "subagent_tokens": 99137,
+  "tool_calls": 41,
+  "duration_ms": 128715,
+  "left_pycache": false,
+  "read_spec_doc": true
+ },
+ {
+  "round": 3,
+  "rid": "658f110e",
+  "eval": "eval-13-inventory-discounts",
+  "config": "no_skill",
+  "run": 1,
+  "acceptance": true,
+  "fails": [],
+  "changed": [
+   "Atests/data/format2.json",
+   "Atests/test_pricing.py",
+   "Mdocs/storage.md",
+   "Minventory/__main__.py",
+   "Minventory/export.py",
+   "Minventory/model.py",
+   "Minventory/pricing.py",
+   "Minventory/report.py",
+   "Minventory/store.py",
+   "Mtests/test_cli.py",
+   "Mtests/test_store.py"
+  ],
+  "subagent_tokens": 68520,
+  "tool_calls": 26,
+  "duration_ms": 73102,
+  "left_pycache": true,
+  "read_spec_doc": true
+ },
+ {
+  "round": 3,
+  "rid": "973b8b3a",
+  "eval": "eval-13-inventory-discounts",
+  "config": "no_skill",
+  "run": 2,
+  "acceptance": true,
+  "fails": [],
+  "changed": [
+   "Atests/data/format2.json",
+   "Atests/test_pricing.py",
+   "Mdocs/storage.md",
+   "Minventory/__main__.py",
+   "Minventory/export.py",
+   "Minventory/model.py",
+   "Minventory/pricing.py",
+   "Minventory/report.py",
+   "Minventory/store.py",
+   "Mtests/test_cli.py",
+   "Mtests/test_store.py"
+  ],
+  "subagent_tokens": 73882,
+  "tool_calls": 23,
+  "duration_ms": 92051,
+  "left_pycache": true,
+  "read_spec_doc": true
+ },
+ {
+  "round": 3,
+  "rid": "f3fdb441",
+  "eval": "eval-13-inventory-discounts",
+  "config": "no_skill",
+  "run": 3,
+  "acceptance": true,
+  "fails": [],
+  "changed": [
+   "Atests/data/format2.json",
+   "Atests/test_pricing.py",
+   "Mdocs/storage.md",
+   "Minventory/__main__.py",
+   "Minventory/export.py",
+   "Minventory/model.py",
+   "Minventory/pricing.py",
+   "Minventory/report.py",
+   "Minventory/store.py",
+   "Mtests/test_cli.py",
+   "Mtests/test_store.py"
+  ],
+  "subagent_tokens": 68295,
+  "tool_calls": 13,
+  "duration_ms": 75313,
+  "left_pycache": false,
+  "read_spec_doc": true
+ }
+]
