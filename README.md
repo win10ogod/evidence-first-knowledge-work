@@ -1,106 +1,78 @@
 # evidence-first-knowledge-work
 
-**Version 1.1.0 | English | MIT**
+**Version 2.0.0 | English | MIT**
 
-A strict evidence-first skill with guided execution for smaller or less reliable models working on open-ended development tasks. It makes requirements, discovery, decomposition, experiments, recovery, integration, and completion checks explicit. It is intended to reduce unsupported engineering decisions; it does not claim to turn every model into an expert.
+An Agent Skill that stops the most common way agents damage engineering work: confident guesses. Examples are a parameter remembered from another version, an edit to a file that changed since it was read, a test run that selected zero tests, or a "done" nobody checked. It is written to work with smaller models as well as larger ones.
 
-**Verify before writing. Re-read version-matched documentation and current targets before every independent edit. Validate the actual result. Never claim a check ran when it did not.** Familiar APIs, small changes, low-risk labels, and model confidence do not waive these requirements.
+**Verify before writing. Re-read the target before every edit. Report only checks that actually ran.** How much ceremony a step needs depends on what the step does (L0 read-only, L1 local edit, L2 standard, L3 guarded), never on how confident the model feels.
 
-## What changed in 1.1.0
+See [CHANGELOG.md](CHANGELOG.md) for what changed from 1.x.
 
-The original G0-G6 gates and strict per-step reads remain. The guided profile adds a concrete route from an open-ended request to requirement-linked work items, execution-path evidence, bounded experiments, failure diagnosis, resumable checkpoints, and independent completion review.
+## Layout
 
-Six fictional worked examples demonstrate good and insufficient evidence. Forty behavioral cases define process expectations. Eight evaluator setup recipes address actual development outcomes. A small executable trace auditor checks recorded ordering and preconditions, with synthetic unit tests that deliberately include violations. These tools do not run a model or enforce tool permissions.
+| Path | Loaded | Purpose |
+| --- | --- | --- |
+| [SKILL.md](SKILL.md) | When the skill triggers | Core rules, rigor levels, receipt format, the loop, stop rules, routing table (~2.3k tokens) |
+| [references/engineering.md](references/engineering.md) | Code/config/CLI/test work | Reconnaissance, execution paths, API checklist, decomposition, edit and validation discipline |
+| [references/verification-recipes.md](references/verification-recipes.md) | When an exact command is needed | Versions, signatures, CLI flags and test selection for Python, Node, Go, Rust and git |
+| [references/research.md](references/research.md) | Research, Q&A, data, docs | Primary sources, claim labels, data contracts, numbers, documentation edits |
+| [references/decision-playbook.md](references/decision-playbook.md) | Unknowns, conflicts, failures | Unknown types, experiment design, failure triage, diagnosis reset, escalation |
+| [references/records.md](references/records.md) | Multi-step or multi-session work | Requirement ledger, failure ledger, checkpoints, delivery format |
+| [references/worked-examples.md](references/worked-examples.md) | Unfamiliar situations | Level selection and six fictional end-to-end examples |
+| [references/completion-review.md](references/completion-review.md) | Before delivery | Independent oracles, real selection, real entry points, diff integrity |
+| [scripts/env_snapshot.py](scripts/env_snapshot.py) | Executed, not read | Read-only snapshot: git state, instruction files, manifests, runtimes, installed package versions |
+| [hooks/](hooks/) | Optional, Claude Code | `PostToolUse` hook that warns when a test run selected zero tests |
+| [project-instructions.snippet.md](project-instructions.snippet.md) | Merge into AGENTS.md / CLAUDE.md | Short always-on reminder that points to the skill |
+| [evals/](evals/README.md) | Evaluators only | Runnable prompts, fixture project, acceptance checks, trigger queries, trace auditor, tool tests |
 
-## Files and loading
-
-| File | Purpose |
-| --- | --- |
-| [SKILL.md](SKILL.md) | Mandatory core, G0-G6 gates, strict rereads, and the guided execution routing table. |
-| [references/guided-development.md](references/guided-development.md) | Request decomposition, real call paths, owning-layer evidence, one active implementation item, integration, and resumable state. |
-| [references/decision-playbook.md](references/decision-playbook.md) | Unknown-contract versus unknown-outcome decisions, experiments, diagnosis resets, conflicts, and scoped blocking. |
-| [references/worked-examples.md](references/worked-examples.md) | Six fictional examples covering integration, novel designs, repeated failure, concurrency, test oracles, and resumption. |
-| [references/completion-review.md](references/completion-review.md) | Independent expectations, real test execution, final-revision integration, scope preservation, and honest completion. |
-| [references/coding-protocol.md](references/coding-protocol.md) | Existing repository reconnaissance, API verification, patch contracts, side effects, testing, and precise rollback. |
-| [references/knowledge-protocol.md](references/knowledge-protocol.md) | Research, data analysis, source verification, and documentation maintenance. |
-| [references/evidence-template.md](references/evidence-template.md) | Requirement ledger, per-step receipts, failure history, checkpoints, and delivery mapping. |
-| [references/acceptance-cases.md](references/acceptance-cases.md) | Forty behavioral acceptance cases, including weaker-model failure modes. |
-| [AGENTS.snippet.md](AGENTS.snippet.md) / [CLAUDE.snippet.md](CLAUDE.snippet.md) | Persistent loading snippets to merge into existing project instructions. |
-| [evals/README.md](evals/README.md) | Target-model comparisons, the trace format, and evaluation limitations. |
-| [evals/cases.json](evals/cases.json) | Eight setup recipes requiring evaluator-prepared repositories and independent tests. |
-| [evals/check_trace.py](evals/check_trace.py) / [evals/test_check_trace.py](evals/test_check_trace.py) | Read-only trace auditing and synthetic tests of the auditor. |
-| [LICENSE](LICENSE) | MIT license. |
-
-Read the core in full. Engineering tasks also load the coding protocol and guided development. Load the relevant decision/example section at its trigger, and load the completion review before delivery. No default "fast mode" lets a model skip evidence. The file split keeps unrelated material out of the active context without removing required operations.
+Every reference file is linked directly from SKILL.md (one level deep), and every file over 100 lines has a table of contents. SKILL.md stays under the 5,000 tokens that Claude Code re-attaches after context compaction, so the whole core survives compaction.[3]
 
 ## Installation
 
-### Codex
+Install a clean runtime copy (no `.git/`, no `evals/`) into your host's skill location:
 
-Place this whole directory at:
-
-```text
-<project>/.agents/skills/evidence-first-knowledge-work/
+```bash
+mkdir -p <dest> && git archive --prefix=evidence-first-knowledge-work/ HEAD | tar -x -C <dest>
 ```
 
-Read the existing project rules, then merge `AGENTS.snippet.md` into the root `AGENTS.md`. Preserve existing instructions and check the effective discovery scope and overrides. Codex loads repository skills from `.agents/skills/`; it builds its instruction chain at startup, so start a fresh session after changing persistent instructions.[1][2]
+| Host | `<dest>` (the skill lands in `<dest>/evidence-first-knowledge-work/`) |
+| --- | --- |
+| Claude Code (project) | `<project>/.claude/skills` |
+| Claude Code (personal) | `~/.claude/skills` |
+| Codex (project) | `<project>/.agents/skills` |
 
-```text
-$evidence-first-knowledge-work
-Use guided execution. Preserve every requested outcome and re-read evidence before each independent edit.
-```
+Then merge [project-instructions.snippet.md](project-instructions.snippet.md) into your existing `CLAUDE.md` or `AGENTS.md`. Replace `<SKILL_DIR>` with the actual install path. Read your existing instructions first, do not overwrite them, and start a new session so the host picks up the change.[1][2][3][4]
 
-### Claude Code
+Invoke the skill explicitly with `/evidence-first-knowledge-work` (Claude Code) or `$evidence-first-knowledge-work` (Codex), or let the description trigger it automatically. The frontmatter uses only portable fields (`name`, `description`, `license`, `metadata`), so the same SKILL.md also uploads to claude.ai and the Skills API.[3][5]
 
-Place the whole directory at:
+### Optional: zero-test hook (Claude Code)
 
-```text
-<project>/.claude/skills/evidence-first-knowledge-work/
-```
-
-Read the existing `CLAUDE.md` before merging `CLAUDE.snippet.md`. Confirm the actual instruction and skill sources in the installed environment. Project skill placement and explicit invocation follow Claude Code's documented skill mechanism.[3][4]
-
-```text
-/evidence-first-knowledge-work
-```
-
-The snippets use project-root-relative paths. Update them to a confirmed real path when installing elsewhere. Do not overwrite existing AGENTS.md or CLAUDE.md, duplicate conflicting rules, or assume the skill loaded merely because its files exist. Keep the appropriate platform snippet; the skill does not require duplicate loading through both platforms.
+Merge the `hooks` block from [hooks/settings.example.json](hooks/settings.example.json) into `.claude/settings.json`, adjusting the path if you installed the skill elsewhere. After each Bash call, the hook scans the output for zero-selection signals (for example `running 0 tests`, `[no tests to run]`, `N skipped, N total`) and adds a reminder to Claude's context. It never blocks, never rewrites output, and always exits 0.[6] The patterns come from real runner output (see [evals/README.md](evals/README.md#zero-test-captures)).
 
 ## Validation
 
-The optional auditor uses Python's standard library and does not install dependencies, execute a candidate, or contact a service. Read its documented scope first:
-
-```text
-python -B -m unittest discover -s evals -p 'test_*.py' -v
-python -B evals/check_trace.py /path/to/normalized-trace.json
+```bash
+python -B -m unittest discover -s evals -p 'test_*.py' -v   # 46 tests: auditor, hook, snapshot script
 ```
 
-The unit tests validate the auditor on synthetic events. They do not measure a weak model's ability. Real evaluations must compare comparable target-model runs, inspect the actual tool trace, and independently test the final artifact. Record stronger-model or human assistance separately.[6]
+The tool tests show that the bundled tools behave as specified. They do not measure whether a model performs better with the skill. To measure that, run the prompts in [evals/evals.json](evals/evals.json) with and without the skill on the models you deploy, as described in [evals/README.md](evals/README.md). No such comparison has been run for this release yet.
 
-Structural review should also check UTF-8, YAML front matter, name/directory consistency, required files, relative links, and package integrity.[7]
+## Limits
 
-## Limits and enforcement boundary
-
-The workflow is an instruction-level control. No hooks, tool interceptor, provider adapter, or permission changes are installed. The trace auditor cannot authenticate receipts, detect omitted events, verify source relevance, or judge task success. A fabricated trace can lie. Host-level enforcement requires separate authorized integration with documented host mechanisms.[4]
-
-The intended use includes less capable models that need explicit steps and examples. Guidance should be tested on the models actually used; effectiveness cannot be inferred from a stronger model's behavior.[5] This release has no measured target-model completion rate, compliance rate, or advanced-development benchmark result. Good procedure can expose limits and support reliable progress without proving universal capability.
+These are instructions, not enforcement; the optional hook is the only automated control. The trace auditor checks recorded ordering, not whether receipts are authentic or relevant. Level thresholds, the two-failure diagnosis reset and the receipt format are design choices made by this project. They are not official platform requirements or empirically tuned values.
 
 ## Sources
 
-Checked 2026-09-25. Platform sources support format and loading instructions. The specific workflow, diagnosis-reset rule, examples, and trace schema are project-authored choices, not official platform requirements or empirically proven thresholds.
+Anthropic sources [3], [5] and [6] were re-checked on 2026-10-09. The OpenAI sources [1] and [2] were checked on 2026-09-25 for 1.1.0 and could not be re-fetched for this release (DNS failure), so confirm the Codex paths against current docs. Platform sources support the format, loading, frontmatter and hook mechanics. The workflow itself is this project's design.
 
 [1] OpenAI, Build skills: https://developers.openai.com/codex/skills
 
 [2] OpenAI, Custom instructions with AGENTS.md: https://developers.openai.com/codex/guides/agents-md
 
-[3] Anthropic, Extend Claude with skills: https://code.claude.com/docs/en/skills
+[3] Anthropic, Extend Claude with skills (frontmatter fields, portability, 1,536-character listing cap, 5,000-token re-attachment after compaction): https://code.claude.com/docs/en/skills
 
 [4] Anthropic, How Claude remembers your project: https://code.claude.com/docs/en/memory
 
-[5] Anthropic, Skill authoring best practices, especially model-specific guidance, explicit workflows, examples, and verifiable intermediate outputs: https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices
+[5] Anthropic, Skill authoring best practices (conciseness, third-person descriptions, one-level references, tables of contents over 100 lines, utility scripts, evaluation-first development): https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices
 
-[6] OpenAI, Testing Agent Skills Systematically with Evals: https://developers.openai.com/blog/eval-skills
-
-[7] Agent Skills, Specification: https://agentskills.io/specification
-
-[8] Python 3.13 standard-library references used for the auditor: https://docs.python.org/3.13/library/json.html ; https://docs.python.org/3.13/library/argparse.html ; https://docs.python.org/3.13/library/pathlib.html ; https://docs.python.org/3.13/library/unittest.html
+[6] Anthropic, Hooks reference (`PostToolUse` input, `hookSpecificOutput.additionalContext`, exit codes): https://code.claude.com/docs/en/hooks

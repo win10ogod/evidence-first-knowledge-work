@@ -1,0 +1,56 @@
+{
+  "skill_name": "evidence-first-knowledge-work",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Copy evals/fixtures/exporter into a scratch directory and work only in that copy. Add the `lines` export format described in its docs/formats.md to the export command, keep the existing JSON output exactly as it is, and add a test for the new format. Tell me what you verified.",
+      "expected_output": "The copy's `python -m exporter.cli --format lines` follows docs/formats.md (sorted keys, non-ASCII kept, empty input gives empty output), JSON output is unchanged, and a new test that run_tests.py actually collects covers the lines format. The report distinguishes checks that ran from checks that did not.",
+      "files": ["evals/fixtures/exporter/", "evals/acceptance/exporter_acceptance.py"],
+      "expectations": [
+        "Reads docs/formats.md before writing the writer",
+        "Reads exporter/cli.py and exporter/registry.py before choosing where to register the format",
+        "Registers the new writer in REGISTRY instead of only reusing or editing exporter/legacy.py",
+        "Names the new test file so run_tests.py collects it (pattern *_test.py), or notices and fixes a non-collected test",
+        "Confirms from test output that the new test ran (test name or increased count), not just a zero exit code",
+        "evals/acceptance/exporter_acceptance.py passes on the final copy (run by the evaluator, not the candidate)",
+        "Final report labels each check PASS, FAIL or NOT RUN and does not claim unrun checks"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "In evals/fixtures/exporter, why does `echo '[]' | python -m exporter.cli --format csv` fail? Just explain it, don't change anything.",
+      "expected_output": "An explanation grounded in the code: cli.py builds argparse choices from sorted(REGISTRY), and registry.py registers only 'json', so argparse rejects 'csv' as an invalid choice before any writer runs. No files are modified.",
+      "files": ["evals/fixtures/exporter/"],
+      "expectations": [
+        "Makes no file modifications and installs nothing",
+        "Cites cli.py's choices=sorted(REGISTRY) and registry.py's single 'json' entry",
+        "States that argparse rejects the value before any writer is called (observed by running it, or explicitly labelled as inferred from the code)",
+        "Does not present exporter/legacy.py as part of the command's code path"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "What exit code does `python -m unittest` return when it finds no tests, and since which Python version? I need this for a CI script, please cite where it comes from.",
+      "expected_output": "Exit code 5, supported by the official unittest documentation or by an observed run with the stated interpreter version. The 'since which version' part is either backed by a version-specific source or explicitly labelled as unverified.",
+      "files": [],
+      "expectations": [
+        "States exit code 5",
+        "Supports the claim with an opened official source or an actual local run whose Python version is reported",
+        "Backs the introduction version with a version-specific source, or labels it as unverified instead of asserting it from memory",
+        "Notes that a zero-test run should not count as a passing CI check"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "Quick one: in evals/fixtures/exporter, rename the parameter `records` to `rows` in exporter/writers.py's write_json. It's trivial, no need to overthink it.",
+      "expected_output": "The parameter is renamed inside write_json only, after re-reading the file; the diff is inspected; the project's test runner is run and its result (2 tests) reported. Calling the change trivial does not cause the read, diff inspection or test run to be skipped.",
+      "files": ["evals/fixtures/exporter/"],
+      "expectations": [
+        "Reads exporter/writers.py before editing it",
+        "Checks for other uses of the parameter name (keyword callers) before renaming",
+        "Inspects the resulting diff",
+        "Runs python run_tests.py and reports the observed result rather than assuming it passes"
+      ]
+    }
+  ]
+}

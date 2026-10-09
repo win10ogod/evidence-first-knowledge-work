@@ -1,64 +1,66 @@
-# Evidence and Recovery Decision Playbook
+# Decision Playbook
 
-Use the matching situation below when the next action is unclear. Every mutation, including an experimental mutation, still passes G1-G3. These are working rules, not a claim that every problem has a known solution.
+Use the matching section when the next action is unclear. Each mutation, experiments included, still follows its level from SKILL.md.
 
-## D1. Which kind of unknown is this?
+## Contents
 
-| Situation | Next action | What remains blocked |
+- D1. What kind of unknown is this?
+- D2. Designing an informative experiment
+- D3. A check failed
+- D4. The target changed or another writer intervened
+- D5. Stop, continue or escalate
+
+## D1. What kind of unknown is this?
+
+| Unknown | Next action | Stays blocked until resolved |
 | --- | --- | --- |
-| API name, parameter, type, version, default, or side effect is unknown | Read exact-version official documentation, then official source/types or packaged documentation if needed. | Operations relying on the unknown contract. |
-| The code path or owning layer is unknown | Start at the real entry point, follow dispatch/calls, inspect neighboring contracts and tests. | Product edits at a guessed layer. |
-| A new design's feasibility is unknown | Define a falsifiable hypothesis and a bounded experiment using verified interfaces. | Claims that the design already works, and dependent production changes. |
-| Sources disagree | Check versions, wrappers, generated sources, runtime loading, and applicable requirements; record the conflict. | Definite claims or edits depending on the unresolved conflict. |
-| A material product decision or permission is missing | Check existing authorized requirements, then ask a focused question if necessary. | The affected scope-changing or externally consequential operation. |
-| Network access fails | Report the failure; read available version-matched local evidence. Observe any governing online-verification requirement. | Any step whose required evidence remains unavailable. |
+| API name, parameter, type, default, version or side effect | Read version-matched docs, then installed source or type stubs (`verification-recipes.md`) | Any operation relying on that contract |
+| Which code path or layer owns the behavior | Start at the real entry point and follow dispatch; read neighboring contracts and tests | Product edits in a guessed layer |
+| Whether a new design is feasible | Run a bounded experiment (D2) using verified interfaces | Claims that the design works; dependent product changes |
+| Sources disagree | Check versions, wrappers, generated code and runtime loading; record the conflict | Claims or edits that depend on the conflict |
+| A product decision or permission | Look in existing requirements; ask one focused question if still open | The scope-changing or external operation only |
+| Network access fails | Say so; use local, version-matched evidence | Steps that still need the unavailable evidence |
 
-A missing solution recipe does not by itself block investigation. A missing API contract cannot be reclassified as a feasibility experiment to justify guessing arguments.
+No published recipe for a solution is a reason to experiment, not to stop. An unknown API contract is never a "feasibility experiment" that justifies guessing arguments.
 
-## D2. How to design an informative experiment
+## D2. Designing an informative experiment
 
-Write a short experiment contract before executing it:
+Write this down before running anything:
 
-1. **Question:** one uncertainty linked to a requirement.
-2. **Hypothesis:** a claim that can be contradicted by an observation.
-3. **Evidence already known:** verified interfaces, input semantics, and baseline behavior.
-4. **Controlled change:** the variable being tested and the baseline being compared.
-5. **Observation rule:** what outcome supports, contradicts, or leaves the hypothesis unresolved. Do not invent a success threshold absent from requirements or an explicit experiment rationale.
-6. **Bounds:** workspace, data, memory/time/cost envelope, permissions, cleanup, and stop conditions.
-7. **Next action:** how each possible result changes the plan.
+1. **Question:** one uncertainty, tied to a requirement.
+2. **Hypothesis:** a claim that an observation could contradict.
+3. **Known:** verified interfaces, input semantics, baseline behavior.
+4. **Change:** the single variable under test, and the baseline it is compared to.
+5. **Reading the result:** what supports the hypothesis, what contradicts it, and what leaves it unresolved. Use no invented success threshold.
+6. **Bounds:** workspace, data, time, memory, cost, permissions, cleanup and stop conditions.
+7. **Next:** how each outcome changes the plan.
 
-Use the smallest representative experiment that answers the question. Keep prototypes isolated from product state when possible. Changing several independent variables together makes causal interpretation uncertain; use separate probes unless coupling is justified and recorded.
+Use the smallest experiment that is still representative, kept isolated from product state. A tiny success does not cover scale, concurrency, other platforms or failure modes; carry those limits forward.
 
-A small experiment can reject an approach without proving a replacement. Do not generalize a tiny successful sample to untested scale, concurrency, platforms, or failure modes. Carry the limitation forward.
+## D3. A check failed
 
-## D3. A check failed: choose the next read, not the next random patch
-
-First preserve the command, working directory, relevant versions, original error, actual test selection, and current diff. Classify from evidence:
+First preserve the command, working directory, versions, full error, which tests were selected, and the current diff. Then classify:
 
 | Observation | Inspect next |
 | --- | --- |
-| Import, setup, permission, or dependency failure | Actual interpreter, loaded package location/version, documented setup, and missing resource. Do not immediately upgrade everything. |
-| Signature, type, or schema mismatch | Exact called interface, wrapper, official version-matched contract, and supplied arguments. |
-| Wrong value or behavior | First divergence from the requirement, input fixture, transformation, and independent expected result. |
-| Focused tests pass but public entry fails | Dispatch, configuration, registration, adapters, serialization, and lifecycle boundaries. |
-| Timeout, memory growth, or stalled work | A bounded baseline, resource ownership/lifetime, input size, and verified instrumentation. Stop unsafe runs. |
-| Zero relevant tests or skipped-only execution | Selection filters, discovery rules, fixture collection, skip reasons, and assertion reachability. |
-| Patch mismatch or target changed | Re-read current content and diff; separate other work before rebuilding the patch. |
+| Import, setup, permission or dependency error | The actual interpreter, the loaded package version and location, the documented setup. Do not upgrade everything. |
+| Signature, type or schema mismatch | The exact interface called (and any wrapper), the version-matched contract, the arguments supplied. |
+| Wrong value or behavior | The first point where the data diverges from the requirement, the fixture, and the independent expected value. |
+| Unit tests pass but the public entry fails | Dispatch, registration, configuration, adapters, serialization, lifecycle. |
+| Timeout, memory growth, hang | A bounded baseline, resource ownership and lifetime, input size. Stop unsafe runs. |
+| Zero tests or only skipped tests | Discovery pattern, selection filters, skip reasons, whether assertions are reachable. |
+| Patch did not apply, or the target changed | Re-read the current content and diff, and separate others' changes (D4). |
 
-Record each attempted explanation as **supported**, **contradicted**, or **unresolved**, with evidence and the next discriminating probe. Do not replay a contradicted explanation unless new evidence changes its applicability.
+Record each explanation as **supported**, **contradicted** or **unresolved**, with its evidence and the next probe that would tell explanations apart. Do not retry a contradicted explanation without new evidence that changes it.
 
-After two distinct evidence-backed repair attempts fail on the same symptom, perform a mandatory diagnosis reset before another product edit: re-check requirements, versions, the execution path, and the earliest divergence. This is a procedural default chosen by this project, not a scientific limit or a reason to abandon the task. A reset may select a different experiment, a better-supported approach, or an escalation with precise missing information. Identical retries already require a new diagnostic reason even before this threshold.
+**Diagnosis reset:** after two evidence-backed repair attempts fail on the same symptom, make no further product edit until you have re-checked the requirement, the versions, the real execution path and the earliest divergence. This threshold is a project default, not a law. The reset may lead to a new experiment, a better-supported approach, or escalation with precise information. It is not a reason to abandon the task.
 
-## D4. State changed or another writer intervened
+## D4. The target changed or another writer intervened
 
-Invalidate evidence for every dependent target. Read the new target and related diff, identify the other changes, and revise the step contract. Use a tool's revision/precondition check when available. A read just before a write cannot guarantee that no concurrent change occurs afterward.
+Invalidate the evidence for that target. Read the new content and its diff, identify the other changes, and rebuild your step against the new state. Use the tool's revision or precondition check when one exists; a read just before a write does not rule out a race. Never force-push, overwrite a newer version, widen a failed replacement, or restore an old copy to get past a conflict. If ownership cannot be separated, block the overlapping write and keep both versions.
 
-Do not force-push, overwrite a newer blob, widen a failed replacement, or restore an entire old file to bypass a conflict. If ownership cannot be separated, block the overlapping mutation and preserve both versions. Disjoint work can continue after its independence is checked.
+## D5. Stop, continue or escalate
 
-## D5. Stop, continue, or escalate
+Continue evidence gathering and bounded local experiments while their own requirements are met. Pause only the actions that depend on the missing evidence or permission. When escalating, give the requirement, the observed facts, the probes already tried, the open question, and the exact artifact or decision you need. Do not ask the user to solve the whole design, and do not report success by quietly removing the uncertain part.
 
-A high-risk label adds authorization, recovery, and environment checks; a low-risk label never removes documentation reads or validation.
-
-Continue authorized evidence gathering and bounded local experiments while their own gates pass. Pause only actions that depend on missing evidence or permissions. Escalate with the precise requirement, observed facts, attempted probes, remaining question, and the artifact needed to proceed. Do not demand that the user solve the whole architecture, and do not report success because the uncertain work was removed.
-
-If the task budget is exhausted, preserve a resumable checkpoint and report partial completion. Do not spend the remaining budget on repeated failing attempts or a false completion claim.
+If the budget runs out, write a checkpoint and report partial completion instead of spending the rest on repeated failing attempts.

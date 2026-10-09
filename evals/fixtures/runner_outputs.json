@@ -1,0 +1,133 @@
+{
+ "note": "Real runner output captured 2026-10-09 with Python 3.13.16 unittest, pytest 9.1.1, Jest 29.7.0, Vitest 2.1.9, Go 1.24.7, Cargo 1.97.0. Paths replaced with <tmp>.",
+ "cases": [
+  {
+   "name": "unittest-zero",
+   "command": "/usr/bin/python3 -m unittest discover -s . -p 'nomatch_*.py'",
+   "exit_code": 5,
+   "stdout": "",
+   "stderr": "\n----------------------------------------------------------------------\nRan 0 tests in 0.000s\n\nNO TESTS RAN\n",
+   "zero_tests": true
+  },
+  {
+   "name": "unittest-pass",
+   "command": "/usr/bin/python3 -m unittest discover -s . -p 'test_*.py' -v",
+   "exit_code": 0,
+   "stdout": "",
+   "stderr": "test_a (test_u.T.test_a) ... ok\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+   "zero_tests": false
+  },
+  {
+   "name": "pytest-deselected",
+   "command": "/tmp/claude-0/-home-user-evidence-first-knowledge-work/985386de-dfba-5b3a-87de-5035b169d73b/scratchpad/venv/bin/python -m pytest -k nomatch",
+   "exit_code": 5,
+   "stdout": "============================= test session starts ==============================\nplatform linux -- Python 3.13.16, pytest-9.1.1, pluggy-1.6.0\nrootdir: <tmp>/py\ncollected 1 item / 1 deselected / 0 selected\n\n============================ 1 deselected in 0.01s =============================\n",
+   "stderr": "",
+   "zero_tests": true
+  },
+  {
+   "name": "pytest-empty",
+   "command": "/tmp/claude-0/-home-user-evidence-first-knowledge-work/985386de-dfba-5b3a-87de-5035b169d73b/scratchpad/venv/bin/python -m pytest e",
+   "exit_code": 5,
+   "stdout": "============================= test session starts ==============================\nplatform linux -- Python 3.13.16, pytest-9.1.1, pluggy-1.6.0\nrootdir: <tmp>/py\ncollected 0 items\n\n============================ no tests ran in 0.00s =============================\n",
+   "stderr": "",
+   "zero_tests": true
+  },
+  {
+   "name": "pytest-pass",
+   "command": "/tmp/claude-0/-home-user-evidence-first-knowledge-work/985386de-dfba-5b3a-87de-5035b169d73b/scratchpad/venv/bin/python -m pytest",
+   "exit_code": 0,
+   "stdout": "============================= test session starts ==============================\nplatform linux -- Python 3.13.16, pytest-9.1.1, pluggy-1.6.0\nrootdir: <tmp>/py\ncollected 1 item\n\ntest_a.py .                                                              [100%]\n\n============================== 1 passed in 0.01s ===============================\n",
+   "stderr": "",
+   "zero_tests": false
+  },
+  {
+   "name": "jest-filter-skipped",
+   "command": "./node_modules/.bin/jest a.test.js -t nomatch",
+   "exit_code": 0,
+   "stdout": "",
+   "stderr": "Test Suites: 1 skipped, 0 of 1 total\nTests:       1 skipped, 1 total\nSnapshots:   0 total\nTime:        0.465 s\nRan all test suites matching /a.test.js/i with tests matching \"nomatch\".\n",
+   "zero_tests": true
+  },
+  {
+   "name": "jest-no-tests",
+   "command": "./node_modules/.bin/jest nomatchpath",
+   "exit_code": 1,
+   "stdout": "No tests found, exiting with code 1\nRun with `--passWithNoTests` to exit with code 0\nIn <tmp>/js\n  4 files checked.\n  testMatch: **/__tests__/**/*.[jt]s?(x), **/?(*.)+(spec|test).[tj]s?(x) - 1 match\n  testPathIgnorePatterns: /node_modules/ - 4 matches\n  testRegex:  - 0 matches\nPattern: nomatchpath - 0 matches\n",
+   "stderr": "",
+   "zero_tests": true
+  },
+  {
+   "name": "jest-pass",
+   "command": "./node_modules/.bin/jest a.test.js",
+   "exit_code": 0,
+   "stdout": "",
+   "stderr": "PASS ./a.test.js\n  \u2713 a (1 ms)\n\nTest Suites: 1 passed, 1 total\nTests:       1 passed, 1 total\nSnapshots:   0 total\nTime:        0.33 s\nRan all test suites matching /a.test.js/i.\n",
+   "zero_tests": false
+  },
+  {
+   "name": "vitest-no-files",
+   "command": "./node_modules/.bin/vitest run nomatchpath",
+   "exit_code": 1,
+   "stdout": "\n RUN  v2.1.9 <tmp>/js\n\n",
+   "stderr": "filter:  nomatchpath\ninclude: **/*.{test,spec}.?(c|m)[jt]s?(x)\nexclude:  **/node_modules/**, **/dist/**, **/cypress/**, **/.{idea,git,cache,output,temp}/**, **/{karma,rollup,webpack,vite,vitest,jest,ava,babel,nyc,cypress,tsup,build,eslint,prettier}.config.*\n\nNo test files found, exiting with code 1\n",
+   "zero_tests": true
+  },
+  {
+   "name": "vitest-pass",
+   "command": "./node_modules/.bin/vitest run b.test.mjs",
+   "exit_code": 0,
+   "stdout": "\n RUN  v2.1.9 <tmp>/js\n\n \u2713 b.test.mjs (1 test) 3ms\n\n Test Files  1 passed (1)\n      Tests  1 passed (1)\n   Start at  06:09:06\n   Duration  368ms (transform 46ms, setup 0ms, collect 29ms, tests 3ms, environment 0ms, prepare 79ms)\n\n",
+   "stderr": "",
+   "zero_tests": false
+  },
+  {
+   "name": "go-filter-none",
+   "command": "go test -run Nomatch ./...",
+   "exit_code": 0,
+   "stdout": "ok  \tx\t0.004s [no tests to run]\n",
+   "stderr": "",
+   "zero_tests": true
+  },
+  {
+   "name": "go-mixed-pass",
+   "command": "go test ./...",
+   "exit_code": 0,
+   "stdout": "?   \ty/a\t[no test files]\nok  \ty/b\t0.005s\n",
+   "stderr": "",
+   "zero_tests": false
+  },
+  {
+   "name": "go-pass-verbose",
+   "command": "go test -v ./...",
+   "exit_code": 0,
+   "stdout": "=== RUN   TestA\n--- PASS: TestA (0.00s)\nPASS\nok  \tx\t0.003s\n",
+   "stderr": "",
+   "zero_tests": false
+  },
+  {
+   "name": "cargo-pass",
+   "command": "cargo test --offline",
+   "exit_code": 0,
+   "stdout": "\nrunning 1 test\ntest t::ta ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\n\n\nrunning 0 tests\n\ntest result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\n\n",
+   "stderr": "    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.02s\n     Running unittests src/lib.rs (target/debug/deps/z-39bf75acb00430f3)\n   Doc-tests z\n",
+   "zero_tests": false
+  },
+  {
+   "name": "go-no-test-files",
+   "command": "go test ./...",
+   "exit_code": 0,
+   "stdout": "?   \ty/a\t[no test files]\n?   \ty/b\t[no test files]\n",
+   "stderr": "",
+   "zero_tests": true
+  },
+  {
+   "name": "cargo-zero",
+   "command": "cargo test --offline",
+   "exit_code": 0,
+   "stdout": "\nrunning 0 tests\n\ntest result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\n\n\nrunning 0 tests\n\ntest result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\n\n",
+   "stderr": "   Compiling z v0.1.0 (<tmp>/rs)\n    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.14s\n     Running unittests src/lib.rs (target/debug/deps/z-39bf75acb00430f3)\n   Doc-tests z\n",
+   "zero_tests": true
+  }
+ ]
+}

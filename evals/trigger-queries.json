@@ -1,0 +1,22 @@
+[
+  {"query": "can you bump the httpx timeout in our api client (src/clients/billing.py) to 30s? we're on httpx 0.27 i think, the calls keep timing out in staging", "should_trigger": true},
+  {"query": "Our GitHub Actions job runs `pytest -k smoke` and it's green but I just noticed it finishes in 0.3s. Can you figure out whether the smoke tests are actually running and fix the workflow if not?", "should_trigger": true},
+  {"query": "add a --dry-run flag to scripts/migrate_users.py that prints what would change without writing to postgres", "should_trigger": true},
+  {"query": "Does pandas 2.2 still accept `inplace=True` on DataFrame.fillna or was that deprecated? I want to update the cleaning step in etl/clean.py accordingly", "should_trigger": true},
+  {"query": "the docker build fails after I upgraded node from 18 to 22, error is about node-gyp and better-sqlite3. here's the log: gyp ERR! find Python... can you fix the Dockerfile", "should_trigger": true},
+  {"query": "Please update docs/api/authentication.md so it matches what the /v2/token endpoint in server/routes/auth.ts actually returns now", "should_trigger": true},
+  {"query": "I tried twice to fix the flaky test_order_sync and it still fails ~1 in 5 runs on CI. Can you take over and find the real cause?", "should_trigger": true},
+  {"query": "Compare our Q3 churn numbers in data/churn_q3.csv with the Q2 report the finance team sent (q2_churn.xlsx) and tell me if churn really went up", "should_trigger": true},
+  {"query": "what's the right way to configure boto3 retries with adaptive mode for S3 uploads in our lambda? we pin boto3 1.34 in requirements.txt", "should_trigger": true},
+  {"query": "just a tiny change: in settings.yaml switch the redis url to use TLS (rediss://) for prod", "should_trigger": true},
+  {"query": "write me a short poem about debugging at 3am for our team's slack channel", "should_trigger": false},
+  {"query": "brainstorm 10 possible names for our new internal developer portal, something catchy", "should_trigger": false},
+  {"query": "can you help me write a polite email to my manager asking to move our 1:1 to thursday", "should_trigger": false},
+  {"query": "explain like i'm five what an API is, my mom asked me at dinner and i blanked", "should_trigger": false},
+  {"query": "turn these meeting notes into a bullet list of action items: - Sam to own onboarding doc - revisit pricing next week - Priya demo on Friday", "should_trigger": false},
+  {"query": "make a slide deck outline for my talk on 'why we moved to a monorepo', 8 slides, high level, no code", "should_trigger": false},
+  {"query": "what are some good books about software architecture for a junior dev? just recommendations", "should_trigger": false},
+  {"query": "rewrite this paragraph from our careers page to sound warmer and less corporate: 'We leverage synergies to deliver value...'", "should_trigger": false},
+  {"query": "give me feedback on the tone of my cover letter for a backend engineer job, I'll paste it below", "should_trigger": false},
+  {"query": "translate this product announcement into Japanese, keep the marketing tone", "should_trigger": false}
+]
