@@ -1,6 +1,6 @@
 # Evaluating the Skill
 
-This directory is for evaluators, not for the agent using the skill. Packaging tools exclude a root-level `evals/` directory, so none of this enters the agent's context. It contains runnable eval prompts, an instantiated fixture project with evaluator-owned acceptance checks, real test-runner captures, a trace auditor, and the tests for all bundled tools. It does not contain benchmark results. No measured comparison between skill versions has been run yet.
+This directory is for evaluators, not for the agent using the skill. Packaging tools exclude a root-level `evals/` directory, so none of this enters the agent's context. It contains runnable eval prompts, an instantiated fixture project with evaluator-owned acceptance checks, real test-runner captures, a trace auditor, and the tests for all bundled tools. Benchmark results are in [results/](results/); the first is [2026-10-09, Haiku 5.5: v2.0 vs v1.1 vs no skill](results/2026-10-09-haiku-5-5/README.md).
 
 ## Contents
 
