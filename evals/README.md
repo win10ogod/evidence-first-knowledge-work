@@ -6,11 +6,13 @@ This directory is for evaluators, not for the agent using the skill. Packaging t
 
 | Path | Purpose |
 | --- | --- |
-| [evals.json](evals.json) | Five runnable prompts with expectations (skill-creator schema) |
+| [evals.json](evals.json) | Thirteen runnable prompts with expectations (skill-creator schema). Evals 6-13 are the hard-task set described below |
 | [fixtures/exporter/](fixtures/exporter/) | A small Python CLI project with deliberate traps: an unused look-alike helper (`legacy.py`), and a runner that collects only `*_test.py` |
 | [acceptance/exporter_acceptance.py](acceptance/exporter_acceptance.py) | Evaluator-owned checks for eval 1. Fails on the untouched fixture and on a "test not collected" solution; passes on a correct one |
 | [fixtures/uploader/](fixtures/uploader/) | A Python 3.11 project (declared only in `pyproject.toml`, the CI workflow and the Dockerfile) whose spec describes the batching as `itertools.batched` semantics, an API that exists only on 3.12+ |
 | [acceptance/uploader_acceptance.py](acceptance/uploader_acceptance.py) | Evaluator-owned checks for eval 5, run on `python3.11`. A `batched`-based solution passes on 3.13 and fails here; a correct one passes on both |
+| [fixtures/](fixtures/) `billing`, `fetcher`, `pricing`, `scheduler`, `sessions`, `notifier`, `versions`, `inventory` | Hard-task fixtures for evals 6-13: multi-step debugging and cross-file integration where the visible test or the obvious edit is not enough (table below) |
+| [acceptance/](acceptance/) `*_acceptance.py` | One evaluator-owned script per fixture: spec-derived or oracle-derived cases, the pristine tests rerun against the candidate code, and the candidate's own suite |
 | [trigger-queries.json](trigger-queries.json) | 10 should-trigger and 10 near-miss queries for description optimization |
 | [fixtures/runner_outputs.json](fixtures/runner_outputs.json) | 16 real outputs from unittest, pytest, Jest, Vitest, Go and Cargo (zero-test and normal runs) |
 | [acceptance-cases.md](acceptance-cases.md) | 49 behavioral cases for reviewing transcripts |
@@ -24,11 +26,26 @@ Run all tool tests from the repository root (standard library only, no network):
 python -B -m unittest discover -s evals -p 'test_*.py' -v
 ```
 
+## Hard-task fixtures (evals 6-13)
+
+Each fixture hides more than the visible symptom. The acceptance script names the trap it catches; every script was checked to pass a reference solution and to fail the untouched fixture and the listed trap solutions.
+
+| Eval | Fixture | What makes it hard | Trap solutions the acceptance rejects |
+| --- | --- | --- | --- |
+| 6 | `billing` | Failing rounding test; spec needs exact decimals **and** per-line half-up rounding | `Decimal` rounding on a float parse, banker's rounding, rounding only the sum |
+| 7 | `fetcher` | New option must go through the config precedence chain and a seconds-to-milliseconds client, in two construction sites | flag-only option, unit mix-up, one site missed |
+| 8 | `pricing` | Order-dependent failure caused by mutating an `lru_cache`d table | clearing the cache in tests, dropping the cache |
+| 9 | `scheduler` | DST gaps and folds in any IANA zone (30-minute and midnight shifts) | `+1h` hack, `normalize`, wall-clock comparison |
+| 10 | `sessions` | Visible boundary bug plus offsets discarded and string sorting | boundary-only fix, string sort, naive timestamps |
+| 11 | `notifier` | Vendored throttle's docstring says seconds, code and CHANGELOG say milliseconds | `Throttle(5, 1)`, fixed delays |
+| 12 | `versions` | Long range spec (caret/tilde on 0.x, X-ranges, hyphen partials, SemVer prerelease ordering and exclusion), answers from npm `semver` 7.6.0 | lexicographic prerelease compare, caret without the 0.x rule, no prerelease exclusion |
+| 13 | `inventory` | Discount touches model, storage format (bump, migration, sample), CLI exit status and message, CSV, list, and two money paths (`report.py` repeats the arithmetic) | `report.py` missed, float `round()` (5.005 -> 5.00), no format bump |
+
 ## Comparing skill versions
 
 1. Copy the fixture into an isolated workspace for each run. Keep `acceptance/` outside the candidate's writable area.
 2. Run the same model on each `evals.json` prompt with (a) no skill, (b) the previous skill version, and (c) this version. Keep tools, permissions, context and budget comparable, and repeat each configuration several times.
-3. Grade the expectations from the transcript, and run `python -I acceptance/exporter_acceptance.py <final copy>` for eval 1. The acceptance script executes candidate code, so run it in the sandbox.
+3. Grade the expectations from the transcript, and run the fixture's acceptance script, for example `python -I acceptance/exporter_acceptance.py <final copy>` for eval 1 or `python -I acceptance/versions_acceptance.py <final copy> fixtures/versions` for eval 12 (scripts for evals 6-13 take the pristine fixture as a second argument). The acceptance script executes candidate code, so run it in the sandbox.
 4. Record pass rate, tokens, tool calls and wall time separately. Keep failed runs. Log any human or stronger-model assistance and report assisted results separately.
 5. Test on every model you deploy with. Guidance that works for a large model may be insufficient for a small one, and the reverse can over-explain.
 

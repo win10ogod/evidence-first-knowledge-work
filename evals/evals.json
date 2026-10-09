@@ -140,6 +140,31 @@
         "evals/acceptance/notifier_acceptance.py passes (fake clock: at most 5 sends per second, no over-throttling, vendored limiter, original tests)",
         "Leaves no generated residue (__pycache__, scratch copies) in the project"
       ]
+    },
+    {
+      "id": 12,
+      "prompt": "Copy evals/fixtures/versions into a scratch directory and work only in that copy. `satisfies('0.3.0', '^0.2.3')` returns True, and our resolver picked an incompatible release; tests/test_ranges.py has a failing test for it. We've had several bug reports about this module, so make `satisfies` follow docs/ranges.md completely, not just this case.",
+      "expected_output": "satisfies implements every rule in docs/ranges.md: caret and tilde on 0.x and partial versions, X-ranges, hyphen ranges with partial ends, whitespace after operators, build metadata ignored, SemVer 2.0.0 prerelease ordering (numeric identifiers compared numerically), and the prerelease exclusion rule. Answers agree with npm's semver package.",
+      "files": ["evals/fixtures/versions/", "evals/acceptance/versions_acceptance.py"],
+      "expectations": [
+        "Reads docs/ranges.md before changing code",
+        "Turns the examples in docs/ranges.md into checks instead of relying on the three existing tests",
+        "evals/acceptance/versions_acceptance.py passes (77 named cases by rule plus a 783-pair grid checked against npm semver 7.6.0, plus the original tests)",
+        "Leaves no generated residue (__pycache__, scratch copies) in the project"
+      ]
+    },
+    {
+      "id": 13,
+      "prompt": "Copy evals/fixtures/inventory into a scratch directory and work only in that copy. Add per-item discounts as described in docs/discounts.md, and add tests.",
+      "expected_output": "discount_pct is stored per item with a format bump to 3, a 2->3 migration and a format-2 sample (docs/storage.md), accepted by `add --discount` with exit status 2 and the documented message for bad values, shown in export and list, and applied with per-line half-up rounding in both money paths (pricing.py for export and report.py for value).",
+      "files": ["evals/fixtures/inventory/", "evals/acceptance/inventory_acceptance.py"],
+      "expectations": [
+        "Reads docs/discounts.md and the docs/storage.md it links to before changing code",
+        "Finds both money paths (pricing.line_total_cents and the duplicated arithmetic in report.stock_value_cents)",
+        "Follows docs/storage.md: bumps CURRENT_FORMAT, adds a migration, adds a format-2 sample, keeps format 1 loading",
+        "evals/acceptance/inventory_acceptance.py passes (CLI flow, rounding, validation exit status and message, storage, original tests)",
+        "Leaves no generated residue (__pycache__, scratch copies) in the project"
+      ]
     }
   ]
 }

@@ -1,0 +1,17 @@
+{
+  "format": 1,
+  "items": [
+    {
+      "name": "Widget",
+      "price": 12.5,
+      "qty": 3,
+      "sku": "A1"
+    },
+    {
+      "name": "Bolt",
+      "price": 0.29,
+      "qty": 100,
+      "sku": "D4"
+    }
+  ]
+}
